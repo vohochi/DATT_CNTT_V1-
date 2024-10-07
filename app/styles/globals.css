@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'FontAwesome';
+  src: url('https://template-intern.l5elb4sxvvqkvl.flashvps.xyz/mypham/downloadable-files/brancy-html/assets/fonts/fontawesome-webfont.woff2?v=4.7.0')
+    format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Sau đó, bạn có thể sử dụng font này trong dự án của mình */
+body {
+  font-family: 'FontAwesome', sans-serif; /* Bạn có thể đặt font cho toàn bộ trang */
+}
+
+/* Hoặc sử dụng cho các phần tử cụ thể */
+.icon {
+  font-family: 'FontAwesome'; /* Dùng cho icon */
+}
