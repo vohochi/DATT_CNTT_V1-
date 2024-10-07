@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 const Footer = () => {
   return (
-    <div className="h-[465.50px] w-[1440px] bg-neutral-50 rounded-tl-[10px] rounded-tr-[10px] flex-col justify-start items-start gap-[0px] inline-flex">
+    <div className="h-auto w-full bg-neutral-50 rounded-tl-[10px] rounded-tr-[10px] flex-col justify-start items-start gap-[0px] inline-flex">
       <div className="self-stretch h-[401px] px-[120px] py-[100px] flex-col justify-start items-center flex">
         <div className="h-[201px] flex-col justify-start items-start flex">
           <div className="self-stretch justify-start items-start inline-flex">
