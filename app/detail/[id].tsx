@@ -23,7 +23,7 @@ const Detail = () => {
   const relatedProducts = [
     {
       id: 1,
-      name: "Related content DX2223",
+      name: "Related content DX22 àhdfhsdfhs",
       image: "/10013.jpg",
       price: 210,
       oldprice: 300,
