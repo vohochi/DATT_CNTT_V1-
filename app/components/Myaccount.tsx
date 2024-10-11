@@ -8,7 +8,6 @@ import Download from "./Download";
 import PaymentMethod from "./PaymentMethod";
 import Address from "./Address";
 import Logout from "./Logout";
-import Link from "next/link";
 
 const Myaccount = () => {
   const menu = [
