@@ -1,7 +1,13 @@
+<<<<<<< HEAD
 import '@/app/styles/globals.css';
 
 import Footer from '@/app/components/Footer';
 import Header from '@/app/components/Header';
+=======
+import Footer from '@/app/components/Footer';
+import Header from '@/app/components/Header';
+import '@/app/styles/globals.css';
+>>>>>>> origin/Chi
 import { Josefin_Sans } from 'next/font/google';
 
 const josefin = Josefin_Sans({
@@ -24,7 +30,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+<<<<<<< HEAD
       <body className={`${josefin.className} `}>
+=======
+      <body className={`${josefin.className}`}>
+>>>>>>> origin/Chi
         <Header />
         {children}
         <Footer />
