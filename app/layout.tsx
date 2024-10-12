@@ -1,6 +1,7 @@
+import '@/app/styles/globals.css';
+
 import Footer from '@/app/components/Footer';
 import Header from '@/app/components/Header';
-import '@/app/styles/globals.css';
 import { Josefin_Sans } from 'next/font/google';
 
 const josefin = Josefin_Sans({

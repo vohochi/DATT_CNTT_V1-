@@ -1,7 +1,8 @@
-'use client'; 
+'use client';
 
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import { FaSearch, FaShoppingCart, FaUser } from 'react-icons/fa'; // Import các biểu tượng từ react-icons
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -14,9 +15,9 @@ const Header = () => {
 
       // check scroll
       if (currentScrollY > lastScrollY) {
-        setVisible(false); // visible header when down
+        setVisible(false); // hide header when scrolling down
       } else {
-        setVisible(true); // show header scroll up
+        setVisible(true); // show header when scrolling up
       }
 
       setLastScrollY(currentScrollY);
@@ -25,11 +26,13 @@ const Header = () => {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll); // clear
-  }, [lastScrollY]); 
+  }, [lastScrollY]);
 
   return (
     <div
-      className={`w-full sticky top-0 z-50 flex items-center justify-between px-6 h-20 transition-transform duration-300 ${visible ? 'translate-y-0' : '-translate-y-full'} ${isScrolled ? 'bg-white text-black' : 'bg-transparent text-white'}`}
+      className={`w-full sticky top-0 z-50 flex items-center justify-between px-6 h-20 transition-transform duration-300 ${
+        visible ? 'translate-y-0' : '-translate-y-full'
+      } ${isScrolled ? 'bg-white text-black' : 'bg-transparent text-white'}`}
     >
       {/* Logo and Navigation */}
       <div className="flex items-center">
@@ -44,7 +47,9 @@ const Header = () => {
           {['home', 'about', 'shop', 'blog', 'pages', 'contact'].map((item) => (
             <div
               key={item}
-              className={`text-neutral-800 text-[18px] font-medium font-['Inter'] capitalize cursor-pointer transition-colors duration-300 ${isScrolled ? 'hover:text-[#ff6565]' : 'hover:text-[#ff6565]'}`}
+              className={`text-neutral-800 text-[18px] font-medium font-['Inter'] capitalize cursor-pointer transition-colors duration-300 ${
+                isScrolled ? 'hover:text-[#ff6565]' : 'hover:text-[#ff6565]'
+              }`}
             >
               {item}
             </div>
@@ -56,18 +61,15 @@ const Header = () => {
       <div className="flex items-center space-x-4 md:space-x-2">
         {/* Search Icon */}
         <div className="w-[30px] h-[30px] flex justify-center items-center cursor-pointer">
-          <div className="w-6 h-6 bg-gray-300 rounded-full" />
-          {/* Replace with actual search icon */}
+          <FaSearch className="w-6 h-6 text-gray-300" />
         </div>
         {/* Cart Icon */}
         <div className="w-[30px] h-[30px] flex justify-center items-center cursor-pointer">
-          <div className="w-6 h-6 bg-gray-300 rounded-full" />
-          {/* Replace with actual cart icon */}
+          <FaShoppingCart className="w-6 h-6 text-gray-300" />
         </div>
         {/* User Icon */}
         <div className="w-[30px] h-[30px] flex justify-center items-center cursor-pointer">
-          <div className="w-6 h-6 bg-gray-300 rounded-full" />
-          {/* Replace with actual user icon */}
+          <FaUser className="w-6 h-6 text-gray-300" />
         </div>
 
         {/* Mobile Navigation */}

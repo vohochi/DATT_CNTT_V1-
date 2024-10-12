@@ -1,9 +1,10 @@
 import Image from 'next/image';
+import { FaFacebookF, FaTwitter, FaInstagram } from 'react-icons/fa'; // Nhập biểu tượng từ react-icons
 
 const Footer = () => {
   return (
     <footer className="flex flex-col bg-neutral-50 rounded-t-lg">
-      <div className=" mx-auto px-6 py-12 lg:py-16">
+      <div className="mx-auto px-6 py-12 lg:py-16">
         <div className="flex flex-col md:flex-row md:justify-between">
           {/* Logo and Description */}
           <div className="w-full md:w-1/4 mb-8 md:mb-0">
@@ -53,10 +54,25 @@ const Footer = () => {
               Social Info
             </h3>
             <div className="flex space-x-4">
-              {/* Replace with actual social icons */}
-              <div className="w-8 h-8 bg-gray-300 rounded-full"></div>
-              <div className="w-8 h-8 bg-gray-300 rounded-full"></div>
-              <div className="w-8 h-8 bg-gray-300 rounded-full"></div>
+              {/* Sử dụng biểu tượng từ react-icons */}
+              <a
+                href="#"
+                className="w-8 h-8 flex justify-center items-center text-gray-600 hover:text-[#ff6565]"
+              >
+                <FaFacebookF />
+              </a>
+              <a
+                href="#"
+                className="w-8 h-8 flex justify-center items-center text-gray-600 hover:text-[#ff6565]"
+              >
+                <FaTwitter />
+              </a>
+              <a
+                href="#"
+                className="w-8 h-8 flex justify-center items-center text-gray-600 hover:text-[#ff6565]"
+              >
+                <FaInstagram />
+              </a>
             </div>
           </div>
         </div>
