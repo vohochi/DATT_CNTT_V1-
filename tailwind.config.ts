@@ -23,7 +23,7 @@ module.exports = {
       },
     },
   },
-  plugins: [
-    require('@iconify/tailwind'),
-  ],
+  // plugins: [
+  //   require('@iconify/tailwind'),
+  // ],
 };

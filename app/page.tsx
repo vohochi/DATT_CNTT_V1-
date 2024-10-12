@@ -1,11 +1,8 @@
-import Dashboard from "./components/Dashboard";
-import Myaccount from "./components/Myaccount";
+import Dashboard from './components/Dashboard';
 
 const page = () => {
   return (
-    <Myaccount/>
 
-    
     // <div className="h-[5282.75px] relative">
     //   <div className="h-[343.19px] px-[120px] pt-[115px] left-0 top-[1000px] absolute flex-col justify-start items-center inline-flex">
     //     <div className="h-[228.19px] flex-col justify-start items-start flex">
