@@ -79,6 +79,13 @@ const Header = () => {
           </button>
         </div>
       </div>
+
+      {/* Mobile Navigation */}
+      <div className="md:hidden">
+        <button className="p-2 text-[#ff6565]">
+          {/* Replace with a hamburger menu icon */}☰
+        </button>
+      </div>
     </div>
   );
 };
