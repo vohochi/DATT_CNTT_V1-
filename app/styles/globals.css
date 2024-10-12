@@ -1,7 +1,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-<<<<<<< HEAD
 
 .card {
   perspective: 1000px; /* Tạo chiều sâu cho hiệu ứng lật */
@@ -35,5 +34,3 @@
   transform: rotateY(180deg); /* Đảo ngược mặt sau */
   background-color: rgba(255, 255, 255, 0.8); /* Màu nền với độ trong suốt */
 }
-=======
->>>>>>> origin/Chi
