@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { FaSearch, FaShoppingCart, FaUser } from 'react-icons/fa'; // Import các biểu tượng từ react-icons
 
@@ -43,17 +44,44 @@ const Header = () => {
           width={70}
           height={68}
         />
-        <nav className="hidden md:flex space-x-10 ml-10">
-          {['home', 'about', 'shop', 'blog', 'pages', 'contact'].map((item) => (
-            <div
-              key={item}
-              className={`text-neutral-800 text-[18px] font-medium font-['Inter'] capitalize cursor-pointer transition-colors duration-300 ${
-                isScrolled ? 'hover:text-[#ff6565]' : 'hover:text-[#ff6565]'
-              }`}
-            >
-              {item}
-            </div>
-          ))}
+        <nav className="flex space-x-8 ml-10">
+          <Link
+            href="/"
+            className="text-[#ff6565] text-[15px] font-medium font-['Inter'] capitalize leading-[80px] cursor-pointer"
+          >
+            home
+          </Link>
+          <Link
+            href="/about"
+            className="text-neutral-800 text-[15px] font-medium font-['Inter'] capitalize leading-[80px] cursor-pointer"
+          >
+            about
+          </Link>
+          <Link
+            // onClick={handleShopClick}
+            href="/shop"
+            className="text-neutral-800 text-[15px] font-medium font-['Inter'] capitalize leading-[80px] cursor-pointer"
+          >
+            shop
+          </Link>
+          <Link
+            href="/blog"
+            className="text-neutral-800 text-[15px] font-medium font-['Inter'] capitalize leading-[80px] cursor-pointer"
+          >
+            Blog
+          </Link>
+          <Link
+            href="/pages"
+            className="text-neutral-800 text-[15px] font-medium font-['Inter'] capitalize leading-[80px] cursor-pointer"
+          >
+            Pages
+          </Link>
+          <Link
+            href="/contact"
+            className="text-neutral-800 text-[15px] font-medium font-['Inter'] capitalize leading-[80px] cursor-pointer"
+          >
+            Contact
+          </Link>
         </nav>
       </div>
 
@@ -69,7 +97,10 @@ const Header = () => {
         </div>
         {/* User Icon */}
         <div className="w-[30px] h-[30px] flex justify-center items-center cursor-pointer">
-          <FaUser className="w-6 h-6 text-gray-300" />
+          <Link href={'/account'}>
+            {' '}
+            <FaUser className="w-6 h-6 text-gray-300" />
+          </Link>{' '}
         </div>
 
         {/* Mobile Navigation */}
