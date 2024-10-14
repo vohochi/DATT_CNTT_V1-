@@ -1,5 +1,4 @@
-import MainHome from '@/app/components/MainHome';
-
+import MainHome from './components/MainHome';
 const page = () => {
   return <MainHome />;
 };
