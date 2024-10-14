@@ -2,6 +2,7 @@ import BlogMain from '@/app/components/BlogMain';
 import CategoryMain from '@/app/components/CategoryMain';
 import SliderMain from '@/app/components/SliderMain';
 import TopSaleMain from '@/app/components/TopSaleMain';
+import { FaPaperPlane } from 'react-icons/fa';
 
 const MainHome = () => {
   return (
@@ -26,14 +27,14 @@ const MainHome = () => {
               </p>
             </div>
 
-            <div className="md:w-7/12 w-full flex justify-center items-center">
+            <div className="md:w-7/12 w-full flex justify-center bg-tranparent items-center">
               <input
                 type="email"
                 className="p-2 w-full md:w-3/4 border border-red-500 rounded-l focus:outline-none"
                 placeholder="enter your email"
               />
-              <button className="p-2 w-1/3 md:w-auto text-white bg-[#ce4820] rounded-r hover:bg-[#ce4820]-700">
-                send
+              <button className="p-3 w-1/3 -ml-3 md:w-auto text-white bg-[#ce4820] rounded-[15px] border border-[#fa6565] hover:bg-red-800">
+                <FaPaperPlane />
               </button>
             </div>
           </div>
