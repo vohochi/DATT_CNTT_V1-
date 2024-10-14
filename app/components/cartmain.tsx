@@ -1,120 +1,163 @@
-import React from "react";
+export default function Cart() {
+    return (
+        <main className="flex flex-col items-center mb-20">
+            {/* <!--== Start Page Header Area Wrapper ==--> */}
+            <nav aria-label="breadcrumb" className="bg-gray-100 py-4">
+                <div className="container mx-auto">
+                    <ol className="flex justify-center space-x-4">
+                        <li><a href="#" className="text-blue-600 hover:underline">Home</a></li>
+                        <li className="text-gray-500">Cart</li>
+                    </ol>
+                </div>
+            </nav>
+            {/* <!--== End Page Header Area Wrapper ==--> */}
 
-export default function Widget() {
-  return (
-    <div className="container mx-auto p-6 bg-white dark:bg-zinc-900 shadow-lg rounded-lg">
-      <header className="flex items-center justify-between mb-6">
-        <h1 className="text-3xl font-bold text-primary dark:text-primary-foreground">Giỏ hàng</h1>
-        <div className="flex items-center">
-          <input
-            type="text"
-            placeholder="Nhập tên sản phẩm"
-            className="border border-zinc-300 dark:border-zinc-500 rounded p-2 focus:outline-none focus:ring-2 focus:ring-primary dark:text-zinc-200 dark:bg-zinc-800"
-          />
-          <button className="bg-primary text-white p-2 rounded ml-2 hover:bg-primary/80 dark:hover:bg-primary/70">
-            Tìm
-          </button>
-          <div className="ml-4">
-            <img
-              src="https://openui.fly.dev/openui/user.svg?text=👤"
-              alt="User Icon"
-              className="w-8 h-8"
-            />
-          </div>
-        </div>
-      </header>
-
-      <table className="min-w-full border border-zinc-300 dark:border-zinc-500 mb-6">
-        <thead>
-          <tr className="bg-zinc-100 dark:bg-zinc-800">
-            <th className="border border-zinc-300 dark:border-zinc-500 p-3 text-left">Tên sản phẩm</th>
-            <th className="border border-zinc-300 dark:border-zinc-500 p-3 text-left">Hình ảnh</th>
-            <th className="border border-zinc-300 dark:border-zinc-500 p-3 text-left">Kích thước</th>
-            <th className="border border-zinc-300 dark:border-zinc-500 p-3 text-left">Màu sắc</th>
-            <th className="border border-zinc-300 dark:border-zinc-500 p-3 text-left">Giá</th>
-            <th className="border border-zinc-300 dark:border-zinc-500 p-3 text-left">Số lượng</th>
-            <th className="border border-zinc-300 dark:border-zinc-500 p-3 text-left">Thành tiền</th>
-            <th className="border border-zinc-300 dark:border-zinc-500 p-3 text-left">Xóa</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td className="border border-zinc-300 dark:border-zinc-500 p-3">Áo khoác K1</td>
-            <td className="border border-zinc-300 dark:border-zinc-500 p-3">
-              <img src="https://placehold.co/100x100" alt="Áo khoác K1" className="w-full h-auto rounded" />
-            </td>
-            <td className="border border-zinc-300 dark:border-zinc-500 p-3">Size L</td>
-            <td className="border border-zinc-300 dark:border-zinc-500 p-3">Màu xanh</td>
-            <td className="border border-zinc-300 dark:border-zinc-500 p-3">550.000đ</td>
-            <td className="border border-zinc-300 dark:border-zinc-500 p-3">
-              <div className="flex items-center">
-                <button className="bg-secondary text-secondary-foreground p-1 rounded">-</button>
-                <span className="mx-2">1</span>
-                <button className="bg-secondary text-secondary-foreground p-1 rounded">+</button>
-              </div>
-            </td>
-            <td className="border border-zinc-300 dark:border-zinc-500 p-3">550.000đ</td>
-            <td className="border border-zinc-300 dark:border-zinc-500 p-3">
-              <button className="bg-destructive text-destructive-foreground p-1 rounded">🗑️</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-        <div className="bg-zinc-100 dark:bg-zinc-800 p-4 rounded-lg shadow">
-          <h2 className="text-lg font-semibold">COUPON</h2>
-          <p className="text-muted dark:text-zinc-300">Enter your coupon code if you have one.</p>
-          <div className="flex items-center mt-2">
-            <input
-              type="text"
-              placeholder="Coupon code"
-              className="border border-zinc-300 dark:border-zinc-500 rounded p-2 mr-2"
-            />
-            <button className="bg-secondary text-secondary-foreground p-2 rounded hover:bg-secondary/80 dark:hover:bg-secondary/70">
-              Áp dụng mã
-            </button>
-          </div>
-        </div>
-
-        <div className="bg-zinc-100 dark:bg-zinc-800 p-4 rounded-lg shadow">
-          <h2 className="text-lg font-semibold">CART TOTALS</h2>
-          <div className="flex justify-between mt-2">
-            <span>Subtotal</span>
-            <span className="font-bold">$499.00</span>
-          </div>
-
-          <div className="mt-2">
-            <span>Shipping</span>
-            <div className="mt-2">
-              <div className="flex justify-between items-center">
-                <label className="mr-2">Flat rate:</label>
-                <span>$3.00</span>
-                <input type="radio" name="shipping" value="flat-rate" className="ml-2" />
-              </div>
-              <div className="flex justify-between items-center mt-2">
-                <label>Free shipping</label>
-                <input type="radio" name="shipping" value="free-shipping" className="ml-2" />
-              </div>
-              <div className="flex justify-between items-center mt-2">
-                <label>Local pickup</label>
-                <input type="radio" name="shipping" value="local-pickup" className="ml-2" />
-              </div>
-            </div>
-            <p className="mt-2">Shipping to <strong>USA</strong>.</p>
-            <button className="text-primary underline hover:text-primary/80 mt-2">Change address</button>
-          </div>
-
-          <div className="flex justify-between mt-2 border-t border-zinc-300 dark:border-zinc-500 pt-2">
-            <span className="font-semibold">Total</span>
-            <span className="font-bold">$504.00</span>
-          </div>
-
-          <button className="bg-primary text-white p-2 rounded mt-4 hover:bg-primary/80 dark:hover:bg-primary/70 w-full">
-            Proceed to Checkout
-          </button>
-        </div>
-      </div>
-    </div>
-  );
+            {/* <!--== Start Product Area Wrapper ==--> */}
+            <section className="py-12 w-4/5">
+                <div className="container mx-auto">
+                    <div className="overflow-x-auto">
+                        <form action="#" method="post">
+                            <table className="min-w-full bg-white">
+                                <thead>
+                                    <tr className="w-full  text-gray-600 uppercase text-sm leading-normal border border-zinc-300 dark:border-zinc-500 border-r-4">
+                                        <th className="py-3 px-6 text-left "></th>
+                                        <th className="py-3 px-5 text-left"></th>
+                                        <th className="py-3 px-6 text-left">Product</th>
+                                        <th className="py-3 px-6 text-left">Price</th>
+                                        <th className="py-3 px-6 text-left">Quantity</th>
+                                        <th className="py-3 px-6 text-left">Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="text-gray-600 text-sm font-light">
+                                    <tr className="border-b border-gray-200 hover:bg-gray-100">
+                                        <td className="py-3 px-6 text-left whitespace-nowrap border ">
+                                            <a href="#" className="text-red-500">×</a>
+                                        </td>
+                                        <td className="py-3 px-6 text-left border">
+                                            <a href="#">
+                                                <img src="/assets/images/shop/cart1.webp" alt="Product Image" className="w-16 h-20" />
+                                            </a>
+                                        </td>
+                                        <td className="py-3 px-6 text-left border">
+                                            <a href="#" className="text-blue-600 hover:underline">Condimentum posuere consectetur urna</a>
+                                        </td>
+                                        <td className="py-3 px-6 text-left border">$115.00</td>
+                                        <td className="py-3 px-6 text-left border">
+                                            <div className="flex items-center">
+                                                <button type="button" className="dec qty-btn bg-gray-300 text-gray-700 px-2">-</button>
+                                                <input type="text" className="quantity w-12 text-center mx-2 border border-gray-300" value="1" readOnly />
+                                                <button type="button" className="inc qty-btn bg-gray-300 text-gray-700 px-2">+</button>
+                                            </div>
+                                        </td>
+                                        <td className="py-3 px-6 text-left border">$115.00</td>
+                                    </tr>
+                                    <tr className="border-b border-gray-200 hover:bg-gray-100">
+                                        <td className="py-3 px-6 text-left border whitespace-nowrap">
+                                            <a href="#" className="text-red-500">×</a>
+                                        </td>
+                                        <td className="py-3 px-6 text-left border">
+                                            <a href="#">
+                                                <img src="https://via.placeholder.com/68x84" alt="Product Image" className="w-16 h-20" />
+                                            </a>
+                                        </td>
+                                        <td className="py-3 px-6 text-left border">
+                                            <a href="#" className="text-blue-600 hover:underline">Kaoreet lobortis sagittis laoreet</a>
+                                        </td>
+                                        <td className="py-3 px-6 text-left border">$95.00</td>
+                                        <td className="py-3 px-6 text-left border">
+                                            <div className="flex items-center">
+                                                <button type="button" className="dec qty-btn bg-gray-300 text-gray-700 px-2">-</button>
+                                                <input type="text" className="quantity w-12 text-center mx-2 border border-gray-300" value="1" readOnly />
+                                                <button type="button" className="inc qty-btn bg-gray-300 text-gray-700 px-2">+</button>
+                                            </div>
+                                        </td>
+                                        <td className="py-3 px-6 text-left border">$95.00</td>
+                                    </tr>
+                                    <tr className="border-b border-gray-200 hover:bg-gray-100">
+                                        <td className="py-3 px-6 text-left border whitespace-nowrap">
+                                            <a href="#" className="text-red-500">×</a>
+                                        </td>
+                                        <td className="py-3 px-6 text-left border">
+                                            <a href="#">
+                                                <img src="https://via.placeholder.com/68x84" alt="Product Image" className="w-16 h-20" />
+                                            </a>
+                                        </td>
+                                        <td className="py-3 px-6 text-left border">
+                                            <a href="#" className="text-blue-600 hover:underline">Nostrum exercitationem itae ipsum</a>
+                                        </td>
+                                        <td className="py-3 px-6 text-left border">$79.00</td>
+                                        <td className="py-3 px-6 text-left border">
+                                            <div className="flex items-center rounded-full">
+                                                <button type="button" className="dec qty-btn bg-gray-300 text-gray-700 px-2">-</button>
+                                                <input type="text" className="quantity w-12 text-center mx-2 border border-gray-300" value="1" readOnly />
+                                                <button type="button" className="inc qty-btn bg-gray-300 text-gray-700 px-2">+</button>
+                                            </div>
+                                        </td>
+                                        <td className="py-3 px-6 text-left border">$79.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td colSpan="6" className="py-3 px-6 text-right">
+                                            <button type="submit" className="bg-gray-500 text-white py-2 px-4 rounded disabled:opacity-50" disabled>Update Cart</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </form>
+                    </div>
+                    <div className="flex flex-wrap -mx-4 mt-8">
+                        <div className="w-full lg:w-1/2 px-4 mb-4 lg:mb-0">
+                            <div className="bg-white p-6 rounded shadow">
+                                <h4 className="text-lg font-semibold mb-4">Coupon</h4>
+                                <p className="text-gray-600 mb-4">Enter your coupon code if you have one.</p>
+                                <input type="text" className="w-full p-2 border border-gray-300 rounded mb-4" placeholder="Coupon code" />
+                                <button className="bg-blue-500 text-white py-2 px-4 rounded">Apply Coupon</button>
+                            </div>
+                        </div>
+                        <div className="w-full lg:w-1/2 px-4">
+                            <div className="bg-gray-100 p-6 rounded shadow">
+                                <h2 className="text-lg font-semibold mb-4">Cart Totals</h2>
+                                <table className="w-full">
+                                    <tbody>
+                                        <tr className="border-t">
+                                            <th className="py-3 text-left">Subtotal</th>
+                                            <td className="py-3 text-right text-2xl">$499.00</td>
+                                        </tr>
+                                        <tr className="border-t">
+                                            <th className="py-3 text-left">Shipping</th>
+                                            <td className="py-3 text-right">
+                                                <ul>
+                                                    <li className=" mb-2">
+                                                        <input type="radio" name="shipping" id="radio1" checked className="mr-2" />
+                                                        <label htmlFor="radio1" className="flex-1">Flat rate: <span>$3.00</span></label>
+                                                    </li>
+                                                    <li className=" mb-2">
+                                                        <input type="radio" name="shipping" id="radio2" className="mr-2" />
+                                                        <label htmlFor="radio2" className="flex-1">Free shipping</label>
+                                                    </li>
+                                                    <li className="">
+                                                        <input type="radio" name="shipping" id="radio3" className="ml   -2" />
+                                                        <label htmlFor="radio3" className="flex-1">Local pickup</label>
+                                                    </li>
+                                                </ul>
+                                                <p className="text-gray-600 mt-2">Shipping to <strong>USA</strong>.</p>
+                                                <a href="#" className="text-blue-500 hover:underline"> Change address</a>
+                                            </td>
+                                        </tr>
+                                        <tr className="border-t">
+                                            <th className="py-3 text-left">Total</th>
+                                            <td className="py-3 text-right text-3xl">$504.00</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div className="text-right mt-4 border-t py-4">
+                                    <a href="#" className="bg-green-500 hover:bg-green-700 text-white py-2 px-4 rounded">Proceed to Checkout</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            {/* <!--== End Product Area Wrapper ==--> */}
+        </main>
+    );
 }
