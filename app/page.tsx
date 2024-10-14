@@ -1,9 +1,14 @@
-import Dashboard from "./components/Dashboard";
+import BlogDetail from "./components/BlogDetail/BlogDetail";
+import PageHeader from "./components/BlogDetail/PageHeader";
 import Myaccount from "./components/Myaccount";
 
 const page = () => {
   return (
-    <Myaccount/>
+    // <Myaccount/>
+    <div>
+            <PageHeader/>
+            <BlogDetail/>
+    </div>
 
     
     // <div className="h-[5282.75px] relative">

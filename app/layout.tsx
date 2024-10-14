@@ -24,13 +24,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
-      </head>
       <body className={`${josefin.className}`}>
         <Header />
         {children}
         <Footer />
+        <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
       </body>
     </html>
   );
