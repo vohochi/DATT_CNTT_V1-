@@ -3,13 +3,15 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-
+import { useRouter } from 'next/navigation';
 import { FaSearch, FaShoppingCart, FaUser } from 'react-icons/fa';
 
 const Header = () => {
+  const router = useRouter();
   const [isScrolled, setIsScrolled] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [visible, setVisible] = useState(true);
+  const [activeLink, setActiveLink] = useState('/');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -28,12 +30,18 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [lastScrollY]);
 
-  return (
-    <div
+  useEffect(() => {
+    setActiveLink(router.pathname); 
+  }, [router.pathname]);
 
-      className={`w-full sticky top-0 z-50 flex items-center justify-between px-6 h-20 transition-transform duration-300 ${visible ? 'translate-y-0' : '-translate-y-full'
-        } ${isScrolled ? 'bg-white text-black' : 'bg-transparent text-white'}`}
-    >
+  const getLinkClassName = (path) => {
+    return activeLink === path
+      ? 'text-[#ff6565] text-[15px] font-medium capitalize leading-[80px] cursor-pointer'
+      : 'text-neutral-800 text-[15px] font-medium capitalize leading-[80px] cursor-pointer hover:text-[#ff6565]';
+  };
+
+  return (
+    <div className={`w-full sticky top-0 z-50 flex items-center justify-between px-6 h-20 transition-transform duration-300 ${visible ? 'translate-y-0' : '-translate-y-full'} ${isScrolled ? 'bg-white text-black' : 'bg-transparent text-white'}`}>
       {/* Logo and Navigation */}
       <div className="flex items-center">
         <Image
@@ -45,17 +53,14 @@ const Header = () => {
         />
 
         <nav className="hidden md:flex space-x-8 ml-10">
-          <Link
-            href="/"
-            className="text-[#ff6565] text-[15px] font-medium capitalize leading-[80px] cursor-pointer"
-          >
+          <Link href="/" className={getLinkClassName('/')} onClick={() => setActiveLink('/')}>
             home
           </Link>
+          <Link href="/about" className={getLinkClassName('/about')} onClick={() => setActiveLink('/about')}>
+            about
+          </Link>
           <div className="relative group">
-            <Link
-              href="/shop"
-              className="text-neutral-800 text-[15px] font-medium capitalize leading-[80px] cursor-pointer"
-            >
+            <Link href="/shop" className={getLinkClassName('/shop')} onClick={() => setActiveLink('/shop')}>
               shop
             </Link>
             {/* Dropdown */}
@@ -63,82 +68,49 @@ const Header = () => {
               <table className="w-[400px]">
                 <thead className="border-b border-gray-100">
                   <tr>
-                    <th className="text-center py-4 text-gray-700 text-sm font-bold border-r border-gray-100">
-                      Page
-                    </th>
-                    <th className="text-center py-4 text-gray-700 text-sm font-bold">
-                      Order Page
-                    </th>
+                    <th className="text-center py-4 text-gray-700 text-sm font-bold border-r border-gray-100">Page</th>
+                    <th className="text-center py-4 text-gray-700 text-sm font-bold">Order Page</th>
                   </tr>
                 </thead>
                 <tbody>
                   {/* First Column */}
                   <tr>
                     <td className="text-center border-b border-gray-100 p-4 hover:bg-gray-100 transition-all duration-300 border-r">
-                      <Link href="#" className="text-gray-700 hover:text-[#ff6565]">
-                        test
-                      </Link>
+                      <Link href="#" className="text-gray-700 hover:text-[#ff6565]">test</Link>
                     </td>
                     <td className="text-center border-b border-gray-100 p-4 hover:bg-gray-100 transition-all duration-300">
-                      <Link href="/wishlist" className="text-gray-700 hover:text-[#ff6565]">
-                        Wishlist
-                      </Link>
+                      <Link href="/wishlist" className="text-gray-700 hover:text-[#ff6565]">Wishlist</Link>
                     </td>
                   </tr>
                   {/* Second Column */}
                   <tr>
                     <td className="text-center p-4 hover:bg-gray-100 transition-all duration-300 border-r border-gray-100">
-                      <Link href="#" className="text-gray-700 hover:text-[#ff6565]">
-                        test test test
-                      </Link>
+                      <Link href="#" className="text-gray-700 hover:text-[#ff6565]">test test test</Link>
                     </td>
                     <td className="text-center p-4 hover:bg-gray-100 transition-all duration-300">
-                      <Link href="/compare" className="text-gray-700 hover:text-[#ff6565]">
-                        Compare
-                      </Link>
+                      <Link href="/compare" className="text-gray-700 hover:text-[#ff6565]">Compare</Link>
                     </td>
                   </tr>
                   <tr>
                     <td className="text-center p-4 hover:bg-gray-100 transition-all duration-300 border-r border-gray-100">
-                      <Link href="#" className="text-gray-700 hover:text-[#ff6565]">
-                        test
-                      </Link>
+                      <Link href="#" className="text-gray-700 hover:text-[#ff6565]">test</Link>
                     </td>
                     <td className="text-center p-4 hover:bg-gray-100 transition-all duration-300">
-                      <Link href="/frequentlyQuestions" className="text-gray-700 hover:text-[#ff6565]">
-                        Frequently questions
-                      </Link>
+                      <Link href="/frequentlyQuestions" className="text-gray-700 hover:text-[#ff6565]">Frequently questions</Link>
                     </td>
                   </tr>
                 </tbody>
               </table>
             </ul>
-
-
           </div>
-          <Link
-            href="/about"
-            className="text-neutral-800 text-[15px] font-medium capitalize leading-[80px] cursor-pointer"
-          >
-            about
-          </Link>
-          <Link
-
-            href="/blog"
-            className="text-neutral-800 text-[15px] font-medium capitalize leading-[80px] cursor-pointer"
-          >
+          <Link href="/blog" className={getLinkClassName('/blog')} onClick={() => setActiveLink('/blog')}>
             Blog
           </Link>
-          <Link
-
-            href="/contact"
-            className="text-neutral-800 text-[15px] font-medium capitalize leading-[80px] cursor-pointer"
-          >
+          <Link href="/contact" className={getLinkClassName('/contact')} onClick={() => setActiveLink('/contact')}>
             Contact
           </Link>
         </nav>
       </div>
-
 
       {/* Icons */}
       <div className="flex items-center space-x-4">

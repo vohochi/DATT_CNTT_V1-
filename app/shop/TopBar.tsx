@@ -1,10 +1,10 @@
 const ShopTopBar = () => {
     return (
         <div className="shop-top-bar-area">
-            <div className="container mx-auto w-[77%]">
+            <div className="container mx-auto w-[77%] my-4">
                 <div className="shop-top-bar flex flex-col md:flex-row items-center justify-between">
                     {/* Sort by Select */}
-                    <select className="select-shoing p-2 border border-gray-300 rounded-md">
+                    <select className="select-shoing p-2 rounded-md">
                         <option>Trending</option>
                         <option value="1">Featured</option>
                         <option value="2">Best Selling</option>
@@ -26,7 +26,7 @@ const ShopTopBar = () => {
                     </div>
 
                     {/* Price Range */}
-                    <div className="select-price-range mt-4 md:mt-0 flex gap-4">
+                    <div className="select-price-range mt-4 md:mt-0 flex gap-4 border-l border-r px-[150px]">
                         <h4 className="title font-bold">Pricing</h4>
                         <div className="select-price-range-slider flex gap-2">
                             <div className="slider-range " id="slider-range">
@@ -54,6 +54,7 @@ const ShopTopBar = () => {
                     </div>
                 </div>
             </div>
+            <hr />
         </div>
     );
 };

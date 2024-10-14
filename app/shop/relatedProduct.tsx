@@ -35,69 +35,9 @@ const products = [
     stars: 5,
     isNew: true,
   },
-  {
-    id: 1,
-    image: "https://via.placeholder.com/370x450",
-    title: "Tên sản phẩm dài tí để xem vỡ box không",
-    price: "$210.00",
-    oldPrice: "$300.00",
-    views: "150 views",
-    stars: 5,
-    isNew: true,
-  },
-  {
-    id: 1,
-    image: "https://via.placeholder.com/370x450",
-    title: "Tên sản phẩm dài tí để xem vỡ box không",
-    price: "$210.00",
-    oldPrice: "$300.00",
-    views: "150 views",
-    stars: 5,
-    isNew: true,
-  },
-  {
-    id: 1,
-    image: "https://via.placeholder.com/370x450",
-    title: "Tên sản phẩm dài tí để xem vỡ box không",
-    price: "$210.00",
-    oldPrice: "$300.00",
-    views: "150 views",
-    stars: 5,
-    isNew: true,
-  },
-  {
-    id: 1,
-    image: "https://via.placeholder.com/370x450",
-    title: "Tên sản phẩm dài tí để xem vỡ box không",
-    price: "$210.00",
-    oldPrice: "$300.00",
-    views: "150 views",
-    stars: 5,
-    isNew: true,
-  },
-  {
-    id: 1,
-    image: "https://via.placeholder.com/370x450",
-    title: "Tên sản phẩm dài tí để xem vỡ box không",
-    price: "$210.00",
-    oldPrice: "$300.00",
-    views: "150 views",
-    stars: 5,
-    isNew: true,
-  },
-  {
-    id: 1,
-    image: "https://via.placeholder.com/370x450",
-    title: "Tên sản phẩm dài tí để xem vỡ box không",
-    price: "$210.00",
-    oldPrice: "$300.00",
-    views: "150 views",
-    stars: 5,
-    isNew: true,
-  },
 
 ];
-const ProductList = () => {
+const RelatedProduct = () => {
   return (
     <div className="flex flex-wrap justify-center gap-auto">
       {products.map((product) => (
@@ -150,44 +90,8 @@ const ProductList = () => {
           </div>
         </div>
       ))}
-      <div className="flex justify-center my-5 ">
-        <ul className="flex space-x-2 border-[2px] border-[#de6565] items-center py-2 px-1 rounded-[50px]">
-          <li>
-            <Link href="#">
-              <div className="flex items-center px-3 py-1 cursor-pointer border-r" aria-label="Previous">
-                <IoIosArrowBack />
-              </div>
-            </Link>
-          </li>
-          <li>
-            <Link href="#">
-              <div className="flex items-center px-3 py-1 cursor-pointer hover:text-[#de6565]">01</div>
-            </Link>
-          </li>
-          <li>
-            <Link href="#">
-              <div className="flex items-center px-3 py-1 cursor-pointer hover:text-[#de6565]">02</div>
-            </Link>
-          </li>
-          <li>
-            <Link href="#">
-              <div className="flex items-center px-3 py-1 cursor-pointer hover:text-[#de6565]">03</div>
-            </Link>
-          </li>
-          <li>
-            <span className="flex items-center px-3 py-1 text-gray-700">. . .</span>
-          </li>
-          <li>
-            <Link href="#">
-              <div className="flex items-center px-3 py-1 cursor-pointer border-l" aria-label="Next">
-                <IoIosArrowForward />
-              </div>
-            </Link>
-          </li>
-        </ul>
-      </div>
     </div>
   );
 };
 
-export default ProductList;
+export default RelatedProduct;

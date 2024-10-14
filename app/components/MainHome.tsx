@@ -9,7 +9,19 @@ const MainHome = () => {
     <div className="w-full container mx-auto">
       <SliderMain />
       <CategoryMain />
-      <TopSaleMain />
+      <div className="w-[77%] mx-auto flex flex-col items-center mb-20">
+        <div className="text-center mb-20 w-full">
+          <div className="text-[#231942] text-[50px] font-normal font-['Inter'] capitalize leading-[39px] mb-2">
+            Top sale
+          </div>
+          <div className="text-[#364958] text-base font-normal font-['Inter'] leading-7">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit
+            <br />
+            ut aliquam, purus sit amet luctus venenatis
+          </div>
+        </div>
+        <TopSaleMain />
+      </div>
       <BlogMain />
       <div className="flex flex-col items-center">
         <div

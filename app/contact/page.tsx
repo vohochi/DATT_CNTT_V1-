@@ -8,7 +8,7 @@ import {
 
 const Page = () => {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="flex flex-col">
       <div className="flex flex-col md:flex-row justify-center items-center p-4">
         <img
           className="w-full md:w-1/2 max-w-[750px] h-auto rounded-tr-[30px] rounded-br-[30px] mb-8 md:mb-0"
