@@ -161,7 +161,7 @@ const About = () => {
       </section>
 
       {/* Text */}
-      <section className="text-center mt-10">
+      <section className="text-center mt-10 pb-10">
         <h1 className="font-semibold text-[50px] text-[#231942]">
           Best Cosmetics Provider
         </h1>
@@ -178,7 +178,7 @@ const About = () => {
       {/* Support */}
       <section className="flex justify-center py-10 bg-gray-100 mt-10">
         {boxes.map((box) => (
-          <div key={box.id} className="rounded-lg m-4 p-5 w-[300px]">
+          <div key={box.id} className="rounded-lg m-4 p-5 w-[350px] mt-10">
             <div className="flex items-center mb-4">
               {" "}
               {/* Sử dụng flex và canh giữa */}
