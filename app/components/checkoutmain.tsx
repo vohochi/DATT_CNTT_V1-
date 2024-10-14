@@ -22,7 +22,8 @@ export default function Checkout() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Billing Details */}
+            {/* //billing// */}
+
             <div>
               <h2 className="text-2xl font-semibold mb-4">Billing Details</h2>
               <form className="space-y-4">
@@ -133,7 +134,7 @@ export default function Checkout() {
               </form>
             </div>
 
-            {/* Order Details */}
+            {/* // order // */}
             <div>
               <h2 className="text-2xl font-semibold mb-4">Your Order</h2>
               <div className="border border-gray-300 p-4 rounded-md">
@@ -200,11 +201,12 @@ export default function Checkout() {
                   </div>
                 </div>
 
-                {/* Nút đặt hàng */}
+                
                 <div className="flex items-center mt-4">
                   <input type="checkbox" className="h-4 w-4 text-blue-600 border-gray-300 rounded" />
                   <label className="ml-2 block text-sm text-gray-900">I have read and agree to the website terms and conditions <span className="text-red-500">*</span></label>
                 </div>
+                {/* đặt hàng */}
                 <button
                   type="submit"
                   className="mt-4 w-full bg-red-500 text-white py-2 rounded-md text-sm font-medium"
