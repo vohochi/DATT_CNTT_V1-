@@ -1,8 +1,9 @@
+
 import Footer from "@/app/components/Footer";
 import Header from "@/app/components/Header";
-// import Myaccount from '@/app/components/Myaccount';
 import "@/app/styles/globals.css";
 import { Josefin_Sans } from "next/font/google";
+import { Providers } from "./providers";
 
 const josefin = Josefin_Sans({
   subsets: ["latin"],
@@ -24,10 +25,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+
       <body className={`${josefin.className}`}>
-        <Header />
-        {children}
-        <Footer />
+        <Providers>
+          <Header />
+          {children}
+          <Footer />
+        </Providers>
         <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
       </body>
     </html>
