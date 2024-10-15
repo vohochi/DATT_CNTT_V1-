@@ -30,9 +30,9 @@ const Header = () => {
 
   return (
     <div
-
-      className={`w-full sticky top-0 z-50 flex items-center justify-between px-6 h-20 transition-transform duration-300 ${visible ? 'translate-y-0' : '-translate-y-full'
-        } ${isScrolled ? 'bg-white text-black' : 'bg-transparent text-white'}`}
+      className={`w-full sticky top-0 z-50 flex items-center justify-between px-6 h-20 transition-transform duration-300 ${
+        visible ? 'translate-y-0' : '-translate-y-full'
+      } ${isScrolled ? 'bg-white text-black' : 'bg-transparent text-white'}`}
     >
       {/* Logo and Navigation */}
       <div className="flex items-center">
@@ -75,12 +75,18 @@ const Header = () => {
                   {/* First Column */}
                   <tr>
                     <td className="text-center border-b border-gray-100 p-4 hover:bg-gray-100 transition-all duration-300 border-r">
-                      <Link href="#" className="text-gray-700 hover:text-[#ff6565]">
+                      <Link
+                        href="#"
+                        className="text-gray-700 hover:text-[#ff6565]"
+                      >
                         test
                       </Link>
                     </td>
                     <td className="text-center border-b border-gray-100 p-4 hover:bg-gray-100 transition-all duration-300">
-                      <Link href="/wishlist" className="text-gray-700 hover:text-[#ff6565]">
+                      <Link
+                        href="/wishlist"
+                        className="text-gray-700 hover:text-[#ff6565]"
+                      >
                         Wishlist
                       </Link>
                     </td>
@@ -88,24 +94,36 @@ const Header = () => {
                   {/* Second Column */}
                   <tr>
                     <td className="text-center p-4 hover:bg-gray-100 transition-all duration-300 border-r border-gray-100">
-                      <Link href="#" className="text-gray-700 hover:text-[#ff6565]">
+                      <Link
+                        href="#"
+                        className="text-gray-700 hover:text-[#ff6565]"
+                      >
                         test test test
                       </Link>
                     </td>
                     <td className="text-center p-4 hover:bg-gray-100 transition-all duration-300">
-                      <Link href="/compare" className="text-gray-700 hover:text-[#ff6565]">
+                      <Link
+                        href="/compare"
+                        className="text-gray-700 hover:text-[#ff6565]"
+                      >
                         Compare
                       </Link>
                     </td>
                   </tr>
                   <tr>
                     <td className="text-center p-4 hover:bg-gray-100 transition-all duration-300 border-r border-gray-100">
-                      <Link href="#" className="text-gray-700 hover:text-[#ff6565]">
+                      <Link
+                        href="#"
+                        className="text-gray-700 hover:text-[#ff6565]"
+                      >
                         test
                       </Link>
                     </td>
                     <td className="text-center p-4 hover:bg-gray-100 transition-all duration-300">
-                      <Link href="/frequentlyQuestions" className="text-gray-700 hover:text-[#ff6565]">
+                      <Link
+                        href="/frequentlyQuestions"
+                        className="text-gray-700 hover:text-[#ff6565]"
+                      >
                         Frequently questions
                       </Link>
                     </td>
@@ -113,8 +131,6 @@ const Header = () => {
                 </tbody>
               </table>
             </ul>
-
-
           </div>
           <Link
             href="/about"
@@ -123,14 +139,18 @@ const Header = () => {
             about
           </Link>
           <Link
-
             href="/blog"
             className="text-neutral-800 text-[15px] font-medium capitalize leading-[80px] cursor-pointer"
           >
             Blog
           </Link>
           <Link
-
+            href="/blogdetail"
+            className="text-neutral-800 text-[15px] font-medium capitalize leading-[80px] cursor-pointer"
+          >
+            BlogDetail
+          </Link>
+          <Link
             href="/contact"
             className="text-neutral-800 text-[15px] font-medium capitalize leading-[80px] cursor-pointer"
           >
@@ -138,7 +158,6 @@ const Header = () => {
           </Link>
         </nav>
       </div>
-
 
       {/* Icons */}
       <div className="flex items-center space-x-4">
