@@ -1,11 +1,5 @@
 import { Image } from "@nextui-org/react";
-import SendMail from "../components/BlogDetail/SendMail";
-import BlogPost from "../components/BlogDetail/BlogPost";
-import Slideshow from "../components/BlogDetail/SlideShow";
-import BlogComment from "../components/BlogDetail/BlogComment";
-
 export default function BlogDetail() {
-
   return (
     <div className="max-w-[1200px] mx-auto">
       <h3 className="text-6xl font-light mb-12 pt-28 text-gray-800 leading-snug">
@@ -53,36 +47,56 @@ export default function BlogDetail() {
             </div>
             <div className="col-span-5">
               <div className="flex items-center justify-end">
-                <span className="ml-4 text-lg h-9 mb-0 mr-4">Share: </span>
+                <p className="ml-4 text-lg h-9 mb-0 mr-4">Share: </p>
                 <a
-                  href=""
+                  href="#"
                   className="block text-center text-2xl leading-10 text-gray-700 w-9 h-9 mb-0 hover:text-red-400 transition duration-500"
                 >
-                  <span
-                    className="iconify"
-                    data-icon="formkit:pinterest"
-                    data-width="24"
-                  ></span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="1em"
+                    height="1em"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      fill="currentColor"
+                      d="M8.34 1C5.46 1 2.62 2.92 2.62 6.02c0 1.97 1.11 3.1 1.78 3.1c.28 0 .44-.77.44-.99c0-.26-.66-.82-.66-1.9c0-2.26 1.72-3.85 3.94-3.85c1.91 0 3.32 1.09 3.32 3.08c0 1.49-.6 4.28-2.53 4.28c-.7 0-1.3-.5-1.3-1.23c0-1.06.74-2.09.74-3.18c0-1.86-2.63-1.52-2.63.72c0 .47.06.99.27 1.42c-.39 1.67-1.18 4.15-1.18 5.87c0 .53.08 1.05.13 1.58c.1.11.05.1.19.04c1.41-1.94 1.36-2.31 2-4.85c.35.66 1.24 1.01 1.94 1.01c2.98 0 4.32-2.9 4.32-5.52c0-2.79-2.41-4.6-5.05-4.6"
+                    />
+                  </svg>
                 </a>
                 <a
-                  href=""
+                  href="#"
                   className="block text-center text-2xl leading-10 text-gray-700 w-9 h-9 mb-0 ml-3 hover:text-red-400 transition duration-500"
                 >
-                  <span
-                    className="iconify"
-                    data-icon="ri:twitter-fill"
-                    data-width="24"
-                  ></span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="1em"
+                    height="1em"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      fill="currentColor"
+                      d="M22.213 5.656a8.4 8.4 0 0 1-2.402.658A4.2 4.2 0 0 0 21.649 4c-.82.488-1.719.83-2.655 1.015a4.182 4.182 0 0 0-7.126 3.814a11.87 11.87 0 0 1-8.621-4.37a4.17 4.17 0 0 0-.566 2.103c0 1.45.739 2.731 1.86 3.481a4.2 4.2 0 0 1-1.894-.523v.051a4.185 4.185 0 0 0 3.355 4.102a4.2 4.2 0 0 1-1.89.072A4.185 4.185 0 0 0 8.02 16.65a8.4 8.4 0 0 1-6.192 1.732a11.83 11.83 0 0 0 6.41 1.88c7.694 0 11.9-6.373 11.9-11.9q0-.271-.012-.541a8.5 8.5 0 0 0 2.086-2.164"
+                    />
+                  </svg>
                 </a>
                 <a
-                  href=""
+                  href="#"
                   className="block text-center text-2xl leading-10 text-gray-700 w-9 h-9 mb-0 ml-3 hover:text-red-400 transition duration-500"
                 >
-                  <span
-                    className="iconify"
-                    data-icon="flowbite:facebook-solid"
-                    data-width="24"
-                  ></span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="1em"
+                    height="1em"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      fill="currentColor"
+                      fill-rule="evenodd"
+                      d="M13.135 6H15V3h-1.865a4.147 4.147 0 0 0-4.142 4.142V9H7v3h2v9.938h3V12h2.021l.592-3H12V6.591A.6.6 0 0 1 12.592 6z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
                 </a>
               </div>
             </div>
@@ -159,10 +173,6 @@ export default function BlogDetail() {
           />
         </a>
       </div>
-      <Slideshow/>
-      <BlogComment/>
-      <BlogPost/>
-      <SendMail/>
     </div>
   );
 }

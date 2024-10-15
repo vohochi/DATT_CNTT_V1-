@@ -1,8 +1,9 @@
 import { Image } from "@nextui-org/react";
 
 const Slideshow = () => {
-    return(
-        <div className="grid grid-cols-12 pt-10 mt-4 pb-28">
+  return (
+    <div className="max-w-[1200px] mx-auto">
+      <div className="grid grid-cols-12 pt-10 mt-4 pb-28">
         <div className="col-span-6">
           <a
             href=""
@@ -63,6 +64,7 @@ const Slideshow = () => {
           </a>
         </div>
       </div>
-    )
-}
+    </div>
+  );
+};
 export default Slideshow;
