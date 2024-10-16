@@ -165,7 +165,9 @@ const Header = () => {
           <FaSearch className="w-6 h-6 text-gray-300" />
         </div>
         <div className="w-[30px] h-[30px] flex justify-center items-center cursor-pointer">
-          <FaShoppingCart className="w-6 h-6 text-gray-300" />
+          <Link href={'/cart'}>
+            <FaShoppingCart className="w-6 h-6 text-gray-300" />
+          </Link>{' '}
         </div>
         <div className="w-[30px] h-[30px] flex justify-center items-center cursor-pointer">
           <Link href="/account">
