@@ -51,6 +51,12 @@ const Header = () => {
           >
             home
           </Link>
+          <Link
+            href="/detail"
+            className="text-[#ff6565] text-[15px] font-medium capitalize leading-[80px] cursor-pointer"
+          >
+            detail
+          </Link>
           <div className="relative group">
             <Link
               href="/shop"
@@ -58,6 +64,7 @@ const Header = () => {
             >
               shop
             </Link>
+            
             {/* Dropdown */}
             <ul className="absolute hidden group-hover:flex bg-white shadow-lg">
               <table className="w-[400px]">

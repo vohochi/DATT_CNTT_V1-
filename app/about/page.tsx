@@ -1,7 +1,39 @@
 "use client";
-import { Image } from "@nextui-org/react"; // Keep this import if you're using Next UI components
+import React, { useState } from "react";
+import { Image } from "@nextui-org/react"; 
 
 const About = () => {
+ // State for drag functionality
+ const [isDragging, setIsDragging] = useState(false);
+ const [startX, setStartX] = useState(0);
+ const [scrollLeft, setScrollLeft] = useState(0);
+
+
+  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    setIsDragging(true);
+    setStartX(e.pageX - e.currentTarget.offsetLeft);
+    setScrollLeft(e.currentTarget.scrollLeft);
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  const handleMouseLeave = () => {
+    setIsDragging(false);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!isDragging) return; // Chỉ thực hiện khi đang kéo
+    e.preventDefault(); // Ngăn chặn hành vi mặc định
+
+    const x = e.pageX - e.currentTarget.offsetLeft; // Vị trí chuột
+    const walk = (x - startX) * 1.5; // Tốc độ cuộn, có thể điều chỉnh
+
+    // Cập nhật vị trí cuộn
+    e.currentTarget.scrollLeft = scrollLeft - walk;
+  };
+
   const funFacts = [
     {
       id: 1,
@@ -99,8 +131,8 @@ const About = () => {
       </section>
 
       {/* Funfact Section */}
-      <section className="py-12 bg-gray-100 max-w-[1703px] mt-10 mb-10">
-        <div className="container mx-auto">
+      <section className="py-12 bg-[#fff] max-w-[1703px] mb-10">
+        <div className="container mx-auto mt-10 mb-10">
           <div className="flex flex-wrap -mb-6">
             {funFacts.map((fact) => (
               <div key={fact.id} className="w-full sm:w-1/2 lg:w-1/3 mb-4">
@@ -130,22 +162,28 @@ const About = () => {
 
       {/* Image Slider Section */}
       <section className="py-12 mt-[60px]">
-        <div className="overflow-x-auto">
-          <div className="flex space-x-4">
-            {images.map((image) => (
-              <div key={image.id} className="flex-none w-[370px] h-[110px]">
-                <Image
-                  src={image.src}
-                  alt={`Image ${image.id}`}
-                  width={370} // Fixed width
-                  height={110} // Adjusted height
-                  className="w-full h-full object-cover" // Use className for styling
-                />
-              </div>
-            ))}
-          </div>
+      <div
+        className="overflow-hidden cursor-grab"
+        onMouseDown={handleMouseDown}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseLeave}
+        onMouseMove={handleMouseMove}
+      >
+        <div className="flex space-x-4">
+          {images.map((image) => (
+            <div key={image.id} className="flex-none w-[370px] h-[110px]">
+              <Image
+                src={image.src}
+                alt={`Image ${image.id}`}
+                width={370}
+                height={110}
+                className="w-full h-full object-cover"
+              />
+            </div>
+          ))}
         </div>
-      </section>
+      </div>
+    </section>
 
       {/* Banner */}
       <section className="py-12">
@@ -176,7 +214,7 @@ const About = () => {
       </section>
 
       {/* Support */}
-      <section className="flex justify-center py-10 bg-gray-100 mt-10">
+      <section className="flex justify-center py-10 bg-[#fff] mt-10">
         {boxes.map((box) => (
           <div key={box.id} className="rounded-lg m-4 p-5 w-[350px] mt-10">
             <div className="flex items-center mb-4">
