@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 export default function Cart() {
   return (
     <main className="flex flex-col items-center mb-20">
@@ -264,12 +266,12 @@ export default function Cart() {
                   </tbody>
                 </table>
                 <div className="text-right mt-4 border-t py-4">
-                  <a
-                    href="#"
+                  <Link
+                    href="/checkout"
                     className="bg-green-500 hover:bg-green-700 text-white py-2 px-4 rounded"
                   >
                     Proceed to Checkout
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>

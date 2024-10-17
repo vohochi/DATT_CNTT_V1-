@@ -76,17 +76,10 @@ const Header = () => {
                   <tr>
                     <td className="text-center border-b border-gray-100 p-4 hover:bg-gray-100 transition-all duration-300 border-r">
                       <Link
-<<<<<<< HEAD
                         href="/account"
                         className="text-gray-700 hover:text-[#ff6565]"
                       >
                         My account
-=======
-                        href="#"
-                        className="text-gray-700 hover:text-[#ff6565]"
-                      >
-                        test
->>>>>>> Tinhf
                       </Link>
                     </td>
                     <td className="text-center border-b border-gray-100 p-4 hover:bg-gray-100 transition-all duration-300">
