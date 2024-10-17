@@ -1,3 +1,9 @@
+<<<<<<< HEAD
+import Image from 'next/image';
+import Link from 'next/link';
+
+=======
+>>>>>>> parent of 786ac8d (edit layout)
 export default function Cart() {
   return (
     <main className="flex flex-col items-center mb-20">
@@ -41,7 +47,9 @@ export default function Cart() {
                     </td>
                     <td className="py-3 px-6 text-left border">
                       <a href="#">
-                        <img
+                        <Image
+                          width={16}
+                          height={20}
                           src="/assets/images/shop/cart1.webp"
                           alt="Product Image"
                           className="w-16 h-20"
@@ -86,7 +94,9 @@ export default function Cart() {
                     </td>
                     <td className="py-3 px-6 text-left border">
                       <a href="#">
-                        <img
+                        <Image
+                          width={16}
+                          height={20}
                           src="https://via.placeholder.com/68x84"
                           alt="Product Image"
                           className="w-16 h-20"
@@ -131,7 +141,9 @@ export default function Cart() {
                     </td>
                     <td className="py-3 px-6 text-left border">
                       <a href="#">
-                        <img
+                        <Image
+                          width={16}
+                          height={20}
                           src="https://via.placeholder.com/68x84"
                           alt="Product Image"
                           className="w-16 h-20"
