@@ -11,7 +11,7 @@ import {
 } from "@nextui-org/react";
 import { Heart, Maximize } from "lucide-react";
 
-// Giả lập dữ liệu sản phẩm (giữ nguyên)
+// Giả lập dữ liệu sản phẩm
 const products = Array(90)
   .fill(null)
   .map((_, index) => ({
@@ -20,11 +20,11 @@ const products = Array(90)
     price: 210.0,
     originalPrice: 300.0,
     reviews: 150,
-    image: "https://via.placeholder.com/370x450",
+    image: "../public/10012.jpg",
     isNew: index % 3 === 0,
   }));
 
-const ProductList = () => {
+const ProductList: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [hoveredProduct, setHoveredProduct] = useState<number | null>(null);
   const productsPerPage = 9;
@@ -38,7 +38,7 @@ const ProductList = () => {
 
   return (
     <div>
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {currentProducts.map((product) => (
           <Card
             key={product.id}
@@ -59,6 +59,38 @@ const ProductList = () => {
                   <span className="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded-full text-xs">
                     new
                   </span>
+                )}
+                {hoveredProduct === product.id && (
+                  <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                    <div className="flex space-x-2">
+                      <Button
+                        isIconOnly
+                        size="sm"
+                        variant="flat"
+                        color="default"
+                        className="bg-white"
+                      >
+                        <Maximize size={20} />
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="flat"
+                        color="primary"
+                        className="bg-white text-black hover:bg-primary hover:text-white transition-colors"
+                      >
+                        ADD TO CART
+                      </Button>
+                      <Button
+                        isIconOnly
+                        size="sm"
+                        variant="flat"
+                        color="default"
+                        className="bg-white"
+                      >
+                        <Heart size={20} />
+                      </Button>
+                    </div>
+                  </div>
                 )}
               </div>
             </CardBody>
@@ -83,19 +115,6 @@ const ProductList = () => {
                 </span>
               </div>
             </CardFooter>
-            {hoveredProduct === product.id && (
-              <div className="absolute bottom-0 left-0 right-0 flex justify-center space-x-2 p-2 bg-white bg-opacity-90 transition-opacity duration-300">
-                <Button isIconOnly size="sm" variant="light">
-                  <Maximize size={20} />
-                </Button>
-                <Button size="sm" variant="flat" color="primary">
-                  ADD TO CART
-                </Button>
-                <Button isIconOnly size="sm" variant="light">
-                  <Heart size={20} />
-                </Button>
-              </div>
-            )}
           </Card>
         ))}
       </div>

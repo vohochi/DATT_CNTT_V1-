@@ -2,17 +2,14 @@
 
 import React, { useState } from "react";
 import { Input, Checkbox, Button } from "@nextui-org/react";
-// import { Range, getTrackBackground } from "react-range";
 import Image from "next/image";
 
 const categories = [
-  { name: "Accessories", count: 5 },
+  { name: "Accessories", count: 6 },
   { name: "Computer", count: 4 },
   { name: "Covid-19", count: 2 },
-  { name: "Electronics", count: 6 },
-  { name: "Frame Sunglasses", count: 12 },
-  { name: "Furniture", count: 7 },
-  { name: "Genuine Leather", count: 9 },
+  { name: "Electronics", count: 12 },
+  { name: "Furniture", count: 9 },
 ];
 
 const popularTags = [
@@ -38,16 +35,12 @@ const recentPosts: RecentPost[] = Array(3)
     id: index + 1,
     title: "Lorem ipsum dolor sit amet conse adipis.",
     date: `Sep ${24 + index}, 2022`,
-    imageUrl: "/public/10016.jpg",
+    imageUrl: "/placeholder.jpg", // Đảm bảo rằng bạn có ảnh placeholder này trong thư mục public
   }));
 
 const SideBarBlog = () => {
-  const [values, setValues] = useState([130, 2500]);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const STEP = 1;
-  const MIN = 130;
-  const MAX = 2500;
 
   const handleCategoryChange = (categoryName: string) => {
     setSelectedCategories((prev) =>
@@ -64,34 +57,33 @@ const SideBarBlog = () => {
   };
 
   return (
-    <div className="w-64 bg-white p-4 shadow-md">
-      <Input type="text" placeholder="Search Here" className="mb-6" />
-
-      {/* Price Filter section */}
-      <div className="mb-6">{/* ... (previous price filter code) ... */}</div>
+    <div className="w-64 space-y-4">
+      {/* Search Input */}
+      <div className="bg-white p-4 shadow-md rounded-lg">
+        <Input type="text" placeholder="Search Here" className="w-full" />
+      </div>
 
       {/* Categories section */}
-      <div className="mb-6">
-        <h3 className="text-lg font-semibold mb-2">Categories</h3>
+      <div className="bg-white p-4 shadow-md rounded-lg">
+        <h3 className="text-lg font-semibold mb-2 flex items-center">
+          <span className="text-red-500 mr-2">○</span>
+          Popular Categoris
+        </h3>
         {categories.map((category) => (
           <div
             key={category.name}
             className="flex items-center justify-between mb-2"
           >
-            <Checkbox
-              checked={selectedCategories.includes(category.name)}
-              onChange={() => handleCategoryChange(category.name)}
-              color="primary"
-            >
+            <span className="text-blue-600 hover:underline cursor-pointer">
               {category.name}
-            </Checkbox>
+            </span>
             <span className="text-sm text-gray-500">({category.count})</span>
           </div>
         ))}
       </div>
 
       {/* Recent Posts section */}
-      <div className="mb-6 bg-gray-100 p-4 rounded-lg">
+      <div className="bg-white p-4 shadow-md rounded-lg">
         <h3 className="text-lg font-semibold mb-4 flex items-center">
           <span className="text-red-500 mr-2">○</span>
           Recent Posts
@@ -99,17 +91,17 @@ const SideBarBlog = () => {
         {recentPosts.map((post) => (
           <div
             key={post.id}
-            className="flex items-start mb-4 bg-white p-2 rounded"
+            className="flex items-start mb-4 pb-4 border-b border-gray-200 last:border-b-0 last:mb-0 last:pb-0"
           >
             <Image
               src={post.imageUrl}
               alt={post.title}
-              width={60}
-              height={60}
-              className="mr-3 object-cover rounded"
+              width={50}
+              height={50}
+              className="mr-3 object-cover"
             />
             <div>
-              <h4 className="text-sm font-medium mb-1 line-clamp-2">
+              <h4 className="text-sm font-medium mb-1 hover:text-blue-600 cursor-pointer">
                 {post.title}
               </h4>
               <p className="text-xs text-red-500">{post.date}</p>
@@ -119,8 +111,11 @@ const SideBarBlog = () => {
       </div>
 
       {/* Popular Tags section */}
-      <div>
-        <h3 className="text-lg font-semibold mb-2">Popular Tags</h3>
+      <div className="bg-white p-4 shadow-md rounded-lg">
+        <h3 className="text-lg font-semibold mb-2 flex items-center">
+          <span className="text-red-500 mr-2">○</span>
+          Popular Tags
+        </h3>
         <div className="flex flex-wrap gap-2">
           {popularTags.map((tag) => (
             <Button
