@@ -11,6 +11,9 @@ const nextConfig = {
   //   ],
   // },
   // output: 'export',
+  images: {
+    domains: ['via.placeholder.com'], // Add the domain
+  },
 };
 
 export default nextConfig;
