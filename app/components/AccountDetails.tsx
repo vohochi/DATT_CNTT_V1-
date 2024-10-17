@@ -1,23 +1,23 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
 function ProfileForm() {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [displayName, setDisplayName] = useState("");
-  const [email, setEmail] = useState("");
-  const [currentPassword, setCurrentPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [displayName, setDisplayName] = useState('');
+  const [email, setEmail] = useState('');
+  const [currentPassword, setCurrentPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
-  const handleSubmit = (event: any) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     // Handle form submission logic here
-    console.log("Form submitted!");
+    console.log('Form submitted!');
   };
 
   return (
     <div className="container">
-      <h3 className="text-2xl mb-2" style={{ borderBottom: "1px dashed #ccc" }}>
+      <h3 className="text-2xl mb-2" style={{ borderBottom: '1px dashed #ccc' }}>
         Account Details
       </h3>
       <form onSubmit={handleSubmit} className="mt-6 pb-8">

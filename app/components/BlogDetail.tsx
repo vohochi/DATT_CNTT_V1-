@@ -33,7 +33,7 @@ export default function BlogDetail() {
             <div className="col-span-7">
               <ul className="flex">
                 <li className="flex items-center text-center text-2xl leading-7">
-                  <img
+                  <Image
                     src="https://template-intern.l5elb4sxvvqkvl.flashvps.xyz/mypham/downloadable-files/brancy-html/assets/images/blog/admin.webp"
                     alt=""
                     className="border-4 rounded-full mr-6"
@@ -168,7 +168,7 @@ export default function BlogDetail() {
             <span className="text-[21px] leading-7 italic text-center text-[#a3a3a3]">
               BY Momen de tomas
             </span>
-            <img
+            <Image
               src="https://template-intern.l5elb4sxvvqkvl.flashvps.xyz/mypham/downloadable-files/brancy-html/assets/images/icons/quote1.webp"
               alt="Icon"
               width={84}
@@ -202,7 +202,7 @@ export default function BlogDetail() {
           href="#"
           className="block rounded-[10px] overflow-hidden relative z-[1]"
         >
-          <img
+          <Image
             src="https://via.placeholder.com/1170x200"
             alt="Image"
             width={1170}

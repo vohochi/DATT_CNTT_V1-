@@ -1,28 +1,28 @@
-"use client";
-import React from "react";
-import { useState } from "react";
-import ProfileForm from "./AccountDetails";
-import Dashboard from "./Dashboard";
-import Orders from "./Orders";
-import Download from "./Download";
-import PaymentMethod from "./PaymentMethod";
-import Address from "./Address";
-import Logout from "./Logout";
+'use client';
+import React from 'react';
+import { useState } from 'react';
+import ProfileForm from './AccountDetails';
+import Dashboard from './Dashboard';
+import Orders from './Orders';
+import Download from './Download';
+import PaymentMethod from './PaymentMethod';
+import Address from './Address';
+import Logout from './Logout';
 
 const Myaccount = () => {
   const menu = [
-    { id: 1, name: "Dashboard" },
-    { id: 2, name: "Orders" },
-    { id: 3, name: "Download" },
-    { id: 4, name: "Payment Method" },
-    { id: 5, name: "Address" },
-    { id: 6, name: "Account Details" },
-    { id: 7, name: "Logout" },
+    { id: 1, name: 'Dashboard' },
+    { id: 2, name: 'Orders' },
+    { id: 3, name: 'Download' },
+    { id: 4, name: 'Payment Method' },
+    { id: 5, name: 'Address' },
+    { id: 6, name: 'Account Details' },
+    { id: 7, name: 'Logout' },
   ];
 
   const [activeTab, setActiveTab] = useState(0);
 
-  const handleTabClick = (index: any) => {
+  const handleTabClick = (index) => {
     setActiveTab(index);
   };
 
@@ -32,7 +32,7 @@ const Myaccount = () => {
         <div className="text-sm text-gray-500">
           <a href="/" className="hover:text-black">
             Home
-          </a>{" "}
+          </a>{' '}
           / <span>My Account</span>
         </div>
 
@@ -49,9 +49,9 @@ const Myaccount = () => {
                   key={i.id}
                   className={`p-3 hover:bg-red-400 ${
                     index === menu.length - 1
-                      ? ""
-                      : "border-b border-b-gray-200"
-                  } ${activeTab === index ? "bg-red-400 text-stone-50" : ""}`}
+                      ? ''
+                      : 'border-b border-b-gray-200'
+                  } ${activeTab === index ? 'bg-red-400 text-stone-50' : ''}`}
                   onClick={() => handleTabClick(index)}
                 >
                   {i.name}
@@ -67,7 +67,7 @@ const Myaccount = () => {
             {activeTab === 3 && <PaymentMethod />}
             {activeTab === 4 && <Address />}
             {activeTab === 5 && <ProfileForm />}
-            {activeTab === 6 && <Logout/>}
+            {activeTab === 6 && <Logout />}
           </div>
         </div>
       </div>
