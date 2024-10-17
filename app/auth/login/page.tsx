@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
@@ -8,9 +9,14 @@ const Page = () => {
         {/* Left side - Image */}
         <div className="w-full lg:w-1/2 h-[300px] lg:h-[680px] relative">
           {/* You can replace this with your actual image or SVG */}
-          <div className="w-full h-full bg-gray-200 rounded-lg flex items-center justify-center text-gray-500">
-            Placeholder for login image
-          </div>
+
+          <Image
+            src="/login.jpg" // Replace with your image path
+            alt="Login Image"
+            layout="fill" // Fill the container
+            objectFit="cover" // Cover the container
+            className="rounded-lg"
+          />
         </div>
 
         {/* Right side - Login Form */}
@@ -57,7 +63,12 @@ const Page = () => {
             <button className="w-full px-12 py-4 bg-amber-400 rounded text-white text-base font-medium hover:bg-amber-500 transition-colors">
               Đăng nhập
             </button>
-            <p className="text-center text-black text-base">Quên mật khẩu?</p>
+            <Link href="/auth/forgot-password">
+              {' '}
+              <p className="text-center text-black text-base hover:underline cursor-pointer">
+                Quên mật khẩu?
+              </p>
+            </Link>
             <p className="text-center text-black text-base">
               Bạn chưa có tài khoản?{' '}
               <Link href={'/auth/register'}>

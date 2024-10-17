@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
@@ -8,9 +9,13 @@ const Page = () => {
         {/* Left side - Image */}
         <div className="w-full lg:w-1/2 h-[300px] lg:h-[680px] relative">
           {/* You can replace this with your actual image or SVG */}
-          <div className="w-full h-full bg-gray-200 rounded-lg flex items-center justify-center text-gray-500">
-            Placeholder for login image
-          </div>
+          <Image
+            src="/register.jpg" // Replace with your image path
+            alt="register Image"
+            layout="fill" // Fill the container
+            objectFit="cover" // Cover the container
+            className="rounded-lg"
+          />
         </div>
 
         {/* Right side - Login Form */}

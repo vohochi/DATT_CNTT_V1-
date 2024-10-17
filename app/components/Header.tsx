@@ -76,10 +76,10 @@ const Header = () => {
                   <tr>
                     <td className="text-center border-b border-gray-100 p-4 hover:bg-gray-100 transition-all duration-300 border-r">
                       <Link
-                        href="#"
+                        href="/account"
                         className="text-gray-700 hover:text-[#ff6565]"
                       >
-                        test
+                        My account
                       </Link>
                     </td>
                     <td className="text-center border-b border-gray-100 p-4 hover:bg-gray-100 transition-all duration-300">
@@ -170,7 +170,7 @@ const Header = () => {
           </Link>{' '}
         </div>
         <div className="w-[30px] h-[30px] flex justify-center items-center cursor-pointer">
-          <Link href="/account">
+          <Link href="/auth/login">
             <FaUser className="w-6 h-6 text-gray-300" />
           </Link>
         </div>
