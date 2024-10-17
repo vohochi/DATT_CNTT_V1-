@@ -42,12 +42,12 @@ const recentPosts: RecentPost[] = Array(3)
   }));
 
 const SideBarBlog = () => {
-  const [values, setValues] = useState([130, 2500]);
+  // const [values, setValues] = useState([130, 2500]);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const STEP = 1;
-  const MIN = 130;
-  const MAX = 2500;
+  // const STEP = 1;
+  // const MIN = 130;
+  // const MAX = 2500;
 
   const handleCategoryChange = (categoryName: string) => {
     setSelectedCategories((prev) =>
