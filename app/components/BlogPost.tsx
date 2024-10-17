@@ -1,4 +1,4 @@
-import { Image } from "@nextui-org/react";
+import { Image } from '@nextui-org/react';
 
 const BlogPost = () => {
   const blogPosts = [
@@ -31,7 +31,7 @@ const BlogPost = () => {
       author: 'NAM ĐẸP TRAI',
       date: 'March 2, 2004',
       bgColor: '#9cdbff',
-    }
+    },
   ];
 
   return (
@@ -49,7 +49,6 @@ const BlogPost = () => {
       <div className="flex justify-center gap-6 w-full max-w-[1440px]">
         {blogPosts.map((post) => (
           <div key={post.id} className="flex flex-col items-start w-[370px]">
-
             <div className="relative overflow-hidden">
               <Image
                 className="card-img-top rounded-[10px] transition-transform duration-300 ease-in-out transform hover:scale-110"
