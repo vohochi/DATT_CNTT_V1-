@@ -1,29 +1,34 @@
-// pages/checkout.js
-import React from 'react';
-
 export default function Checkout() {
   return (
     <><nav aria-label="breadcrumb" className="bg-yellow-50 py-4">
       <div className="container">
         <ol className="flex justify-center space-x-4">
-          <li><a href="#" className="text-blue-600  hover:underline">Home</a></li>
+          <li><a href="#" className="  hover:text-red-600">Home</a></li>
           <li>/</li>
           <li className="text-gray-500">checkout</li>
         </ol>
       </div>
-    </nav><div className="min-h-screen">
+    </nav>
+      <div className="min-h-screen">
         <div className="max-w-6xl mx-auto bg-white p-8 shadow-md">
           <div className="border-b border-gray-300 pb-4 mb-4 ">
             <div className="bg-gray-100 p-4 text-gray-700 text-sm flex border-t-2 border-blue-500 ">
               <i className="fas fa-tag mr-2"></i>
               <div className='mr-2'>Have a Coupon?</div>
-              <a href="#/" className='text-blue-500'> Click here to enter your code</a>
+              <a href="#/" className='hover:text-red-600'> Click here to enter your code</a>
+            </div>
+            {/* hiệu ứng ở đây chưa đc */}
+            <div className="mt-4 p-4 border rounded">
+              <p className="mb-2">If you have a coupon code, please apply it below.</p>
+              <div className="flex w-3/5">
+                <input type="text" className="border p-2 flex-grow" placeholder="Coupon code" />
+                <button className="ml-2 bg-gray-100 border p-2 hover:bg-red-600 hover:text-white">APPLY COUPON</button>
+              </div>
             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* //billing// */}
-
+            {/* Billing Details */}
             <div>
               <h2 className="text-2xl font-semibold mb-4">Billing Details</h2>
               <form className="space-y-4">
@@ -134,9 +139,9 @@ export default function Checkout() {
               </form>
             </div>
 
-            {/* // order // */}
+            {/* Order Details */}
             <div>
-              <h2 className="text-2xl font-semibold mb-4">Your Order</h2>
+              <h2 className="text-2xl font-semibold mb-5">Your Order</h2>
               <div className="border border-gray-300 p-4 rounded-md">
                 <table className="w-full mb-4">
                   <thead>
@@ -168,7 +173,7 @@ export default function Checkout() {
                     </tr>
                   </tbody>
                 </table>
-
+                {/* hiệu ứng ở đây không được */}
                 <div className="space-y-4">
                   <div>
                     <input type="radio" id="bank" name="payment" className="h-4 w-4 text-blue-600 border-gray-300 rounded" />
@@ -183,16 +188,19 @@ export default function Checkout() {
                   <div>
                     <input type="radio" id="check" name="payment" className="h-4 w-4 text-blue-600 border-gray-300 rounded" />
                     <label htmlFor="check" className="ml-2 text-sm text-gray-700 font-medium">CHECK PAYMENTS</label>
+                    <p className="text-sm text-gray-500 mt-1">Please send a check to Store Name, Store Street, Store Town, Store State / County, Store Postcode.</p>
                   </div>
 
                   <div>
                     <input type="radio" id="cod" name="payment" className="h-4 w-4 text-blue-600 border-gray-300 rounded" />
                     <label htmlFor="cod" className="ml-2 text-sm text-gray-700 font-medium">CASH ON DELIVERY</label>
+                    <p className="text-sm text-gray-500 mt-1">Pay with cash upon delivery.</p>
                   </div>
 
                   <div>
                     <input type="radio" id="paypal" name="payment" className="h-4 w-4 text-blue-600 border-gray-300 rounded" />
                     <label htmlFor="paypal" className="ml-2 text-sm text-gray-700 font-medium">
+                      <p className="text-sm text-gray-500 mt-1">Pay via PayPal; you can pay with your credit card if you don’t have a PayPal account.</p>
                       PAYPAL
                     </label>
                     <p className="text-sm text-gray-500 mt-1">
@@ -201,15 +209,14 @@ export default function Checkout() {
                   </div>
                 </div>
 
-                
+                {/* Nút đặt hàng */}
                 <div className="flex items-center mt-4">
                   <input type="checkbox" className="h-4 w-4 text-blue-600 border-gray-300 rounded" />
                   <label className="ml-2 block text-sm text-gray-900">I have read and agree to the website terms and conditions <span className="text-red-500">*</span></label>
                 </div>
-                {/* đặt hàng */}
                 <button
                   type="submit"
-                  className="mt-4 w-full bg-red-500 text-white py-2 rounded-md text-sm font-medium"
+                  className="mt-4 w-full bg-red-500 text-white py-2 rounded-md text-sm font-medium hover:bg-black"
                 >
                   PLACE ORDER
                 </button>
