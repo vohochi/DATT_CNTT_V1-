@@ -1,7 +1,7 @@
 const Address = () => {
   return (
     <div className="">
-      <h3 className="text-2xl mb-2" style={{ borderBottom: "1px dashed #ccc" }}>
+      <h3 className="text-2xl mb-2" style={{ borderBottom: '1px dashed #ccc' }}>
         Billing Address
       </h3>
       <address>
@@ -17,12 +17,12 @@ const Address = () => {
           href="#"
           className="text-gray-600 hover:text-red-500 transition duration-500 flex items-center"
         >
-            <span
-              className="iconify"
-              data-icon="fa:pencil-square-o"
-              data-width="16"
-            ></span>
-            <span className="ml-2 italic">Edit Address</span>
+          <span
+            className="iconify"
+            data-icon="fa:pencil-square-o"
+            data-width="16"
+          ></span>
+          <span className="ml-2 italic">Edit Address</span>
         </a>
       </address>
     </div>

@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   Card,
   CardBody,
@@ -8,8 +8,8 @@ import {
   Image,
   Button,
   Pagination,
-} from "@nextui-org/react";
-import { Heart, Maximize } from "lucide-react";
+} from '@nextui-org/react';
+import { Heart, Maximize } from 'lucide-react';
 
 // Giả lập dữ liệu sản phẩm
 const products = Array(90)
@@ -20,7 +20,7 @@ const products = Array(90)
     price: 210.0,
     originalPrice: 300.0,
     reviews: 150,
-    image: "../public/10012.jpg",
+    image: '../public/10012.jpg',
     isNew: index % 3 === 0,
   }));
 

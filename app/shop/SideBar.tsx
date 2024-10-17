@@ -1,27 +1,27 @@
-"use client";
+'use client';
 
-import React, { useState } from "react";
-import { Input, Checkbox, Button, Slider } from "@nextui-org/react";
+import React, { useState } from 'react';
+import { Input, Checkbox, Button, Slider } from '@nextui-org/react';
 // import { Range, getTrackBackground } from "react-range";
 
 const categories = [
-  { name: "Accessories", count: 5 },
-  { name: "Computer", count: 4 },
-  { name: "Covid-19", count: 2 },
-  { name: "Electronics", count: 6 },
-  { name: "Frame Sunglasses", count: 12 },
-  { name: "Furniture", count: 7 },
-  { name: "Genuine Leather", count: 9 },
+  { name: 'Accessories', count: 5 },
+  { name: 'Computer', count: 4 },
+  { name: 'Covid-19', count: 2 },
+  { name: 'Electronics', count: 6 },
+  { name: 'Frame Sunglasses', count: 12 },
+  { name: 'Furniture', count: 7 },
+  { name: 'Genuine Leather', count: 9 },
 ];
 
 const popularTags = [
-  "Beauty",
-  "MakeupArtist",
-  "Makeup",
-  "Hair",
-  "Nails",
-  "Hairstyle",
-  "Skincare",
+  'Beauty',
+  'MakeupArtist',
+  'Makeup',
+  'Hair',
+  'Nails',
+  'Hairstyle',
+  'Skincare',
 ];
 
 const Sidebar = () => {
@@ -104,7 +104,7 @@ const Sidebar = () => {
             <Button
               key={tag}
               size="sm"
-              variant={selectedTags.includes(tag) ? "solid" : "bordered"}
+              variant={selectedTags.includes(tag) ? 'solid' : 'bordered'}
               color="primary"
               onClick={() => handleTagClick(tag)}
               className="rounded-full text-sm"

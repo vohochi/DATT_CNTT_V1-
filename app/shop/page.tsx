@@ -1,7 +1,7 @@
-import ShopBanner from "./ShopBanner";
-import Sidebar from "./SideBar";
-import ProductList from "./ProductList";
-import RelateProduct from "./RelateProduct";
+import ShopBanner from './ShopBanner';
+import Sidebar from './SideBar';
+import ProductList from './ProductList';
+import RelateProduct from './RelateProduct';
 
 export default function ShopPage() {
   return (
