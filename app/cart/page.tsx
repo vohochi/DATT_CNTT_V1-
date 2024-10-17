@@ -274,7 +274,7 @@ export default function Cart() {
                 </table>
                 <div className="text-right mt-4 border-t py-4">
                   <Link
-                    href="#"
+                    href="/checkout"
                     className="bg-green-500 hover:bg-green-700 text-white py-2 px-4 rounded"
                   >
                     Proceed to Checkout

@@ -5,20 +5,15 @@ import {
   faMailBulk,
   faMapLocation,
 } from '@fortawesome/free-solid-svg-icons';
-import Image from 'next/image'; // Import Image component
 
 const Page = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <div className="flex flex-col md:flex-row justify-center items-center p-4">
-        {/* Sử dụng Image component của Next.js */}
-        <Image
+        <img
           className="w-full md:w-1/2 max-w-[750px] h-auto rounded-tr-[30px] rounded-br-[30px] mb-8 md:mb-0"
           src="https://via.placeholder.com/945x709"
           alt="Contact"
-          width={945} // Cung cấp chiều rộng và chiều cao
-          height={709}
-          layout="responsive" // Cho phép ảnh tự động điều chỉnh kích thước
         />
         <div className="w-full md:w-1/2 max-w-[600px] px-4">
           <h1 className="text-4xl md:text-5xl mb-4 text-[#231942] capitalize">
