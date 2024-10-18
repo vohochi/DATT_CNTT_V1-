@@ -166,7 +166,7 @@ export default function Checkout() {
                   </label>
                   <textarea
                     className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
-                    rows="4"
+                    rows={4}
                     placeholder="Notes about your order, e.g. special notes for delivery."
                   ></textarea>
                 </div>

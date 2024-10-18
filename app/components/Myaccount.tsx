@@ -22,7 +22,7 @@ const Myaccount = () => {
 
   const [activeTab, setActiveTab] = useState(0);
 
-  const handleTabClick = (index) => {
+  const handleTabClick = (index: number) => {
     setActiveTab(index);
   };
 

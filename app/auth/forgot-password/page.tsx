@@ -52,7 +52,7 @@ const Page = () => {
                     <input
                       key={num}
                       type="text"
-                      maxLength="1"
+                      // maxLength="1"
                       className="w-12 h-12 text-center border border-gray-300 rounded"
                     />
                   ))}

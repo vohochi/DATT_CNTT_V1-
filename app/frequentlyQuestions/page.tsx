@@ -3,11 +3,17 @@ import { Image } from '@nextui-org/react';
 import { useState } from 'react';
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
 
-const FrequentlyQuestions = () => {
-  const [openIndex, setOpenIndex] = useState(null);
-  const [activeIndex, setActiveIndex] = useState(null);
+interface AccordionItem {
+  question: string;
+  answer: string;
+}
 
-  const toggleAccordion = (index) => {
+const FrequentlyQuestions = () => {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+
+  const toggleAccordion = (index: number) => {
+    // Add type to 'index'
     if (openIndex === index) {
       setOpenIndex(null);
     } else {
@@ -16,7 +22,7 @@ const FrequentlyQuestions = () => {
     setActiveIndex(activeIndex === index ? null : index);
   };
 
-  const items = [...Array(8)].map((_, index) => ({
+  const items: AccordionItem[] = [...Array(8)].map((_, index) => ({
     question: `Accordion Question ${index + 1}`,
     answer: `Đây là câu trả lời cho câu hỏi số ${
       index + 1

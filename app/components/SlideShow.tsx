@@ -5,15 +5,22 @@ import { useState, useEffect, useRef } from 'react';
 const Slideshow = () => {
   const [isHoveredPrev, setIsHoveredPrev] = useState(false);
   const [isHoveredNext, setIsHoveredNext] = useState(false);
-  const refPrev = useRef(null);
-  const refNext = useRef(null);
+  const refPrev = useRef<HTMLDivElement>(null); // Specify type for ref
+  const refNext = useRef<HTMLDivElement>(null); // Specify type for ref
 
   useEffect(() => {
-    const handleClickOutside = (event: any) => {
-      if (refPrev.current && !refPrev.current.contains(event.target)) {
+    const handleClickOutside = (event: MouseEvent) => {
+      // Specify event type
+      if (
+        refPrev.current &&
+        !refPrev.current.contains(event.target as Node) // Convert EventTarget to Node
+      ) {
         setIsHoveredPrev(false);
       }
-      if (refNext.current && !refNext.current.contains(event.target)) {
+      if (
+        refNext.current &&
+        !refNext.current.contains(event.target as Node) // Convert EventTarget to Node
+      ) {
         setIsHoveredNext(false);
       }
     };

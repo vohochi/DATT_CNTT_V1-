@@ -1,4 +1,6 @@
+'use client';
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 function ProfileForm() {
   const [firstName, setFirstName] = useState('');
@@ -8,11 +10,52 @@ function ProfileForm() {
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [passwordError, setPasswordError] = useState('');
 
-  const handleSubmit = (event) => {
+  const router = useRouter();
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // Handle form submission logic here
-    console.log('Form submitted!');
+
+    // Basic password validation (add more rules as needed)
+    if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/.test(newPassword)) {
+      setPasswordError(
+        'Password must be at least 8 characters long and include lowercase, uppercase, and numbers.'
+      );
+      return;
+    }
+
+    // Password confirmation
+    if (newPassword !== confirmPassword) {
+      setPasswordError('Passwords do not match.');
+      return;
+    }
+
+    // Handle form submission logic here (send data to your server)
+    try {
+      const response = await fetch('/api/profile', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          firstName,
+          lastName,
+          displayName,
+          email,
+          currentPassword,
+          newPassword,
+        }),
+      });
+
+      if (response.ok) {
+        // Handle successful update, e.g., redirect
+        router.push('/profile');
+      } else {
+        // Handle errors, e.g., display an error message
+        console.error('Error updating profile');
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+    }
   };
 
   return (
@@ -127,6 +170,9 @@ function ProfileForm() {
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
           </div>
+        </div>
+        <div className="mb-6">
+          {passwordError && <p className="text-red-500">{passwordError}</p>}
         </div>
         <div className="flex items-center justify-center">
           <button

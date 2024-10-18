@@ -173,7 +173,7 @@ export default function Cart() {
                     <td className="py-3 px-6 text-left border">$79.00</td>
                   </tr>
                   <tr>
-                    <td colSpan="6" className="py-3 px-6 text-right">
+                    <td colSpan={6} className="py-3 px-6 text-right">
                       <button
                         type="submit"
                         className="bg-gray-500 text-white py-2 px-4 rounded disabled:opacity-50"

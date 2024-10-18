@@ -5,12 +5,15 @@ import {
   faMailBulk,
   faMapLocation,
 } from '@fortawesome/free-solid-svg-icons';
+import Image from 'next/image';
 
 const Page = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <div className="flex flex-col md:flex-row justify-center items-center p-4">
-        <img
+        <Image
+          width={956}
+          height={709}
           className="w-full md:w-1/2 max-w-[750px] h-auto rounded-tr-[30px] rounded-br-[30px] mb-8 md:mb-0"
           src="https://via.placeholder.com/945x709"
           alt="Contact"
@@ -88,7 +91,7 @@ const Page = () => {
             width="100%"
             height="450"
             style={{ border: 0 }}
-            allowFullScreen=""
+            allowFullScreen
             loading="lazy"
           ></iframe>
         </div>
