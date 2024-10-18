@@ -4,10 +4,10 @@ import { FaTimes, FaCheckSquare } from 'react-icons/fa';
 const WishlistModal = ({ isOpen, onClose }) => {
     return (
         <aside className={`fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70 transition-opacity duration-300 ${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`} role="dialog" aria-modal="true">
-            <div className="w-[40%] modal-dialog modal-dialog-centered flex justify-center rounded">
+            <div className="w-full max-w-lg modal-dialog modal-dialog-centered flex justify-center rounded">
                 <div className="modal-content bg-white rounded-lg shadow-lg">
 
-                    <div className="modal-body flex flex-col items-center ">
+                    <div className="modal-body flex flex-col items-center">
                         <div className='bg-[#de6565] w-full rounded-t'>
                             <button
                                 type="button"
@@ -31,7 +31,7 @@ const WishlistModal = ({ isOpen, onClose }) => {
                                     className="rounded"
                                 />
                             </div>
-                            <h4 className="product-name text-lg font-semibold pb-4">
+                            <h4 className="product-name text-lg font-semibold pb-4 text-center">
                                 <a href="/product-details" className="hover:text-[#de6565]">Readable content DX22</a>
                             </h4>
                         </div>

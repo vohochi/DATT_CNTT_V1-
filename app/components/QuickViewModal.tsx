@@ -34,9 +34,9 @@ const QuickViewModal = ({ isOpen, onClose }) => {
             aria-modal="true"
         >
             <div
-                className={`w-[75%] modal-dialog modal-dialog-centered bg-white rounded-lg shadow-lg transform transition-transform duration-300 ${isOpen ? 'translate-y-0' : '-translate-y-12'} ${isAnimating ? 'opacity-100' : 'opacity-0'}`}
+                className={`w-[75%] max-h-[95%] overflow-auto modal-dialog modal-dialog-centered bg-white rounded-lg shadow-lg transform transition-transform duration-300 ${isOpen ? 'translate-y-0' : '-translate-y-12'} ${isAnimating ? 'opacity-100' : 'opacity-0'}`}
             >
-                <div className="modal-content">
+                <div className="modal-content ">
                     <div className="modal-body p-8 relative">
                         <div className="flex justify-start">
                             <button type="button" className="text-gray-600 absolute top-2 left-2" onClick={onClose}>
