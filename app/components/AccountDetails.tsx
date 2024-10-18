@@ -16,12 +16,12 @@ function ProfileForm() {
   };
 
   return (
-    <div className="container">
+    <div className="container mx-auto px-4">
       <h3 className="text-2xl mb-2" style={{ borderBottom: "1px dashed #ccc" }}>
         Account Details
       </h3>
       <form onSubmit={handleSubmit} className="mt-6 pb-8">
-        <div className="grid grid-cols-2 gap-4 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
           <div>
             <label
               htmlFor="firstName"
@@ -96,7 +96,7 @@ function ProfileForm() {
             onChange={(e) => setCurrentPassword(e.target.value)}
           />
         </div>
-        <div className="grid grid-cols-2 gap-4 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
           <div>
             <label
               htmlFor="newPassword"

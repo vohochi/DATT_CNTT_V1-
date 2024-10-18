@@ -23,7 +23,7 @@ const orders = [
 ];
 const Orders = () => {
   return (
-    <div className="">
+    <div className="overflow-x-auto">
       <h3 className="text-2xl mb-2" style={{ borderBottom: "1px dashed #ccc" }}>
         Orders
       </h3>

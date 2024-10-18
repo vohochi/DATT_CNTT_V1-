@@ -14,9 +14,9 @@ const products = [
 ];
 const Download = () => {
   return (
-    <div className="">
+    <div className="overflow-x-auto">
       <h3 className="text-2xl mb-2" style={{ borderBottom: "1px dashed #ccc" }}>
-        Orders
+        Downloads
       </h3>
       <table className="w-full border-collapse mt-6 text-center">
         <thead>
