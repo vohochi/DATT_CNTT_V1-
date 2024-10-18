@@ -177,25 +177,25 @@ const Header = () => {
         className={`fixed z-50 top-0 left-0 w-64 h-screen-container bg-[#de6565] shadow-lg transition-transform duration-300 transform ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
           }`}
       >
-        <div className="bg-[#1f1f1f] w-full h-screen  text-[#fff]">
+        <div className="bg-[#1f1f1f] w-full h-screen text-[#fff]">
           <h2 className="flex justify-between items-center text-lg font-semibold bg-[#de6565] p-4">
             Menu
             <MdOutlineArrowBackIos className="ml-auto" onClick={() => setIsMobileMenuOpen(false)} />
           </h2>
           <nav className="flex flex-col h-full space-y-3 mt-4 w-full px-4 ">
-            <Link href="/" className="text-gray-700 text-sm text-[#fff]" onClick={() => setIsMobileMenuOpen(false)}>
+            <Link href="/" className="text-sm text-[#fff]" onClick={() => setIsMobileMenuOpen(false)}>
               Home
             </Link>
-            <Link href="/shop" className="text-gray-700 text-sm text-[#fff]" onClick={() => setIsMobileMenuOpen(false)}>
+            <Link href="/shop" className="text-sm text-[#fff]" onClick={() => setIsMobileMenuOpen(false)}>
               Shop
             </Link>
-            <Link href="/about" className="text-gray-700 text-sm text-[#fff]" onClick={() => setIsMobileMenuOpen(false)}>
+            <Link href="/about" className="text-sm text-[#fff]" onClick={() => setIsMobileMenuOpen(false)}>
               About
             </Link>
-            <Link href="/blog" className="text-gray-700 text-sm text-[#fff]" onClick={() => setIsMobileMenuOpen(false)}>
+            <Link href="/blog" className="text-sm text-[#fff]" onClick={() => setIsMobileMenuOpen(false)}>
               Blog
             </Link>
-            <Link href="/contact" className="text-gray-700 text-sm text-[#fff]" onClick={() => setIsMobileMenuOpen(false)}>
+            <Link href="/contact" className="text-sm text-[#fff]" onClick={() => setIsMobileMenuOpen(false)}>
               Contact
             </Link>
           </nav>
