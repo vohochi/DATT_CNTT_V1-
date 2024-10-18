@@ -1,5 +1,6 @@
 "use client";
-import Image from "next/image";
+import { Image } from "@nextui-org/react";
+
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
@@ -50,8 +51,8 @@ const Detail = () => {
   return (
     <div>
       {/* Header breadcrumb */}
-      <section className="bg-[#FFF3DA] py-4 h-[166px]">
-        <div className="mx-auto px-4 flex justify-between items-center max-w-[1200px]">
+      <section className="bg-[#FFF3DA] py-4 h-[166px] items-center">
+        <div className="mx-auto px-4 flex justify-between items-center h-[150px] max-w-[1200px]">
           <div>
             <span className="text-gray-500">Home / Product Detail</span>
             <h1 className="text-3xl text-[#231942]">Product Detail</h1>
@@ -67,15 +68,15 @@ const Detail = () => {
             {/* Image Section */}
             <div className="w-full md:w-1/2 p-5">
               <div
-                className="relative bg-gray-300 flex items-center justify-center"
+                className="relative bg-gray-300 mt-10 flex rounded-lg items-center justify-center"
                 style={{ height: "693px", width: "100%" }} // Sử dụng 100% cho responsive
               >
                 <Image
-                  src="/100016.jpg"
-                  alt="Product Image"
-                  layout="fill"
-                  objectFit="cover"
-                  className="md:h-[693px] md:w-[570px]" // Responsive height và width
+                  src="https://via.placeholder.com/570x693"
+                  alt="Banner"
+                  width={1169}
+                  height={745}
+                  className="object-cover"
                 />
                 <span className="absolute top-7 right-7 bg-[#ff6565] text-white font-normal text-base py-1 px-6 rounded-full">
                   new
@@ -129,25 +130,25 @@ const Detail = () => {
                       className="mr-2"
                     />
                     25 ml bottle <strong>$350.00</strong>{" "}
-                    <span className="text-sm text-gray-400">extra 25%</span>
                   </label>
+                  <span className="text-sm text-gray-400 ml-6">extra 25%</span>
                 </div>
               </div>
 
               <hr />
 
-              <div className="flex justify-between items-center border-2 border-[#ff6565] rounded-full p-1 w-[150px] mt-5 md:mt-10 mb-5 md:mb-10">
+              <div className="flex justify-between items-center border-2 border-[#e63946] rounded-full p-1 w-[150px] mt-5 md:mt-10 mb-5 md:mb-10">
                 <button
-                  className="border rounded-full px-3 py-1 "
+                  className="border font-bold rounded-full px-3 py-1 "
                   onClick={decreaseQuantity}
                 >
                   -
                 </button>
-                <span className="mx-3">
+                <span className="mx-3 font-bold">
                   {quantity.toString().padStart(2, "0")}
                 </span>
                 <button
-                  className="border rounded-full px-3 py-1"
+                  className="border font-bold rounded-full px-3 py-1"
                   onClick={increaseQuantity}
                 >
                   +
@@ -180,7 +181,7 @@ const Detail = () => {
                   />
                 </button>
 
-                <button className="bg-[#ff6565] text-white py-2 px-4 rounded-full w-[150px] md:w-[200px] h-[50px]">
+                <button className="bg-[#ff6565] text-white py-2 px-4 rounded-full w-[150px] md:w-[200px] h-[50px] hover:bg-[#364958] hover:text-white transition-colors duration-300">
                   ADD TO CART
                 </button>
               </div>
@@ -315,8 +316,8 @@ const Detail = () => {
                   Provide rating anonymously
                 </label>
               </div>
-              <button className="bg-[#ff6565] text-white px-4 py-2 rounded-full mt-2 h-[50px] w-[200px]">
-                Submit
+              <button className="bg-[#ff6565] text-white px-4 py-2 rounded-full mt-2 h-[50px] w-[200px] hover:bg-[#364958] transition-colors duration-300">
+                SUBMIT
               </button>
             </div>
           </div>
@@ -324,100 +325,91 @@ const Detail = () => {
       </section>
 
       {/* Banner */}
-<section className="mt-14">
-  <div className="mx-auto max-w-[1170px] text-center">
-    <div
-      className="relative flex items-center justify-center h-64 md:h-96 lg:h-[400px]"
-    >
-      <Image
-        src="/10017.jpg"
-        alt="Banner Image"
-        layout="fill"
-        objectFit="cover"
-        className="rounded-lg"
-      />
-    </div>
-  </div>
-</section>
-
-
-      {/* Related Products */}
-<section className="mt-14 mb-14">
-  <div className="mx-auto max-w-[1200px]">
-    <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-6 text-[#231942]">
-      Related Products
-    </h2>
-    <div className="mb-10">
-      <p className="text-base sm:text-lg md:text-xl text-gray-500">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit
-      </p>
-      <p className="text-base sm:text-lg text-gray-500">
-        ut aliquam, purus sit amet luctus venenatis
-      </p>
-    </div>
-
-    {/* Responsive Grid Layout */}
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-      {relatedProducts.map((product) => (
-        <div key={product.id} className="bg-white p-4 rounded-lg">
-          {/* Image Section */}
-          <div className="relative mx-auto" style={{ width: "100%", height: "0", paddingBottom: "120%" }}>
-            <Image
-              src={product.image}
-              alt={product.name}
-              layout="fill"
-              objectFit="cover"
-              className="rounded-t-lg"
-            />
-            <span className="absolute top-5 right-5 bg-[#ff6565] text-white font-normal text-base py-1 px-6 rounded-full">
-              new
-            </span>
-          </div>
-
-          {/* Product Details */}
-          <div className="mt-4 ml-4">
-            <div className="flex justify-between">
-              <span className="text-red-500">★★★★☆</span>
-              <p className="text-gray-500 text-sm md:text-base">
-                {product.review}
-              </p>
-            </div>
-            <h3 className="text-lg font-semibold text-[#231942] mt-2">
-              {product.name}
-            </h3>
-            <div className="flex items-center mt-2">
-              <p className="text-[#231942] text-xl sm:text-2xl mr-5">
-                ${product.price}
-              </p>
-              <p className="text-gray-500 line-through text-sm sm:text-lg">
-                ${product.oldprice}
-              </p>
-            </div>
-
-            {/* Action Buttons in a Row */}
-            <div className="flex items-center space-x-4 sm:space-x-6 mt-4">
-              {/* Add to Cart Button */}
-              <button className="border-2 border-[#e63946] text-[#231942] py-1 px-4 rounded-full w-[120px] sm:w-[150px] h-[40px] sm:h-[50px] bg-transparent text-sm sm:text-base">
-                Add to Cart
-              </button>
-
-              {/* Zoom Image Button */}
-              <button className="border-2 border-[#e63946] text-[#231942] py-1 px-4 rounded-full flex items-center justify-center w-[40px] sm:w-[50px] h-[40px] sm:h-[50px] text-lg sm:text-xl">
-                <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
-              </button>
-
-              {/* Add to Wishlist Button */}
-              <button className="border-2 border-[#e63946] text-[#231942] py-1 px-4 rounded-full flex items-center justify-center w-[40px] sm:w-[50px] h-[40px] sm:h-[50px]">
-                <FontAwesomeIcon icon={faHeartThin} />
-              </button>
-            </div>
+      <section className="mt-14">
+        <div className="mx-auto max-w-[1170px] text-center">
+          <div className="relative flex items-center justify-center h-64 md:h-96 lg:h-[400px]">
+            <Image src="/10017.jpg" alt="Banner Image" className="rounded-lg" />
           </div>
         </div>
-      ))}
-    </div>
-  </div>
-</section>
+      </section>
 
+      {/* Related Products */}
+      <section className="mt-14 mb-14">
+        <div className="mx-auto max-w-[1200px]">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-6 text-[#231942]">
+            Related Products
+          </h2>
+          <div className="mb-10">
+            <p className="text-base sm:text-lg md:text-xl text-gray-500">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit
+            </p>
+            <p className="text-base sm:text-lg text-gray-500">
+              ut aliquam, purus sit amet luctus venenatis
+            </p>
+          </div>
+
+          {/* Responsive Grid Layout */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {relatedProducts.map((product) => (
+              <div
+                key={product.id}
+                className="bg-white p-4 rounded-lg group relative overflow-hidden"
+              >
+                {/* Image Section */}
+                <div className="relative mx-auto w-full h-0 pb-[120%] transition-transform duration-500 ease-in-out group-hover:scale-105">
+                  <Image
+                    src={product.image}
+                    alt={product.name}
+                    className="rounded-t-lg w-full h-full object-cover w-[370] h-[450px]"
+                  />
+                  <span className="absolute top-5 right-5 bg-[#ff6565] text-white font-normal text-base py-1 px-6 rounded-full">
+                    new
+                  </span>
+                </div>
+
+                {/* Product Details */}
+                <div className="absolute bottom-0 left-0 right-0 bg-white p-3 transition-transform duration-500 ease-in-out group-hover:translate-y-0 translate-y-full">
+                  <div className="flex justify-between">
+                    <span className="text-red-500]">★★★★☆</span>
+                    <p className="text-gray-500 text-sm md:text-base">
+                      {product.review}
+                    </p>
+                  </div>
+                  <h3 className="text-lg font-semibold text-[#231942] mt-2">
+                    {product.name}
+                  </h3>
+                  <div className="flex items-center mt-2">
+                    <p className="text-[#231942] text-xl sm:text-2xl mr-5">
+                      ${product.price}
+                    </p>
+                    <p className="text-gray-500 line-through text-sm sm:text-lg">
+                      ${product.oldprice}
+                    </p>
+                  </div>
+
+                  {/* Action Buttons in a Row */}
+                  <div className="flex items-center space-x-4 sm:space-x-6 mt-4 ">
+                    {/* Add to Cart Button */}
+                    <button className="border-2 border-[#e63946] text-[#231942] py-1 px-4 rounded-full w-[120px] sm:w-[150px] h-[40px] sm:h-[50px] bg-transparent text-sm sm:text-base ">
+                      Add to Cart
+                    </button>
+
+                    {/* Zoom Image Button */}
+                    <button className="border-2 border-[#e63946] text-[#231942] py-1 px-4 rounded-full flex items-center justify-center w-[40px] sm:w-[50px] h-[40px] sm:h-[50px] text-lg sm:text-xl">
+                      <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
+                    </button>
+
+                    {/* Add to Wishlist Button */}
+                    <button className="border-2 border-[#e63946] text-[#231942] py-1 px-4 rounded-full flex items-center justify-center w-[40px] sm:w-[50px] h-[40px] sm:h-[50px]">
+                      <FontAwesomeIcon icon={faHeartThin} />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
     </div>
   );
 };
