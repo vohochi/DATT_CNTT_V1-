@@ -5,11 +5,14 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 import { FaSearch, FaShoppingCart, FaUser } from 'react-icons/fa';
+import { GiHamburgerMenu } from 'react-icons/gi';
+import { MdOutlineArrowBackIos } from 'react-icons/md';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [visible, setVisible] = useState(true);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -28,9 +31,21 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [lastScrollY]);
 
+  //cant scroll when open mobi menu
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.classList.add('overflow-hidden');
+    } else {
+      document.body.classList.remove('overflow-hidden');
+    }
+    return () => {
+      document.body.classList.remove('overflow-hidden');
+    };
+  }, [isMobileMenuOpen]);
+
   return (
     <div
-      className={`w-full sticky top-0 z-50 flex items-center justify-between px-6 h-20 transition-transform duration-300 ${
+      className={`w-full sticky top-0 z-30 flex items-center justify-between px-6 h-20 transition-transform duration-300 ${
         visible ? 'translate-y-0' : '-translate-y-full'
       } ${isScrolled ? 'bg-white text-black' : 'bg-transparent text-white'}`}
     >
@@ -59,22 +74,21 @@ const Header = () => {
               shop
             </Link>
             {/* Dropdown */}
-            <ul className="absolute hidden group-hover:flex bg-white shadow-lg">
-              <table className="w-[400px]">
-                <thead className="border-b border-gray-100">
+            <ul className="absolute hidden group-hover:flex bg-white shadow-lg -mt-3">
+              <table className="w-[500px] table-fixed">
+                <thead>
                   <tr>
-                    <th className="text-center py-4 text-gray-700 text-sm font-bold border-r border-gray-100">
+                    <th className="text-center py-4 text-gray-700 font-bold border-r">
                       Page
                     </th>
-                    <th className="text-center py-4 text-gray-700 text-sm font-bold">
+                    <th className="text-center py-4 text-gray-700 font-bold">
                       Order Page
                     </th>
                   </tr>
                 </thead>
                 <tbody>
-                  {/* First Column */}
-                  <tr>
-                    <td className="text-center border-b border-gray-100 p-4 hover:bg-gray-100 transition-all duration-300 border-r">
+                  <tr className="border-t">
+                    <td className="text-center border-b border-gray-200 p-4 hover:bg-gray-200 border-r">
                       <Link
                         href="/account"
                         className="text-gray-700 hover:text-[#ff6565]"
@@ -82,7 +96,7 @@ const Header = () => {
                         My account
                       </Link>
                     </td>
-                    <td className="text-center border-b border-gray-100 p-4 hover:bg-gray-100 transition-all duration-300">
+                    <td className="text-center border-b border-gray-200 p-4 hover:bg-gray-200">
                       <Link
                         href="/wishlist"
                         className="text-gray-700 hover:text-[#ff6565]"
@@ -91,17 +105,16 @@ const Header = () => {
                       </Link>
                     </td>
                   </tr>
-                  {/* Second Column */}
-                  <tr>
-                    <td className="text-center p-4 hover:bg-gray-100 transition-all duration-300 border-r border-gray-100">
+                  <tr className="">
+                    <td className="text-center border-b border-gray-200 p-4 hover:bg-gray-200 border-r">
                       <Link
-                        href="#"
+                        href="/cart"
                         className="text-gray-700 hover:text-[#ff6565]"
                       >
-                        test test test
+                        Cart
                       </Link>
                     </td>
-                    <td className="text-center p-4 hover:bg-gray-100 transition-all duration-300">
+                    <td className="text-center border-b border-gray-200 p-4 hover:bg-gray-200">
                       <Link
                         href="/compare"
                         className="text-gray-700 hover:text-[#ff6565]"
@@ -110,21 +123,21 @@ const Header = () => {
                       </Link>
                     </td>
                   </tr>
-                  <tr>
-                    <td className="text-center p-4 hover:bg-gray-100 transition-all duration-300 border-r border-gray-100">
+                  <tr className="">
+                    <td className="text-center p-4 hover:bg-gray-200 border-r">
                       <Link
-                        href="#"
-                        className="text-gray-700 hover:text-[#ff6565]"
+                        href="/checkout"
+                        className="text-gray-700 hover:text-[#ff6565] "
                       >
-                        test
+                        Checkout
                       </Link>
                     </td>
-                    <td className="text-center p-4 hover:bg-gray-100 transition-all duration-300">
+                    <td className="text-center p-4 hover:bg-gray-200">
                       <Link
                         href="/frequentlyQuestions"
                         className="text-gray-700 hover:text-[#ff6565]"
                       >
-                        Frequently questions
+                        Frequently Questions
                       </Link>
                     </td>
                   </tr>
@@ -162,23 +175,87 @@ const Header = () => {
       {/* Icons */}
       <div className="flex items-center space-x-4">
         <div className="w-[30px] h-[30px] flex justify-center items-center cursor-pointer">
-          <FaSearch className="w-6 h-6 text-gray-300" />
+          <FaSearch className="w-6 h-6 text-[#1f1f1f]" />
         </div>
         <div className="w-[30px] h-[30px] flex justify-center items-center cursor-pointer">
           <Link href={'/cart'}>
-            <FaShoppingCart className="w-6 h-6 text-gray-300" />
+            <FaShoppingCart className="w-6 h-6 text-[#1f1f1f]" />
           </Link>{' '}
         </div>
         <div className="w-[30px] h-[30px] flex justify-center items-center cursor-pointer">
           <Link href="/auth/login">
-            <FaUser className="w-6 h-6 text-gray-300" />
+            <FaUser className="w-6 h-6 text-[#1f1f1f]" />
           </Link>
+        </div>
+        {/* Mobile Menu */}
+        <div className="md:hidden">
+          <button
+            className="p-2 text-[#1f1f1f]"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            <GiHamburgerMenu />
+          </button>
         </div>
       </div>
 
-      {/* Mobile Menu */}
-      <div className="md:hidden">
-        <button className="p-2 text-[#ff6565]">☰</button>
+      {/* Mobile Sidebar */}
+      <div
+        className={`fixed inset-0 z-40 h-screen bg-black transition-opacity duration-300 ${
+          isMobileMenuOpen ? 'opacity-80' : 'opacity-0 pointer-events-none'
+        }`}
+        onClick={() => setIsMobileMenuOpen(false)}
+      ></div>
+      <div
+        className={`fixed z-50 top-0 left-0 w-64 h-screen-container bg-[#de6565] shadow-lg transition-transform duration-300 transform ${
+          isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
+        }`}
+      >
+        <div className="bg-[#1f1f1f] w-full h-screen text-[#fff]">
+          <h2 className="flex justify-between items-center text-lg font-semibold bg-[#de6565] p-4">
+            Menu
+            <MdOutlineArrowBackIos
+              className="ml-auto"
+              onClick={() => setIsMobileMenuOpen(false)}
+            />
+          </h2>
+          <nav className="flex flex-col h-full space-y-3 mt-4 w-full px-4 ">
+            <Link
+              href="/"
+              className="text-sm text-[#fff]"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Home
+            </Link>
+            <Link
+              href="/shop"
+              className="text-sm text-[#fff]"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Shop
+            </Link>
+            <Link
+              href="/about"
+              className="text-sm text-[#fff]"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              About
+            </Link>
+            <Link
+              href="/blog"
+              className="text-sm text-[#fff]"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Blog
+            </Link>
+            <Link
+              href="/contact"
+              className="text-sm text-[#fff]"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Contact
+            </Link>
+          </nav>
+        </div>
       </div>
     </div>
   );

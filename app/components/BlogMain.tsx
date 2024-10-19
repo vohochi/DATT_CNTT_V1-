@@ -1,5 +1,4 @@
-
-import { Image } from "@nextui-org/react";
+import Image from 'next/image';
 
 const BlogMain = () => {
   const blogPosts = [
@@ -32,7 +31,7 @@ const BlogMain = () => {
       author: 'NAM ĐẸP TRAI',
       date: 'March 2, 2004',
       bgColor: '#9cdbff',
-    }
+    },
   ];
 
   return (
@@ -47,10 +46,9 @@ const BlogMain = () => {
           ut aliquam, purus sit amet luctus venenatis
         </div>
       </div>
-      <div className="flex flex-wrap justify-center gap-6 w-full max-w-[1440px]">
+      <div className="flex flex-wrap justify-center gap-6 w-full">
         {blogPosts.map((post) => (
           <div key={post.id} className="flex flex-col items-start w-[370px]">
-
             <div className="relative overflow-hidden">
               <Image
                 className="card-img-top rounded-[10px] transition-transform duration-300 ease-in-out transform hover:scale-110"
@@ -69,14 +67,14 @@ const BlogMain = () => {
                 style={{
                   backgroundColor: post.bgColor,
                 }}
-                className={`px-[31px] py-[7px] mt-6 mb-6 rounded-[50px] justify-start items-start inline-flex cursor-pointer hover:bg-opacity-80 transition-all duration-200`}
+                className={`px-[31px] py-[7px] mt-6 mb-6 rounded-[50px] justify-start items-start inline-flex cursor-pointer bg-opacity-80 hover:bg-opacity-0 transition-all duration-200`}
               >
                 <div className="text-white text-[13px] font-medium font-['Inter'] uppercase leading-snug">
                   {post.category}
                 </div>
               </div>
 
-              <div className="text-[#231942] text-[28px] mb-2 font-medium font-['Inter']">
+              <div className="text-[#231942] text-[28px] mb-2 font-medium font-['Inter'] hover:text-[#de6565]">
                 {post.title}
               </div>
               <div className="grid grid-cols-2 items-center">

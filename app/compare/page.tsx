@@ -1,5 +1,6 @@
 'use client';
-import { Image } from '@nextui-org/react';
+
+import Image from 'next/image';
 import Link from 'next/link';
 
 interface Product {
@@ -13,12 +14,12 @@ interface Product {
   dimensions: string;
 }
 
-interface Attribute {
+interface ProductAttribute {
   label: string;
-  render: (product: Product) => string | JSX.Element;
+  render: (product: Product) => React.ReactNode;
 }
 
-const Compare = () => {
+const Compare: React.FC = () => {
   const arrTest: Product[] = [
     {
       img: 'https://via.placeholder.com/370x450',
@@ -55,10 +56,10 @@ const Compare = () => {
     },
   ];
 
-  const productAttributes: Attribute[] = [
+  const productAttributes: ProductAttribute[] = [
     {
       label: 'Product Info',
-      render: (product) => (
+      render: (product: Product) => (
         <div className="flex flex-col items-center space-y-4">
           <div className="font-md">
             <Link href="#">X Remove</Link>
@@ -87,20 +88,21 @@ const Compare = () => {
         </div>
       ),
     },
-    { label: 'Price', render: (product) => `£${product.price}` },
-    { label: 'Sku', render: (product) => product.sku },
-    { label: 'Description', render: (product) => product.description },
+    { label: 'Price', render: (product: Product) => `£${product.price}` },
+    { label: 'Sku', render: (product: Product) => product.sku },
+    { label: 'Description', render: (product: Product) => product.description },
     {
       label: 'Availability',
-      render: (product) => (
+      render: (product: Product) => (
         <span className="text-white bg-[#35d56a] text-[12px] py-[4px] px-[15px] rounded-[15px]">
           {product.stockStatus}
         </span>
       ),
     },
-    { label: 'Weight', render: (product) => product.weight },
-    { label: 'Dimensions', render: (product) => product.dimensions },
+    { label: 'Weight', render: (product: Product) => product.weight },
+    { label: 'Dimensions', render: (product: Product) => product.dimensions },
   ];
+
   return (
     <main className="main-content">
       {/*== Start Page Header Area Wrapper ==*/}
@@ -120,17 +122,20 @@ const Compare = () => {
 
       {/*== Start Compare Area Wrapper ==*/}
       <section className="section-space py-8">
-        <div className="container mx-auto w-[77%] my-[100px]">
+        <div className="container mx-auto w-[77%] my-[50px] lg:my-[100px]">
           <div className="overflow-x-auto">
-            <table className="table-auto w-full text-left border-collapse">
+            <table className="table-auto min-w-[640px] w-full text-left border-collapse">
               <tbody className="border-t border-gray-300">
                 {productAttributes.map((attr, attrIndex) => (
-                  <tr key={attrIndex} className="border-b ">
+                  <tr key={attrIndex} className="border-b">
                     <th className="px-4 py-4 text-sm font-bold border bg-[#00000010] w-[200px]">
                       {attr.label}
                     </th>
                     {arrTest.map((product, index) => (
-                      <td key={index} className="px-4 py-4 text-center border">
+                      <td
+                        key={index}
+                        className="px-4 py-4 text-center border min-w-[250px]"
+                      >
                         {attr.render(product)}
                       </td>
                     ))}

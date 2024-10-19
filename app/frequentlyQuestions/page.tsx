@@ -13,7 +13,6 @@ const FrequentlyQuestions = () => {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   const toggleAccordion = (index: number) => {
-    // Add type to 'index'
     if (openIndex === index) {
       setOpenIndex(null);
     } else {
@@ -56,6 +55,10 @@ const FrequentlyQuestions = () => {
                   width={601}
                   height={368}
                   alt="FAQ Image"
+                  className="object-cover max-w-[100%] h-auto"
+                  style={{
+                    aspectRatio: 'auto 601 / 368',
+                  }}
                 />
               </div>
             </div>
