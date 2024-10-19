@@ -1,3 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.product-category-item {
+  perspective: 1000px;
+}
+
+.icon {
+  transition: transform 0.75s ease-in-out;
+  transform-style: preserve-3d;
+}
+
+.icon:hover {
+  transform: rotateY(360deg);
+}
