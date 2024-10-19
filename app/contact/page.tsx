@@ -62,17 +62,17 @@ const Page = () => {
       <div className="bg-[#fffaef] mt-8 py-12 m-20">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-center text-center md:text-left space-y-8 md:space-y-0">
-            <div className="md:w-1/3">
+            <div className="md:w-1/3 flex flex-col items-center">
               <FontAwesomeIcon icon={faPhone} className="w-8 h-8 mb-4" />
               <p className="text-base">+11 0203 03023</p>
               <p className="text-base">+11 0203 03023</p>
             </div>
-            <div className="md:w-1/3">
+            <div className="md:w-1/3 flex flex-col items-center">
               <FontAwesomeIcon icon={faMailBulk} className="w-8 h-8 mb-4" />
               <p className="text-base">example@demo.com</p>
               <p className="text-base">demo@example.com</p>
             </div>
-            <div className="md:w-1/3">
+            <div className="md:w-1/3 flex flex-col items-center">
               <FontAwesomeIcon icon={faMapLocation} className="w-8 h-8 mb-4" />
               <p className="text-base">
                 Sunset Beach, North
