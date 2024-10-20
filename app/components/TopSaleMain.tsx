@@ -5,6 +5,7 @@ import { TbArrowsDiagonal } from 'react-icons/tb';
 import QuickViewModal from './QuickViewModal';
 import { useState } from 'react';
 import WishlistModal from './QuickViewWishlist';
+import Link from 'next/link';
 
 interface Product {
   id: number;
@@ -151,11 +152,13 @@ const TopSaleMain: React.FC = () => {
             key={product.id}
             className="flex flex-col items-center w-full relative group"
           >
-            <Image
-              className="card-img-top rounded-[10px] w-full"
-              src={product.image}
-              alt="Card cap"
-            />
+            <Link href="/detail">
+              <Image
+                className="card-img-top rounded-[10px] w-full"
+                src={product.image}
+                alt="Card cap"
+              />
+            </Link>
             {product.isNew && (
               <span className="absolute top-0 right-0 bg-red-500 text-white text-xs z-10 font-bold px-6 py-2 m-4 rounded-[20px]">
                 new
@@ -172,9 +175,12 @@ const TopSaleMain: React.FC = () => {
                 </div>
                 <div className="text-slate-500">{product.views}</div>
               </div>
-              <div className="text-[#231942] text-[25px] mb-2 font-medium font-['Inter']">
-                {product.title}
-              </div>
+              <Link href="/detail">
+                <div className="text-[#231942] text-[25px] mb-2 font-medium font-['Inter']">
+                  {product.title}
+                </div>
+              </Link>
+
               <div className="flex items-center">
                 <p className="font-semibold mr-2 text-[#364958] text-[21px] font-medium leading-9">
                   {product.price}
