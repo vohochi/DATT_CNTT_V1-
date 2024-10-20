@@ -2,7 +2,7 @@ import { Image } from "@nextui-org/react";
 import Link from 'next/link';
 import { MdOutlineArrowBackIos } from "react-icons/md";
 
-export default function CartOffCanvas({ isOpen, onClose }) {
+export default function CartSideBarModal({ isOpen, onClose }) {
     return (
         <>
             <div

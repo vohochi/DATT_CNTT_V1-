@@ -1,7 +1,4 @@
-
-import { button } from '@nextui-org/react';
 import { FaSearch } from 'react-icons/fa';
-// Modal component
 const SearchModal = ({ isOpen, onClose }) => {
     if (!isOpen) return null;
 

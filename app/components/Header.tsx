@@ -9,6 +9,7 @@ import { GiHamburgerMenu } from 'react-icons/gi';
 import { MdOutlineArrowBackIos } from 'react-icons/md';
 import SearchModal from './SearchTopBar';
 import CartOffCanvas from './CartRightSideBar';
+import CartSideBarModal from './CartRightSideBar';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -273,7 +274,7 @@ const Header = () => {
         isOpen={isSearchModalOpen}
         onClose={() => setIsSearchModalOpen(false)}
       />
-      <CartOffCanvas
+      <CartSideBarModal
         isOpen={isCartModalOpen}
         onClose={() => setIsCartModalOpen(false)}
       />
