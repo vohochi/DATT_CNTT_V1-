@@ -90,7 +90,7 @@ export default function Cart() {
                         </Link>
                       </td>
                       <td className="py-3 px-6 text-[#323232] text-center font-semibold text-[16px] border">
-                        <Link href="#" className=" text-center hover:underline">
+                        <Link href="#" className=" text-center transiton-colors duration-300 hover:text-[#ff6565]">
                           {product.name}
                         </Link>
                       </td>
@@ -212,10 +212,10 @@ export default function Cart() {
                             </label>
                           </li>
                         </ul>
-                        <p className="text-gray-600 mt-2">
+                        <p className="text-gray-600 mt-7 mb-3">
                           Shipping to <strong>USA</strong>.
                         </p>
-                        <Link href="#" className="hover:underline">
+                        <Link href="#" className="transiton-colors duration-300 hover:text-[#ff6565]">
                           Change address
                         </Link>
                       </td>
@@ -229,10 +229,10 @@ export default function Cart() {
                 <div className="text-right mt-4 border-t py-4">
                   <button
                     type="submit"
-                    className="justify-end text-white bg-[#ff6565] border-1 border-[#ff6565] h-[60px] w-[250px] py-2 px-4 rounded font-semibold text-[20px] hover:bg-black transition-colors duration-300"
+                    className="justify-end text-white bg-[#ff6565] border-1 border-[#ff6565] h-[60px] w-[280px] py-2 px-4 rounded font-semibold text-18px] hover:bg-black transition-colors duration-300"
                     disabled
                   >
-                    Proceed to Checkout
+                    PROCEED TO CHECKOUT
                   </button>
                 </div>
               </div>
