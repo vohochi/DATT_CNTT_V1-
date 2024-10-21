@@ -1,16 +1,16 @@
-'use client';
-import { Image } from '@nextui-org/react';
+"use client";
+import { Image } from "@nextui-org/react";
 
-import { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
-import { faHeart as faHeartThin } from '@fortawesome/free-solid-svg-icons';
-import { faArrowUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
+import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { faHeart as faHeartThin } from "@fortawesome/free-solid-svg-icons";
+import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
 
 const Detail = () => {
   const rating = 4.5; // Giả sử đánh giá là 4.5 sao
-  const [activeTab, setActiveTab] = useState('Specification');
+  const [activeTab, setActiveTab] = useState("Specification");
   const [quantity, setQuantity] = useState<number>(1);
   const [isChecked, setIsChecked] = useState(false);
 
@@ -24,27 +24,27 @@ const Detail = () => {
   const relatedProducts = [
     {
       id: 1,
-      name: 'Related content DX22 àhdfhsdfhs',
-      image: '/10013.jpg',
+      name: "Related content DX22 àhdfhsdfhs",
+      image: "/10013.jpg",
       price: 210,
       oldprice: 300,
-      review: '150 reviews',
+      review: "150 reviews",
     },
     {
       id: 2,
-      name: 'Related content DX22',
-      image: '/10013.jpg',
+      name: "Related content DX22",
+      image: "/10013.jpg",
       price: 210,
       oldprice: 300,
-      review: '150 reviews',
+      review: "150 reviews",
     },
     {
       id: 3,
-      name: 'Related content DX22',
-      image: '/10013.jpg',
+      name: "Related content DX22",
+      image: "/10013.jpg",
       price: 210,
       oldprice: 300,
-      review: '150 reviews',
+      review: "150 reviews",
     },
   ];
 
@@ -69,7 +69,7 @@ const Detail = () => {
             <div className="w-full md:w-1/2 p-5">
               <div
                 className="relative bg-gray-300 mt-10 flex rounded-lg items-center justify-center"
-                style={{ height: '693px', width: '100%' }} // Sử dụng 100% cho responsive
+                style={{ height: "693px", width: "100%" }} // Sử dụng 100% cho responsive
               >
                 <Image
                   src="https://via.placeholder.com/570x693"
@@ -99,8 +99,8 @@ const Detail = () => {
                       icon={faStar}
                       className={`star ${
                         index < Math.floor(rating)
-                          ? 'text-yellow-500'
-                          : 'text-gray-400'
+                          ? "text-yellow-500"
+                          : "text-gray-400"
                       }`}
                     />
                   ))}
@@ -129,7 +129,7 @@ const Detail = () => {
                       value="25ml"
                       className="mr-2"
                     />
-                    25 ml bottle <strong>$350.00</strong>{' '}
+                    25 ml bottle <strong>$350.00</strong>{" "}
                   </label>
                   <span className="text-sm text-gray-400 ml-6">extra 25%</span>
                 </div>
@@ -145,7 +145,7 @@ const Detail = () => {
                   -
                 </button>
                 <span className="mx-3 font-bold">
-                  {quantity.toString().padStart(2, '0')}
+                  {quantity.toString().padStart(2, "0")}
                 </span>
                 <button
                   className="border font-bold rounded-full px-3 py-1"
@@ -198,28 +198,28 @@ const Detail = () => {
             <div className="flex mb-10 justify-between lg:justify-start">
               <button
                 className={`text-xl md:text-2xl lg:text-3xl mr-6 lg:mr-14 underline ${
-                  activeTab === 'Specification' ? 'text-[#231942]' : ''
+                  activeTab === "Specification" ? "text-[#231942]" : ""
                 }`}
                 style={{
-                  color: activeTab === 'Specification' ? 'black' : '#898989',
+                  color: activeTab === "Specification" ? "black" : "#898989",
                 }}
-                onClick={() => setActiveTab('Specification')}
+                onClick={() => setActiveTab("Specification")}
               >
                 Specification
               </button>
               <button
                 className={`text-xl md:text-2xl lg:text-3xl underline ${
-                  activeTab === 'Review' ? 'text-[#231942]' : ''
+                  activeTab === "Review" ? "text-[#231942]" : ""
                 }`}
-                style={{ color: activeTab === 'Review' ? 'black' : '#898989' }}
-                onClick={() => setActiveTab('Review')}
+                style={{ color: activeTab === "Review" ? "black" : "#898989" }}
+                onClick={() => setActiveTab("Review")}
               >
                 Review
               </button>
             </div>
 
             <div>
-              {activeTab === 'Specification' && (
+              {activeTab === "Specification" && (
                 <div>
                   <div className="mb-4 text-sm md:text-base lg:text-lg text-gray-500">
                     Weight: 250 g
@@ -246,7 +246,7 @@ const Detail = () => {
                 </div>
               )}
 
-              {activeTab === 'Review' && (
+              {activeTab === "Review" && (
                 <div>
                   <div className="bg-white p-4 rounded-lg shadow-lg mb-4">
                     <div className="flex items-center mb-2">
