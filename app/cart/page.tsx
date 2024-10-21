@@ -78,19 +78,23 @@ export default function Cart() {
                           ×
                         </button>
                       </td>
-                      <td className="py-3 text-center px-6 border">
+                      <td className="py-3 px-6 border flex justify-center items-center">
                         <Link href="#">
                           <Image
                             width={100}
                             height={84}
                             src={product.image}
                             alt={product.name}
-                            className="justify-center ml-8 w-16 h-20"
+                            className="w-16 h-20"
                           />
                         </Link>
                       </td>
+
                       <td className="py-3 px-6 text-[#323232] text-center font-semibold text-[16px] border">
-                        <Link href="#" className=" text-center transiton-colors duration-300 hover:text-[#ff6565]">
+                        <Link
+                          href="#"
+                          className=" text-center transiton-colors duration-300 hover:text-[#ff6565]"
+                        >
                           {product.name}
                         </Link>
                       </td>
@@ -215,7 +219,10 @@ export default function Cart() {
                         <p className="text-gray-600 mt-7 mb-3">
                           Shipping to <strong>USA</strong>.
                         </p>
-                        <Link href="#" className="transiton-colors duration-300 hover:text-[#ff6565]">
+                        <Link
+                          href="#"
+                          className="transiton-colors duration-300 hover:text-[#ff6565]"
+                        >
                           Change address
                         </Link>
                       </td>
@@ -229,7 +236,7 @@ export default function Cart() {
                 <div className="text-right mt-4 border-t py-4">
                   <button
                     type="submit"
-                    className="justify-end text-white bg-[#ff6565] border-1 border-[#ff6565] h-[60px] w-[280px] py-2 px-4 rounded font-semibold text-18px] hover:bg-black transition-colors duration-300"
+                    className="justify-end text-white bg-[#ff6565] border-1 border-[#ff6565] h-[60px] w-[280px] py-2 px-4 rounded font-semibold text-[18px] hover:bg-black transition-colors duration-300"
                     disabled
                   >
                     PROCEED TO CHECKOUT
