@@ -170,7 +170,7 @@ export default function BlogDetail() {
               BY Momen de tomas
             </span>
             <Image
-              src="https://template-intern.l5elb4sxvvqkvl.flashvps.xyz/mypham/downloadable-files/brancy-html/assets/images/icons/quote1.webp"
+              src="/quote1.jpg"
               alt="Icon"
               width={84}
               height={60}
