@@ -38,7 +38,7 @@ const recentPosts: RecentPost[] = Array(3)
     id: index + 1,
     title: 'Lorem ipsum dolor sit amet conse adipis.',
     date: `Sep ${24 + index}, 2022`,
-    imageUrl: '/public/10016.jpg',
+    imageUrl: '/10016.jpg',
   }));
 
 const SideBarBlog = () => {

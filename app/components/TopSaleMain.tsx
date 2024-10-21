@@ -1,11 +1,11 @@
 'use client';
-import { Image } from '@nextui-org/react';
 import { FaRegHeart } from 'react-icons/fa';
 import { TbArrowsDiagonal } from 'react-icons/tb';
 import QuickViewModal from './QuickViewModal';
 import { useState } from 'react';
 import WishlistModal from './QuickViewWishlist';
 import Link from 'next/link';
+import Image from 'next/image';
 
 // interface Product {
 //   id: number;

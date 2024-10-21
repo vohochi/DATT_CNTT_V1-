@@ -1,5 +1,5 @@
-import Image from "next/image";
-import Link from "next/link";
+import Image from 'next/image';
+import Link from 'next/link';
 
 export default function Cart() {
   return (
@@ -49,21 +49,21 @@ export default function Cart() {
                   {[
                     {
                       id: 1,
-                      name: "Condimentum posuere consectetur urna",
+                      name: 'Condimentum posuere consectetur urna',
                       price: 115.0,
-                      image: "https://via.placeholder.com/68x84",
+                      image: 'https://via.placeholder.com/68x84',
                     },
                     {
                       id: 2,
-                      name: "Kaoreet lobortis sagittis laoreet",
+                      name: 'Kaoreet lobortis sagittis laoreet',
                       price: 95.0,
-                      image: "https://via.placeholder.com/68x84",
+                      image: 'https://via.placeholder.com/68x84',
                     },
                     {
                       id: 3,
-                      name: "Nostrum exercitationem itae ipsum",
+                      name: 'Nostrum exercitationem itae ipsum',
                       price: 79.0,
-                      image: "https://via.placeholder.com/68x84",
+                      image: 'https://via.placeholder.com/68x84',
                     },
                   ].map((product) => (
                     <tr
