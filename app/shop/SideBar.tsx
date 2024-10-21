@@ -51,10 +51,10 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="w-64 space-y-4">
+    <div className="space-y-4">
       {/* Search Input */}
       <div className="bg-white p-4 shadow-md rounded-lg">
-        <Input type="text" placeholder="Search Here" />
+        <Input type="text" placeholder="Search Here" fullWidth />
       </div>
 
       {/* Price Filter section */}
@@ -67,9 +67,9 @@ const Sidebar = () => {
           maxValue={MAX}
           value={priceRange}
           onChange={(value) => handlePriceChange(value as number[])}
-          className="max-w-md"
+          className="max-w-full"
         />
-        <div className="flex justify-between mt-2">
+        <div className="flex justify-between mt-2 text-sm">
           <span>${priceRange[0]}</span>
           <span>—</span>
           <span>${priceRange[1]}</span>
@@ -89,9 +89,9 @@ const Sidebar = () => {
               onChange={() => handleCategoryChange(category.name)}
               color="primary"
             >
-              {category.name}
+              <span className="text-sm">{category.name}</span>
             </Checkbox>
-            <span className="text-sm text-gray-500">({category.count})</span>
+            <span className="text-xs text-gray-500">({category.count})</span>
           </div>
         ))}
       </div>
@@ -107,7 +107,7 @@ const Sidebar = () => {
               variant={selectedTags.includes(tag) ? "solid" : "bordered"}
               color="primary"
               onClick={() => handleTagClick(tag)}
-              className="rounded-full text-sm"
+              className="rounded-full text-xs"
             >
               {tag}
             </Button>

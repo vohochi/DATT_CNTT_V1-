@@ -19,22 +19,21 @@ const relatedProducts = Array(3)
 const RelateProduct: React.FC = () => {
   return (
     <div className="mt-12">
-      <h2 className="text-2xl font-bold mb-4">Related Products</h2>
-      <p className="text-gray-600 mb-6">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam,
-        purus sit amet luctus venenatis
+      <h2 className="text-xl md:text-2xl font-bold mb-4">Related Products</h2>
+      <p className="text-sm md:text-base text-gray-600 mb-6">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit amet luctus venenatis
       </p>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {relatedProducts.map((product) => (
-          <Card key={product.id} className="max-w-[370px]">
+          <Card key={product.id} className="w-full">
             <CardBody className="p-0">
-              <div className="relative">
+              <div className="relative aspect-square">
                 <Image
                   src={product.image}
                   alt={product.name}
                   width={370}
-                  height={450}
-                  className="w-full h-auto object-cover"
+                  height={370}
+                  className="w-full h-full object-cover"
                 />
                 {product.isNew && (
                   <span className="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded-full text-xs">
@@ -43,25 +42,17 @@ const RelateProduct: React.FC = () => {
                 )}
               </div>
             </CardBody>
-            <CardFooter className="flex-col items-start">
+            <CardFooter className="flex-col items-start p-2">
               <div className="flex items-center mb-1">
                 {[1, 2, 3, 4, 5].map((star) => (
-                  <span key={star} className="text-yellow-400 text-sm">
-                    ★
-                  </span>
+                  <span key={star} className="text-yellow-400 text-xs">★</span>
                 ))}
-                <span className="ml-2 text-xs text-gray-600">
-                  {product.reviews} reviews
-                </span>
+                <span className="ml-2 text-xs text-gray-600">{product.reviews} reviews</span>
               </div>
               <h3 className="text-sm font-semibold">{product.name}</h3>
               <div className="flex items-center">
-                <span className="text-sm font-bold mr-2">
-                  ${product.price.toFixed(2)}
-                </span>
-                <span className="text-xs line-through text-gray-500">
-                  ${product.originalPrice.toFixed(2)}
-                </span>
+                <span className="text-sm font-bold mr-2">${product.price.toFixed(2)}</span>
+                <span className="text-xs line-through text-gray-500">${product.originalPrice.toFixed(2)}</span>
               </div>
             </CardFooter>
           </Card>
@@ -72,3 +63,4 @@ const RelateProduct: React.FC = () => {
 };
 
 export default RelateProduct;
+

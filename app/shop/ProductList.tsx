@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Card,
   CardBody,
@@ -20,47 +20,69 @@ const products = Array(90)
     price: 210.0,
     originalPrice: 300.0,
     reviews: 150,
-    image: "../public/10012.jpg",
+    image:
+      "D:WorkspaceProjectInternDATT_CNTT_V1-publicNuoc-giai-khat-co-gaz-TAMS-ZERO-CALORIE-Huong-Nho-Luu.png",
     isNew: index % 3 === 0,
   }));
 
 const ProductList: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [hoveredProduct, setHoveredProduct] = useState<number | null>(null);
-  const productsPerPage = 9;
+  const itemsPerPage = 8;
 
-  const indexOfLastProduct = currentPage * productsPerPage;
-  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const indexOfLastProduct = currentPage * itemsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - itemsPerPage;
   const currentProducts = products.slice(
     indexOfFirstProduct,
     indexOfLastProduct
   );
 
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   return (
-    <div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div className="container mx-auto px-4">
+      <div className="text-center mb-6">
+        <h1 className="text-2xl md:text-3xl font-bold">All Products</h1>
+        <p className="text-sm md:text-base">
+          Showing {currentProducts.length} Results
+        </p>
+      </div>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {currentProducts.map((product) => (
           <Card
             key={product.id}
-            className="max-w-[370px] relative group"
+            className="w-full mx-auto relative group"
             onMouseEnter={() => setHoveredProduct(product.id)}
             onMouseLeave={() => setHoveredProduct(null)}
           >
             <CardBody className="p-0">
-              <div className="relative">
+              <div
+                className={`relative ${
+                  isMobile ? "aspect-[3/2]" : "aspect-square"
+                }`}
+              >
                 <Image
                   src={product.image}
                   alt={product.name}
-                  width={370}
-                  height={450}
-                  className="w-full h-auto object-cover"
+                  width={300}
+                  height={isMobile ? 200 : 300}
+                  className="w-full h-full object-cover"
                 />
                 {product.isNew && (
                   <span className="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded-full text-xs">
                     new
                   </span>
                 )}
-                {hoveredProduct === product.id && (
+                {!isMobile && hoveredProduct === product.id && (
                   <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
                     <div className="flex space-x-2">
                       <Button
@@ -70,13 +92,13 @@ const ProductList: React.FC = () => {
                         color="default"
                         className="bg-white"
                       >
-                        <Maximize size={20} />
+                        <Maximize size={16} />
                       </Button>
                       <Button
                         size="sm"
                         variant="flat"
                         color="primary"
-                        className="bg-white text-black hover:bg-primary hover:text-white transition-colors"
+                        className="bg-white text-black hover:bg-primary hover:text-white transition-colors text-xs"
                       >
                         ADD TO CART
                       </Button>
@@ -87,30 +109,28 @@ const ProductList: React.FC = () => {
                         color="default"
                         className="bg-white"
                       >
-                        <Heart size={20} />
+                        <Heart size={16} />
                       </Button>
                     </div>
                   </div>
                 )}
               </div>
             </CardBody>
-            <CardFooter className="flex-col items-start">
+            <CardFooter className="flex-col items-start p-2">
               <div className="flex items-center mb-1">
-                {[1, 2, 3, 4, 5].map((star) => (
-                  <span key={star} className="text-yellow-400 text-lg">
-                    ★
-                  </span>
-                ))}
-                <span className="ml-2 text-sm text-gray-600">
+                <span className="text-yellow-400 text-sm mr-1">★★★★★</span>
+                <span className="text-xs text-gray-600">
                   {product.reviews} reviews
                 </span>
               </div>
-              <h3 className="text-lg font-semibold">{product.name}</h3>
-              <div className="flex items-center">
-                <span className="text-xl font-bold mr-2">
+              <h3 className="text-sm font-semibold truncate w-full">
+                {product.name}
+              </h3>
+              <div className="flex items-center justify-between w-full">
+                <span className="text-sm font-bold">
                   ${product.price.toFixed(2)}
                 </span>
-                <span className="text-sm line-through text-gray-500">
+                <span className="text-xs line-through text-gray-500">
                   ${product.originalPrice.toFixed(2)}
                 </span>
               </div>
@@ -118,11 +138,12 @@ const ProductList: React.FC = () => {
           </Card>
         ))}
       </div>
-      <div className="flex justify-center mt-8">
+      <div className="flex justify-center mt-6">
         <Pagination
-          total={Math.ceil(products.length / productsPerPage)}
+          total={Math.ceil(products.length / itemsPerPage)}
           initialPage={1}
           onChange={(page) => setCurrentPage(page)}
+          size="sm"
         />
       </div>
     </div>

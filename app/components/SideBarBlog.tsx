@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Input, Checkbox, Button } from "@nextui-org/react";
+import { Input, Button } from "@nextui-org/react";
 import Image from "next/image";
 
 const categories = [
@@ -39,16 +39,7 @@ const recentPosts: RecentPost[] = Array(3)
   }));
 
 const SideBarBlog = () => {
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
-
-  const handleCategoryChange = (categoryName: string) => {
-    setSelectedCategories((prev) =>
-      prev.includes(categoryName)
-        ? prev.filter((cat) => cat !== categoryName)
-        : [...prev, categoryName]
-    );
-  };
 
   const handleTagClick = (tag: string) => {
     setSelectedTags((prev) =>
@@ -57,7 +48,7 @@ const SideBarBlog = () => {
   };
 
   return (
-    <div className="w-64 space-y-4">
+    <div className="space-y-4">
       {/* Search Input */}
       <div className="bg-white p-4 shadow-md rounded-lg">
         <Input type="text" placeholder="Search Here" className="w-full" />
@@ -67,7 +58,7 @@ const SideBarBlog = () => {
       <div className="bg-white p-4 shadow-md rounded-lg">
         <h3 className="text-lg font-semibold mb-2 flex items-center">
           <span className="text-red-500 mr-2">○</span>
-          Popular Categoris
+          Popular Categories
         </h3>
         {categories.map((category) => (
           <div
@@ -124,7 +115,7 @@ const SideBarBlog = () => {
               variant={selectedTags.includes(tag) ? "solid" : "bordered"}
               color="primary"
               onClick={() => handleTagClick(tag)}
-              className="rounded-full text-sm"
+              className="rounded-full text-xs"
             >
               {tag}
             </Button>

@@ -7,10 +7,11 @@ export default function ShopPage() {
   return (
     <>
       <ShopBanner />
-      {/* <ShopTopBar/> */}
-      <div className="container mx-auto px-4 py-8 flex w-[77%]">
-        <Sidebar />
-        <div className="flex-1 ml-8">
+      <div className="container mx-auto px-4 py-8 flex flex-col md:flex-row">
+        <div className="w-full md:w-1/4 mb-8 md:mb-0">
+          <Sidebar />
+        </div>
+        <div className="w-full md:w-3/4 md:pl-8">
           <ProductList />
           <RelateProduct />
         </div>
