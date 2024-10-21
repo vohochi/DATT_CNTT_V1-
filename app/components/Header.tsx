@@ -8,7 +8,6 @@ import { FaSearch, FaShoppingCart, FaUser } from 'react-icons/fa';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { MdOutlineArrowBackIos } from 'react-icons/md';
 import SearchModal from './SearchTopBar';
-import CartOffCanvas from './CartRightSideBar';
 import CartSideBarModal from './CartRightSideBar';
 
 const Header = () => {
@@ -50,8 +49,9 @@ const Header = () => {
 
   return (
     <div
-      className={`w-full sticky top-0 z-30 flex items-center justify-between px-6 h-20 transition-transform duration-300 ${visible ? 'translate-y-0' : '-translate-y-full'
-        } ${isScrolled ? 'bg-white text-black' : 'bg-transparent text-white'}`}
+      className={`w-full sticky top-0 z-30 flex items-center justify-between px-6 h-20 transition-transform duration-300 ${
+        visible ? 'translate-y-0' : '-translate-y-full'
+      } ${isScrolled ? 'bg-white text-black' : 'bg-transparent text-white'}`}
     >
       {/* Logo and Navigation */}
       <div className="flex items-center">
@@ -184,10 +184,16 @@ const Header = () => {
 
       {/* Icons */}
       <div className="flex items-center space-x-4">
-        <div onClick={() => setIsSearchModalOpen(true)} className="w-[30px] h-[30px] flex justify-center items-center cursor-pointer">
+        <div
+          onClick={() => setIsSearchModalOpen(true)}
+          className="w-[30px] h-[30px] flex justify-center items-center cursor-pointer"
+        >
           <FaSearch className="w-6 h-6 text-[#1f1f1f]" />
         </div>
-        <div onClick={() => setIsCartModalOpen(true)} className="w-[30px] h-[30px] flex justify-center items-center cursor-pointer">
+        <div
+          onClick={() => setIsCartModalOpen(true)}
+          className="w-[30px] h-[30px] flex justify-center items-center cursor-pointer"
+        >
           <FaShoppingCart className="w-6 h-6 text-[#1f1f1f]" />
         </div>
         <div className="w-[30px] h-[30px] flex justify-center items-center cursor-pointer">
@@ -208,8 +214,11 @@ const Header = () => {
 
       {/* dark overlay */}
       <div
-        className={`fixed inset-0 z-40 h-screen bg-black transition-opacity duration-300 ${isMobileMenuOpen || isSearchModalOpen || isCartModalOpen ? 'opacity-80' : 'opacity-0 pointer-events-none'
-          }`}
+        className={`fixed inset-0 z-40 h-screen bg-black transition-opacity duration-300 ${
+          isMobileMenuOpen || isSearchModalOpen || isCartModalOpen
+            ? 'opacity-80'
+            : 'opacity-0 pointer-events-none'
+        }`}
         onClick={() => {
           setIsMobileMenuOpen(false);
           setIsSearchModalOpen(false);
@@ -219,8 +228,9 @@ const Header = () => {
 
       {/* Mobile Sidebar */}
       <div
-        className={`fixed z-50 top-0 left-0 w-64 h-screen-container bg-[#de6565] shadow-lg transition-transform duration-300 transform ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
-          }`}
+        className={`fixed z-50 top-0 left-0 w-64 h-screen-container bg-[#de6565] shadow-lg transition-transform duration-300 transform ${
+          isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
+        }`}
       >
         <div className="bg-[#1f1f1f] w-full h-screen text-[#fff]">
           <h2 className="flex justify-between items-center text-lg font-semibold bg-[#de6565] p-4">
@@ -278,8 +288,6 @@ const Header = () => {
         isOpen={isCartModalOpen}
         onClose={() => setIsCartModalOpen(false)}
       />
-
-
     </div>
   );
 };
