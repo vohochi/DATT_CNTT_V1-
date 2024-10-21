@@ -1,6 +1,6 @@
+import Image from 'next/image';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
-import { Image } from '@nextui-org/react';
 
 const BlogComment = () => {
   return (

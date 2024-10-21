@@ -1,4 +1,5 @@
-import { Image } from '@nextui-org/react';
+import Image from 'next/image';
+
 export default function BlogDetail() {
   return (
     <div className="max-w-[1200px] mx-auto">
