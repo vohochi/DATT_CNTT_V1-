@@ -20,8 +20,7 @@ const products = Array(90)
     price: 210.0,
     originalPrice: 300.0,
     reviews: 150,
-    image:
-      'D:WorkspaceProjectInternDATT_CNTT_V1-publicNuoc-giai-khat-co-gaz-TAMS-ZERO-CALORIE-Huong-Nho-Luu.png',
+    image: '/Nuoc-giai-khat-co-gaz-TAMS-ZERO-CALORIE-Huong-Nho-Luu.png',
     isNew: index % 3 === 0,
   }));
 

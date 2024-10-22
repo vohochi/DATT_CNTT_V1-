@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import React from "react";
-import { Card, CardBody, CardFooter, Image } from "@nextui-org/react";
+import React from 'react';
+import { Card, CardBody, CardFooter, Image } from '@nextui-org/react';
 
 // Giả lập dữ liệu sản phẩm liên quan
 const relatedProducts = Array(3)
@@ -12,7 +12,7 @@ const relatedProducts = Array(3)
     price: 210.0,
     originalPrice: 300.0,
     reviews: 150,
-    image: "/placeholder-370x450.jpg", // Đảm bảo bạn có ảnh placeholder này
+    image: 'https://via.placeholder.com/370x450', // Đảm bảo bạn có ảnh placeholder này
     isNew: true,
   }));
 
@@ -21,7 +21,8 @@ const RelateProduct: React.FC = () => {
     <div className="mt-12">
       <h2 className="text-xl md:text-2xl font-bold mb-4">Related Products</h2>
       <p className="text-sm md:text-base text-gray-600 mb-6">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit amet luctus venenatis
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam,
+        purus sit amet luctus venenatis
       </p>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {relatedProducts.map((product) => (
@@ -45,14 +46,22 @@ const RelateProduct: React.FC = () => {
             <CardFooter className="flex-col items-start p-2">
               <div className="flex items-center mb-1">
                 {[1, 2, 3, 4, 5].map((star) => (
-                  <span key={star} className="text-yellow-400 text-xs">★</span>
+                  <span key={star} className="text-yellow-400 text-xs">
+                    ★
+                  </span>
                 ))}
-                <span className="ml-2 text-xs text-gray-600">{product.reviews} reviews</span>
+                <span className="ml-2 text-xs text-gray-600">
+                  {product.reviews} reviews
+                </span>
               </div>
               <h3 className="text-sm font-semibold">{product.name}</h3>
               <div className="flex items-center">
-                <span className="text-sm font-bold mr-2">${product.price.toFixed(2)}</span>
-                <span className="text-xs line-through text-gray-500">${product.originalPrice.toFixed(2)}</span>
+                <span className="text-sm font-bold mr-2">
+                  ${product.price.toFixed(2)}
+                </span>
+                <span className="text-xs line-through text-gray-500">
+                  ${product.originalPrice.toFixed(2)}
+                </span>
               </div>
             </CardFooter>
           </Card>
@@ -63,4 +72,3 @@ const RelateProduct: React.FC = () => {
 };
 
 export default RelateProduct;
-
