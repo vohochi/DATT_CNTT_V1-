@@ -1,6 +1,15 @@
+'use client'
+import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import Image from 'next/image';
+import { RootState } from '@/store';
+import { fetchAllBanner } from '@/_lib/banner';
 
 const SliderMain = () => {
+  // const dispatch = useDispatch<AppDispatch>();
+  const title = useSelector((state: RootState) => state.banner.title);
+  console.log('tlt',title);
+  fetchAllBanner();
   return (
     <div className="flex flex-row justify-between w-full -mt-[90px] h-auto relative">
       {/* Left Section */}
@@ -16,6 +25,7 @@ const SliderMain = () => {
             placeholder="blur"
             blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
           />
+
           <h1 className="z-20 absolute bottom-0 left-0 z-10 text-[30px] sm:text-[40px] md:text-[60px] uppercase font-bold overflow-hidden whitespace-nowrap">
             Clean Fresh
           </h1>
@@ -66,7 +76,10 @@ const SliderMain = () => {
           placeholder="blur"
           blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
         />
+
+
       </div>
+
     </div>
   );
 };

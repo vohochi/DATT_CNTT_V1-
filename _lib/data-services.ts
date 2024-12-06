@@ -17,7 +17,7 @@ export const dataServices = async <T, R>(
     };
 
     const response = await axios(config);
-
+    console.log(response)
     if (!response.data) {
       throw new Error('No data returned from API');
     }

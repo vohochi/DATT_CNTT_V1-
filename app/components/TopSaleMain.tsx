@@ -157,6 +157,8 @@ const TopSaleMain: React.FC = () => {
                 className="card-img-top rounded-[10px] w-full"
                 src={product.image}
                 alt="Card cap"
+                width={1000}
+                height={100}
               />
             </Link>
             {product.isNew && (

@@ -1,23 +1,17 @@
-
+'use client'
 import Footer from "@/app/components/Footer";
 import Header from "@/app/components/Header";
 import "@/app/styles/globals.css";
 import { Josefin_Sans } from "next/font/google";
-import { Providers } from "./providers";
+import { Provider } from 'react-redux'; 
+import store from "@/store";
 
 const josefin = Josefin_Sans({
   subsets: ["latin"],
   display: "swap",
 });
 
-export const metadata = {
-  title: {
-    template: "%s / The Wild Oasis",
-    default: "Welcome / The Wild Oasis",
-  },
-  description:
-    "Luxurious cabin hotel, located in the heart of the Italian Dolomites, surrounded by beautiful mountains and dark forests",
-};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -27,11 +21,11 @@ export default function RootLayout({
     <html lang="en">
 
       <body className={`${josefin.className}`}>
-        <Providers>
+        <Provider store={store}>
           <Header />
           {children}
           <Footer />
-        </Providers>
+        </Provider>
       </body>
     </html>
   );
