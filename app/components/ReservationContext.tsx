@@ -11,7 +11,7 @@ interface ReservationRange {
 }
 
 // Create the context
-const ReservationContext = createContext<{
+export const ReservationContext = createContext<{
   range: ReservationRange;
   setRange: React.Dispatch<React.SetStateAction<ReservationRange>>;
   resetRange: () => void;

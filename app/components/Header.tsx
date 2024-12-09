@@ -49,9 +49,8 @@ const Header = () => {
 
   return (
     <div
-      className={`w-full sticky top-0 z-30 flex items-center justify-between px-6 h-20 transition-transform duration-300 ${
-        visible ? 'translate-y-0' : '-translate-y-full'
-      } ${isScrolled ? 'bg-white text-black' : 'bg-transparent text-white'}`}
+      className={`w-full sticky top-0 z-30 flex items-center justify-between px-6 h-20 transition-transform duration-300 ${visible ? 'translate-y-0' : '-translate-y-full'
+        } ${isScrolled ? 'bg-white text-black' : 'bg-transparent text-white'}`}
     >
       {/* Logo and Navigation */}
       <div className="flex items-center">
@@ -70,12 +69,49 @@ const Header = () => {
           >
             home
           </Link>
+          <Link
+            href="/about"
+            className="text-neutral-800 text-[15px] font-medium capitalize leading-[80px] cursor-pointer"
+          >
+            about
+          </Link>
+          <Link
+            href="/shop"
+            className="text-neutral-800 text-[15px] font-medium capitalize leading-[80px] cursor-pointer"
+          >
+            shop
+          </Link>
           <div className="relative group">
             <Link
-              href="/shop"
+              href="/blog"
               className="text-neutral-800 text-[15px] font-medium capitalize leading-[80px] cursor-pointer"
             >
-              shop
+              blog
+            </Link>
+            {/* Dropdown */}
+            <ul className="absolute hidden group-hover:flex bg-white shadow-lg -mt-3">
+              <table className="w-[250px] table-fixed">
+                <tbody>
+                  <tr className="border-t">
+                    <td className="text-center border-b border-gray-200 p-4 hover:bg-gray-200 border-r">
+                      <Link
+                        href="/account"
+                        className="text-gray-700 hover:text-[#ff6565]"
+                      >
+                        blog detail
+                      </Link>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </ul>
+          </div>
+          <div className="relative group">
+            <Link
+              href="#"
+              className="text-neutral-800 text-[15px] font-medium capitalize leading-[80px] cursor-pointer"
+            >
+              page
             </Link>
             {/* Dropdown */}
             <ul className="absolute hidden group-hover:flex bg-white shadow-lg -mt-3">
@@ -150,30 +186,6 @@ const Header = () => {
             </ul>
           </div>
           <Link
-            href="/detail"
-            className="text-neutral-800 text-[15px] font-medium capitalize leading-[80px] cursor-pointer"
-          >
-            shop detail
-          </Link>
-          <Link
-            href="/about"
-            className="text-neutral-800 text-[15px] font-medium capitalize leading-[80px] cursor-pointer"
-          >
-            about
-          </Link>
-          <Link
-            href="/blog"
-            className="text-neutral-800 text-[15px] font-medium capitalize leading-[80px] cursor-pointer"
-          >
-            Blog
-          </Link>
-          <Link
-            href="/blogdetail"
-            className="text-neutral-800 text-[15px] font-medium capitalize leading-[80px] cursor-pointer"
-          >
-            BlogDetail
-          </Link>
-          <Link
             href="/contact"
             className="text-neutral-800 text-[15px] font-medium capitalize leading-[80px] cursor-pointer"
           >
@@ -214,11 +226,10 @@ const Header = () => {
 
       {/* dark overlay */}
       <div
-        className={`fixed inset-0 z-40 h-screen bg-black transition-opacity duration-300 ${
-          isMobileMenuOpen || isSearchModalOpen || isCartModalOpen
-            ? 'opacity-80'
-            : 'opacity-0 pointer-events-none'
-        }`}
+        className={`fixed inset-0 z-40 h-screen bg-black transition-opacity duration-300 ${isMobileMenuOpen || isSearchModalOpen || isCartModalOpen
+          ? 'opacity-80'
+          : 'opacity-0 pointer-events-none'
+          }`}
         onClick={() => {
           setIsMobileMenuOpen(false);
           setIsSearchModalOpen(false);
@@ -228,9 +239,8 @@ const Header = () => {
 
       {/* Mobile Sidebar */}
       <div
-        className={`fixed z-50 top-0 left-0 w-64 h-screen-container bg-[#de6565] shadow-lg transition-transform duration-300 transform ${
-          isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
-        }`}
+        className={`fixed z-50 top-0 left-0 w-64 h-screen-container bg-[#de6565] shadow-lg transition-transform duration-300 transform ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
+          }`}
       >
         <div className="bg-[#1f1f1f] w-full h-screen text-[#fff]">
           <h2 className="flex justify-between items-center text-lg font-semibold bg-[#de6565] p-4">

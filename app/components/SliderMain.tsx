@@ -8,7 +8,7 @@ import { fetchAllBanner } from '@/_lib/banner';
 const SliderMain = () => {
   // const dispatch = useDispatch<AppDispatch>();
   const title = useSelector((state: RootState) => state.banner.title);
-  console.log('tlt',title);
+  console.log(title);
   fetchAllBanner();
   return (
     <div className="flex flex-row justify-between w-full -mt-[90px] h-auto relative">
@@ -26,16 +26,16 @@ const SliderMain = () => {
             blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
           />
 
-          <h1 className="z-20 absolute bottom-0 left-0 z-10 text-[30px] sm:text-[40px] md:text-[60px] uppercase font-bold overflow-hidden whitespace-nowrap">
+          <h1 className="z-20 absolute bottom-0 left-0 z-10 text-[30px] sm:text-[40px] md:text-[67px] uppercase font-bold overflow-hidden whitespace-nowrap">
             Clean Fresh
           </h1>
         </div>
         <div className="flex flex-col items-start mt-4">
-          <p className="z-20 text-base sm:text-lg md:text-lg text-gray-700 text-start mb-6 w-[180px] sm:w-[240px] md:w-[427px]">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          <p className="z-20 text-base sm:text-lg md:text-lg text-gray-700 text-start mb-6 w-[180px] sm:w-[240px] md:w-[427px] text-[21px] font-[Inter, sans-serif]">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit amet luctus venenatis.
           </p>
-          <button className="px-4 py-2 bg-[#ff6565] text-white rounded hover:bg-[#ff4949] transition duration-300">
-            Buy Now
+          <button className="px-10 py-3 align-items-center bg-[#ffffff] text-[#231942] rounded-[50px] border border-[#ff4949] hover:bg-[#ff4949] hover:text-[#ffffff] transition duration-300">
+            BUY NOW
           </button>
         </div>
         <div className="absolute bottom-0 left-0 z-10 text-[16px] sm:text-[18px] md:text-[21px] text-gray-500 mx-8">

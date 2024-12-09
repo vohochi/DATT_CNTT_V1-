@@ -7,8 +7,8 @@ import { Provider } from 'react-redux';
 import store from "@/store";
 
 const josefin = Josefin_Sans({
-  subsets: ["latin"],
-  display: "swap",
+  subsets: ['latin'],
+  display: 'swap',
 });
 
 
@@ -19,7 +19,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-
       <body className={`${josefin.className}`}>
         <Provider store={store}>
           <Header />
