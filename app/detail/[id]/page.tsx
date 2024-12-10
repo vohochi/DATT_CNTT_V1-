@@ -16,7 +16,6 @@ const Detail = () => {
   const [activeTab, setActiveTab] = useState('Specification');
   const [quantity, setQuantity] = useState(1);
   const [isChecked, setIsChecked] = useState(false);
-  console.log(id);
   useEffect(() => {
     // Lấy sản phẩm khi component được mount
     const fetchProduct = async () => {
