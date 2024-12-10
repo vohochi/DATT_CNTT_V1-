@@ -6,33 +6,31 @@ import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as faHeartThin } from '@fortawesome/free-solid-svg-icons';
 import { Product } from '@/types/Product';
 import { getProductById } from '@/_lib/product';
+import { useParams } from 'next/navigation';
 
-// Giả sử bạn có một API getProductById
-// const getProductById = async (id: string) => {
-//   const response = await fetch(`/api/products/${id}`);
-//   const data = await response.json();
-//   return data;
-// };
+const Detail = () => {
+  const { id } = useParams();
+  const numericId = Array.isArray(id) ? parseInt(id[0], 10) : parseInt(id, 10);
 
-const Detail = ({ productId }: { productId: number }) => {
   const [product, setProduct] = useState<Product | null>(null); // state lưu sản phẩm
   const [activeTab, setActiveTab] = useState('Specification');
   const [quantity, setQuantity] = useState(1);
   const [isChecked, setIsChecked] = useState(false);
-
+  console.log(id);
   useEffect(() => {
     // Lấy sản phẩm khi component được mount
     const fetchProduct = async () => {
       try {
-        const data = await getProductById(productId);
+        const data = await getProductById(numericId);
         setProduct(data);
+        console.log(data);
       } catch (error) {
         console.error('Failed to fetch product:', error);
       }
     };
 
     fetchProduct();
-  }, [productId]);
+  }, [id]);
 
   if (!product) {
     return <div>Loading...</div>; // Nếu chưa có sản phẩm, hiển thị loading
