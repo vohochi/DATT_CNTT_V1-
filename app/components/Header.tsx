@@ -9,6 +9,9 @@ import { GiHamburgerMenu } from 'react-icons/gi';
 import { MdOutlineArrowBackIos } from 'react-icons/md';
 import SearchModal from './SearchTopBar';
 import CartSideBarModal from './CartRightSideBar';
+import Cookies from 'js-cookie';
+import { fetchProfile } from '@/_lib/customer';
+import { Customer } from '@/types/Customer';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -17,6 +20,21 @@ const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
   const [isCartModalOpen, setIsCartModalOpen] = useState(false);
+  const [userProfile, setUserProfile] = useState<Customer | null>(null);
+
+  useEffect(() => {
+    const userId = Cookies.get('user_id');
+    if (userId) {
+      fetchProfile(parseInt(userId))
+        .then((data) => {
+          console.log(data);
+          setUserProfile(data.data);
+        })
+        .catch((error) => {
+          console.error('Error fetching user profile:', error);
+        });
+    }
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -197,9 +215,22 @@ const Header = () => {
           <FaShoppingCart className="w-6 h-6 text-[#1f1f1f]" />
         </div>
         <div className="w-[30px] h-[30px] flex justify-center items-center cursor-pointer">
-          <Link href="/auth/login">
-            <FaUser className="w-6 h-6 text-[#1f1f1f]" />
-          </Link>
+          {userProfile ? (
+            <div className="flex items-center">
+              {/* <Image
+                src={userProfile.avatar || '/default-avatar.png'}
+                alt="User Avatar"
+                width={30}
+                height={30}
+                className="rounded-full"
+              /> */}
+              <span className="ml-2 text-sm">{userProfile.name}</span>
+            </div>
+          ) : (
+            <Link href="/auth/login">
+              <FaUser className="w-6 h-6 text-[#1f1f1f]" />
+            </Link>
+          )}
         </div>
         {/* Mobile Menu */}
         <div className="md:hidden">
