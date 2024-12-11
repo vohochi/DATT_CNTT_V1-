@@ -1,7 +1,79 @@
+"use client";
+
 // pages/checkout.js
-import React from 'react';
+import { fetchDictrict, fetchProvince, fetchWard } from "@/_lib/address";
+import React, { useEffect, useState } from "react";
+
+interface AddressData {
+  id: string; // Or number, depending on your data
+  name: string;
+}
 
 export default function Checkout() {
+  const [districts, setDistricts] = useState<AddressData[]>([]);
+  const [provinces, setProvinces] = useState<AddressData[]>([]);
+  const [wards, setWards] = useState<AddressData[]>([]);
+
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    companyName: "",
+    country: "",
+    streetAddress: "",
+    city: "",
+    district: "",
+    ward: "",
+    phone: "",
+    email: "",
+    orderNotes: "",
+    name: '',
+    id: '',
+  });
+
+  useEffect(() => {
+    const getAddress = async () => {
+      try {
+        const [districtData, provinceData, wardData] = await Promise.all([
+          fetchDictrict(),
+          fetchProvince(),
+          fetchWard(),
+        ]);
+        setDistricts(districtData || []);
+        setProvinces(provinceData || []);
+        setWards(wardData || []);
+        console.log(provinceData, districtData, wardData)
+
+      } catch (error) {
+        console.error("Failed to fetch address data:", error);
+      }
+    };
+
+    getAddress();
+  }, []);
+
+  useEffect(() => {
+    if (formData.district) {
+      const fetchWardData = async () => {
+        try {
+          const wardData = await fetchWard(formData.district); // Fetch wards based on selected district
+          setWards(wardData || []);
+        } catch (error) {
+          console.error("Failed to fetch ward data:", error);
+        }
+      };
+
+      fetchWardData();
+    }
+  }, [formData.district]);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
   return (
     <>
       <nav aria-label="breadcrumb" className="bg-yellow-50 py-4">
@@ -24,7 +96,7 @@ export default function Checkout() {
               <i className="fas fa-tag mr-2"></i>
               <div className="mr-2">Have a Coupon?</div>
               <a href="#/" className="text-blue-500">
-                {' '}
+                {" "}
                 Click here to enter your code
               </a>
             </div>
@@ -39,19 +111,25 @@ export default function Checkout() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700">
-                      First name <span className="text-red-500">*</span>
+                      First Name <span className="text-red-500">*</span>
                     </label>
                     <input
                       type="text"
+                      name="firstName"
+                      value={formData.firstName}
+                      onChange={handleInputChange}
                       className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
                     />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700">
-                      Last name <span className="text-red-500">*</span>
+                      Last Name <span className="text-red-500">*</span>
                     </label>
                     <input
                       type="text"
+                      name="lastName"
+                      value={formData.lastName}
+                      onChange={handleInputChange}
                       className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
                     />
                   </div>
@@ -67,22 +145,23 @@ export default function Checkout() {
                   />
                 </div>
 
+                {/* Dynamic Country Selection */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700">
                     Country <span className="text-red-500">*</span>
                   </label>
-                  <select className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
-                    <option>Bangladesh</option>
-                    <option>Afghanistan</option>
-                    <option>Albania</option>
-                    <option>Algeria</option>
-                    <option>Armenia</option>
-                    <option>India</option>
-                    <option>Pakistan </option>
-                    <option>England</option>
-                    <option>London</option>
-                    <option>London</option>
-                    <option>China</option>
+                  <select
+                    name="country"
+                    value={formData.country}
+                    onChange={handleInputChange}
+                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+                  >
+                    <option value="">Select a country</option>
+                    {provinces.map((province) => (
+                      <option key={province.id} value={province.name}>
+                        {province.name}
+                      </option>
+                    ))}
                   </select>
                 </div>
 
@@ -112,12 +191,43 @@ export default function Checkout() {
                   />
                 </div>
 
+                {/* Dynamic District Selection */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700">
                     District <span className="text-red-500">*</span>
                   </label>
-                  <select className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
-                    <option>Afghanistan</option>
+                  <select
+                    name="district"
+                    value={formData.district}
+                    onChange={handleInputChange}
+                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+                  >
+                    <option value="">Select a district</option>
+                    {districts.map((district) => (
+                      <option key={district.id} value={district.name}>
+                        {district.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Dynamic Ward Selection */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">
+                    Ward <span className="text-red-500">*</span>
+                  </label>
+                  <select
+                    name="ward"
+                    value={formData.ward}
+                    onChange={handleInputChange}
+                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+                  >
+                    <option value="">Select a ward</option>
+                    {wards.map((ward) => (
+                      <option key={ward.id} value={ward.name}>
+                        {ward.name}
+                      </option>
+                    ))}
                   </select>
                 </div>
 
@@ -160,11 +270,15 @@ export default function Checkout() {
                     Ship to a different address?
                   </label>
                 </div>
+                {/* Notes */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700">
-                    Order notes (optional)
+                    Order Notes (optional)
                   </label>
                   <textarea
+                    name="orderNotes"
+                    value={formData.orderNotes}
+                    onChange={handleInputChange}
                     className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
                     rows={4}
                     placeholder="Notes about your order, e.g. special notes for delivery."
@@ -309,7 +423,7 @@ export default function Checkout() {
                     className="h-4 w-4 text-blue-600 border-gray-300 rounded"
                   />
                   <label className="ml-2 block text-sm text-gray-900">
-                    I have read and agree to the website terms and conditions{' '}
+                    I have read and agree to the website terms and conditions{" "}
                     <span className="text-red-500">*</span>
                   </label>
                 </div>
