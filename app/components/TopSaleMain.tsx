@@ -46,7 +46,7 @@ const TopSaleMain: React.FC = () => {
         {products.slice(1).map((product) => (
           <div
             key={product.id}
-            className="flex flex-col items-center w-full relative group rounded"
+            className="flex flex-col items-center w-full relative group"
           >
             {/* Hình ảnh sản phẩm */}
             <Link href={`/detail/${product.id}`}>
@@ -61,11 +61,10 @@ const TopSaleMain: React.FC = () => {
 
             {/* Trạng thái sản phẩm */}
             <span
-              className={`absolute top-0 right-0 text-xs z-10 font-bold px-6 py-2 m-4 rounded-[20px] ${
-                product.status === 1
+              className={`absolute top-0 right-0 text-xs z-10 font-bold px-6 py-2 m-4 rounded-[20px] ${product.status === 1
                   ? 'bg-green-500 text-white'
                   : 'bg-red-500 text-white'
-              }`}
+                }`}
             >
               {product.status === 1 ? 'Available' : 'Unavailable'}
             </span>
