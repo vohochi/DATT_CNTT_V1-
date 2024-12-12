@@ -40,7 +40,7 @@ const SliderMain = () => {
   const currentBanner = banners[currentSlide];
 
   return (
-    <div className="flex flex-row justify-between w-screen -mt-[90px] h-[1000px] relative">
+    <div className="flex flex-row justify-between w-screen -mt-[90px] sm:h-auto md:h-[1000px] h-[auto] relative">
       {/* Left Section */}
       <div
         className="flex flex-col justify-center items-center w-1/2 bg-white min-h-[400px] sm:min-h-[600px] md:min-h-[800px] relative"
@@ -66,7 +66,7 @@ const SliderMain = () => {
           <p className="z-20 text-base sm:text-lg md:text-lg text-gray-700 text-start mb-6 w-[180px] sm:w-[240px] md:w-[427px] text-[21px] font-[Inter, sans-serif]">
             {currentBanner.description}
           </p>
-          <button className="px-10 py-3 align-items-center bg-[#ffffff] text-[#231942] rounded-[50px] border border-[#ff4949] hover:bg-[#ff4949] hover:text-[#ffffff] transition duration-300">
+          <button className="z-10 px-10 py-3 align-items-center bg-[#ffffff] text-[#231942] rounded-[50px] border border-[#ff4949] hover:bg-[#ff4949] hover:text-[#ffffff] transition duration-300">
             BUY NOW
           </button>
         </div>
@@ -99,7 +99,7 @@ const SliderMain = () => {
         <Image
           src="https://via.placeholder.com/841x832"
           alt="Decorative"
-          className="-ml-[50%] sm:-ml-[50%] md:-ml-[20%] w-[841px] sm:w-[841px] md:w-[841px] mt-[0] absolute transition-all z-10"
+          className="-ml-[50%] sm:-ml-[50%] md:-ml-[20%] w-[841px] sm:w-[841px] md:w-[841px] mt-[0] absolute transition-all z-5"
           width={841}
           height={832}
           priority={true}
