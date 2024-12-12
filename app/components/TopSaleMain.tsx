@@ -42,7 +42,7 @@ const TopSaleMain: React.FC = () => {
       </div>
 
       {/* Danh sách sản phẩm */}
-      <div className="grid gap-6 grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 w-[78%]">
+      <div className="grid gap-6 rounded grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 w-[78%]">
         {products.slice(1).map((product) => (
           <div
             key={product.id}
@@ -62,8 +62,8 @@ const TopSaleMain: React.FC = () => {
             {/* Trạng thái sản phẩm */}
             <span
               className={`absolute top-0 right-0 text-xs z-10 font-bold px-6 py-2 m-4 rounded-[20px] ${product.status === 1
-                  ? 'bg-green-500 text-white'
-                  : 'bg-red-500 text-white'
+                ? 'bg-green-500 text-white'
+                : 'bg-red-500 text-white'
                 }`}
             >
               {product.status === 1 ? 'Available' : 'Unavailable'}
