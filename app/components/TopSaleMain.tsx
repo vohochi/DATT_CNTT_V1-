@@ -46,7 +46,7 @@ const TopSaleMain: React.FC = () => {
         {products.slice(1).map((product) => (
           <div
             key={product.id}
-            className="flex flex-col items-center w-full relative group"
+            className="flex flex-col items-center w-full relative group rounded"
           >
             {/* Hình ảnh sản phẩm */}
             <Link href={`/detail/${product.id}`}>

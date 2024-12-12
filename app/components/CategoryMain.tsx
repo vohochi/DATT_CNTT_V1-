@@ -1,3 +1,4 @@
+import { fetchAllCategory } from '@/_lib/category';
 import Image from 'next/image';
 const CategorySection = () => {
   const arr = [
@@ -14,6 +15,11 @@ const CategorySection = () => {
     { id: 5, name: 'Blusher', img: '/10009.jpg', bg: '#ffdae0' },
     { id: 6, name: 'Natural', img: '/10010.jpg', bg: '#fff3da' },
   ];
+  const fetchCategory = async () => {
+    const data = await fetchAllCategory();
+    console.log(data);
+  }
+
 
   return (
     <section className="my-[100px]">
@@ -28,9 +34,8 @@ const CategorySection = () => {
               >
                 {category.flag && (
                   <span
-                    className={`flag-new absolute -top-4 right-2 transform rotate-90 text-white text-xs font-medium rounded px-4 py-1 rounded-[50px] ${
-                      category.flag === 'sale' ? 'bg-[#835BF4]' : 'bg-[#FF6565]'
-                    }`}
+                    className={`flag-new absolute -top-4 right-2 transform rotate-90 text-white text-xs font-medium rounded px-4 py-1 rounded-[50px] ${category.flag === 'sale' ? 'bg-[#835BF4]' : 'bg-[#FF6565]'
+                      }`}
                   >
                     {category.flag}
                   </span>
