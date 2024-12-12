@@ -11,8 +11,9 @@ const CategorySection: React.FC = () => {
     const getCategories = async () => {
       try {
         const { data } = await fetchAllCategory();
-        console.log('cate', data);
-        setCategories(data);
+        const activeCategory = data.filter((category: Category) => category.is_active);
+        console.log('cate', activeCategory);
+        setCategories(activeCategory);
       } catch (error) {
         console.error('Failed to fetch categories:', error);
       }
@@ -43,7 +44,8 @@ const CategorySection: React.FC = () => {
                 <div className="icon mx-auto mt-4">
                   <Image
                     className="transition-transform duration-300 mx-auto max-h-[80px]"
-                    src={category.file?.path ? `https://api-core.dsp.one/${category.file.path}` : '/default-image.jpg'}
+                    // src={category.file ? `https://api-core.dsp.one/${category.file.path}` : '/default-image.jpg'}
+                    src={category.file ? `` : '/default-image.jpg'}
                     width={80}
                     height={80}
                     alt={category.file?.filename ? `/${category.file.filename}` :'null'}
@@ -51,7 +53,7 @@ const CategorySection: React.FC = () => {
                 </div>
 
                 <hr className="w-10 mx-auto border-t border-[#ff6565] mt-8" />
-                <h3 className="title text-center text-lg font-semibold mt-4">
+                <h3 className="title text-center text-lg font-semibold mt-4 overflow-ellipsis">
                   {category.name}
                 </h3>
               </a>

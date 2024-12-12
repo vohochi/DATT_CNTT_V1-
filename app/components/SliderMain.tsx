@@ -21,13 +21,17 @@ const SliderMain = () => {
     getBanners();
   }, []);
 
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % banners.length);
-  };
+  // Automatic slide rotation
+  useEffect(() => {
+    if (banners.length > 0) {
+      const slideInterval = setInterval(() => {
+        setCurrentSlide((prev) => (prev + 1) % banners.length);
+      }, 3000); // Change slide every 3 seconds
 
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + banners.length) % banners.length);
-  };
+      // Cleanup interval on component unmount
+      return () => clearInterval(slideInterval);
+    }
+  }, [banners]);
 
   if (banners.length === 0) {
     return <div>Loading...</div>;
@@ -36,11 +40,11 @@ const SliderMain = () => {
   const currentBanner = banners[currentSlide];
 
   return (
-    <div className="flex flex-row justify-between w-full -mt-[90px] h-auto relative">
+    <div className="flex flex-row justify-between w-screen -mt-[90px] h-[1000px] relative">
       {/* Left Section */}
       <div
         className="flex flex-col justify-center items-center w-1/2 bg-white min-h-[400px] sm:min-h-[600px] md:min-h-[800px] relative"
-        style={{ backgroundColor: currentBanner.background_color || '#ffffff' }}
+        style={{ backgroundColor: '#ffffff' }}
       >
         <div className="relative flex flex-col items-start">
           <Image
@@ -76,24 +80,12 @@ const SliderMain = () => {
         className="flex flex-col justify-center w-1/2 p-4 min-h-[400px] sm:min-h-[600px] md:min-h-[800px] relative"
         style={{ backgroundColor: currentBanner.background_color || '#d9f1e1' }}
       >
+        {/* Indicator dots */}
         <div className="absolute bottom-0 right-[120px] z-10 flex space-x-4 mb-2 ">
-          <div
-            className="w-[30px] h-[30px] flex justify-center items-center cursor-pointer"
-            onClick={prevSlide}
-          >
-            <div className="w-6 h-6 bg-gray-300 rounded-full" />
-          </div>
-          <div
-            className="w-[30px] h-[30px] flex justify-center items-center cursor-pointer"
-            onClick={nextSlide}
-          >
-            <div className="w-6 h-6 bg-gray-300 rounded-full" />
-          </div>
           {banners.map((_, index) => (
             <div
               key={index}
-              className={`w-[30px] h-[30px] flex justify-center items-center cursor-pointer`}
-              onClick={() => setCurrentSlide(index)}
+              className={`w-[30px] h-[30px] flex justify-center items-center`}
             >
               <div
                 className={`w-6 h-6 rounded-full transition-all duration-300 ${index === currentSlide
@@ -107,8 +99,8 @@ const SliderMain = () => {
         <Image
           src="https://via.placeholder.com/841x832"
           alt="Decorative"
-          className="-ml-[50%] sm:-ml-[50%] md:-ml-[20%] w-full sm:w-[1000px] md:w-[1200px] mt-[0] absolute transition-all z-10"
-          width={1200}
+          className="-ml-[50%] sm:-ml-[50%] md:-ml-[20%] w-[841px] sm:w-[841px] md:w-[841px] mt-[0] absolute transition-all z-10"
+          width={841}
           height={832}
           priority={true}
           placeholder="blur"

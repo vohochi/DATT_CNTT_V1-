@@ -73,7 +73,7 @@ const TopSaleMain: React.FC = () => {
             <div className="card-body w-full mt-4">
               {/* Tên sản phẩm */}
               <Link href={`/detail/${product.id}`}>
-                <h3 className="text-[#231942] text-[25px] mb-2 font-medium">
+                <h3 className="text-[#231942] text-[25px] mb-2 font-medium overflow-ellipsis">
                   {product.name}
                 </h3>
               </Link>
