@@ -1,7 +1,7 @@
-import ShopBanner from "../components/ShopBanner";
-import Sidebar from "../components/SideBar";
-import ProductList from "../components/ProductList";
-import RelateProduct from "../components/RelateProduct";
+import ShopBanner from "@/app/components/ShopBanner";
+import Sidebar from "@/app/components/SideBar";
+import ProductList from "@/app/components/ProductList";
+import RelateProduct from "@/app/components/RelateProduct";
 
 export default function ShopPage() {
   return (

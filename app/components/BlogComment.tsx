@@ -1,11 +1,11 @@
-import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
-import { ChevronDownIcon } from "@heroicons/react/20/solid";
-import { Image } from "@nextui-org/react";
+import Image from 'next/image';
+import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
+import { ChevronDownIcon } from '@heroicons/react/20/solid';
 
 const BlogComment = () => {
   return (
     <div className="max-w-[1200px] mx-auto">
-      <div className="border-t border-gray-300 pt-[50px] px-[100px]">
+      <div className="border-t border-gray-300 pt-[50px] px-4 md:px-16 lg:px-24">
         <div className="">
           <h4 className="border-b border-gray-300 pb-2 mb-[18px] text-[28px] leading-9 font-medium">
             Comment

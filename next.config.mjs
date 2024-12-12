@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  reactStrictMode: true,
   // images: {
   //   remotePatterns: [
   //     {
@@ -11,6 +12,9 @@ const nextConfig = {
   //   ],
   // },
   // output: 'export',
+  images: {
+    domains: ['via.placeholder.com'], // Add the domain
+  },
 };
 
 export default nextConfig;

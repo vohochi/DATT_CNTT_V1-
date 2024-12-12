@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   Card,
   CardBody,
@@ -8,20 +8,20 @@ import {
   Image,
   Button,
   Pagination,
-} from "@nextui-org/react";
+} from '@nextui-org/react';
 
 // Giả lập dữ liệu blog
 const blogs = Array(20)
   .fill(null)
   .map((_, index) => ({
     id: index + 1,
-    title: "Lorem ipsum dolor sit amet consectetur adipiscing.",
-    author: "TOMAS DE MOMEN",
+    title: 'Lorem ipsum dolor sit amet consectetur adipiscing.',
+    author: 'TOMAS DE MOMEN',
     date: `FEBRUARY ${13 + index}, 2021`,
-    category: "BEAUTY",
+    category: 'BEAUTY',
     image: `https://via.placeholder.com/370x320?text=Blog${index + 1}`,
     excerpt:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
   }));
 
 const BlogList = () => {

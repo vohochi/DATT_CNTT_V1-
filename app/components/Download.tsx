@@ -1,21 +1,21 @@
 const products = [
   {
-    product: "Haven - Free Real Estate PSD Template",
-    date: "Aug 22, 2018",
-    expire: "Yes",
-    download: "Download File",
+    product: 'Haven - Free Real Estate PSD Template',
+    date: 'Aug 22, 2018',
+    expire: 'Yes',
+    download: 'Download File',
   },
   {
-    product: "HasTech - Profolio Business Template",
-    date: "Sep 12, 2018",
-    expire: "Never",
-    download: "Download File",
+    product: 'HasTech - Profolio Business Template',
+    date: 'Sep 12, 2018',
+    expire: 'Never',
+    download: 'Download File',
   },
 ];
 const Download = () => {
   return (
     <div className="">
-      <h3 className="text-2xl mb-2" style={{ borderBottom: "1px dashed #ccc" }}>
+      <h3 className="text-2xl mb-2" style={{ borderBottom: '1px dashed #ccc' }}>
         Orders
       </h3>
       <table className="w-full border-collapse mt-6 text-center">

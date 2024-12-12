@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
@@ -8,9 +9,13 @@ const Page = () => {
         {/* Left side - Image */}
         <div className="w-full lg:w-1/2 h-[300px] lg:h-[680px] relative">
           {/* You can replace this with your actual image or SVG */}
-          <div className="w-full h-full bg-gray-200 rounded-lg flex items-center justify-center text-gray-500">
-            Placeholder for login image
-          </div>
+          <Image
+            src="/resetPass.jpg" // Replace with your image path
+            alt="reset Password Image"
+            layout="fill" // Fill the container
+            objectFit="cover" // Cover the container
+            className="rounded-lg"
+          />
         </div>
 
         {/* Right side - Login Form */}
@@ -18,7 +23,7 @@ const Page = () => {
           <div className="w-full space-y-8">
             <div className="space-y-4">
               <h1 className="text-black text-3xl lg:text-4xl font-medium leading-tight">
-                Quên mật khẩu
+                Đổi mật khẩu mới
               </h1>
               <p className="text-black text-base">Vui lòng nhập vào bên dưới</p>
             </div>
@@ -52,18 +57,12 @@ const Page = () => {
             </div>
           </div>
           <div className="w-full space-y-4">
-            <button className="w-full px-12 py-4 bg-amber-400 rounded text-white text-base font-medium hover:bg-amber-500 transition-colors">
-              Đăng nhập
-            </button>
-            <p className="text-center text-black text-base">Quên mật khẩu?</p>
-            <p className="text-center text-black text-base">
-              Bạn chưa có tài khoản?{' '}
-              <Link href={'/auth/register'}>
-                <span className="text-amber-400 hover:underline">
-                  Đăng ký ngay
-                </span>
-              </Link>
-            </p>
+            <Link href={'/auth/login'}>
+              {' '}
+              <button className="w-full px-12 py-4 bg-amber-400 rounded text-white text-base font-medium hover:bg-amber-500 transition-colors">
+                Xác nhận
+              </button>
+            </Link>{' '}
           </div>
         </div>
       </div>

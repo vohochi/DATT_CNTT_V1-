@@ -1,4 +1,5 @@
-import { Image } from "@nextui-org/react";
+import Image from 'next/image';
+
 export default function BlogDetail() {
   return (
     <div className="max-w-[1200px] mx-auto">
@@ -8,13 +9,13 @@ export default function BlogDetail() {
       <div className="flex mb-12 ">
         <a
           href="#"
-          className="bg-red-400 text-white font-medium text-xs uppercase inline-block rounded-full px-[31px] py-[7px]"
+          className="bg-[#ff9c9c] text-white  font-medium font-['Inter'] text-[13px] uppercase inline-block rounded-full px-[31px] py-[7px]"
         >
           Beauty
         </a>
         <a
           href="#"
-          className="bg-violet-400 text-white font-medium text-xs uppercase inline-block rounded-full px-[31px] py-[7px] ml-5"
+          className="bg-[#957afe] text-white font-medium font-['Inter'] text-[13px] uppercase inline-block rounded-full px-[31px] py-[7px] ml-5"
         >
           Fashion
         </a>
@@ -33,11 +34,11 @@ export default function BlogDetail() {
             <div className="col-span-7">
               <ul className="flex">
                 <li className="flex items-center text-center text-2xl leading-7">
-                  <img
+                  <Image
                     src="https://template-intern.l5elb4sxvvqkvl.flashvps.xyz/mypham/downloadable-files/brancy-html/assets/images/blog/admin.webp"
                     alt=""
                     className="border-4 rounded-full mr-6"
-                  />{" "}
+                  />{' '}
                   Tomas Alva Addison
                 </li>
                 <li className="ml-12 flex items-center text-center text-2xl leading-7">
@@ -101,7 +102,21 @@ export default function BlogDetail() {
               </div>
             </div>
           </div>
-          <p className="py-10">
+          <p className="mb-[32px] mt-[35px]">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae
+            mauris, feugiat malesuada adipiscing est. Turpis at cras scelerisque
+            cursus et enim. Tellus integer purus scelerisque convallis gravida
+            volutpat elit. In purus amet, suspendisse et lorem. At in id et
+            facilisi molestie interdum blandit elementum. Arcu lectus in
+            ultrices mauris amet, volutpat arcu. Habitant ac vitae, quam egestas
+            in sed. Dignissim odio nunc fermentum donec risus. Volutpat
+            elementum aliquet nec ligula. Rhoncus sem condimentum egestas
+            scelerisque. Ac commodo neque auctor porttitor enim, tristique
+            mollis laoreet. Interdum tellus tortor senectus erat enim in.
+            Penatibus odio sed in dui a id urna. Tellus odio adipiscing erat
+            viverra tempor.
+          </p>
+          <p className="mb-[50px]">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Gravida
             quis turpis feugiat sapien venenatis. Iaculis nunc nisl risus mattis
             elit id lobortis. Proin erat fermentum tempor elementum bibendum.
@@ -109,39 +124,64 @@ export default function BlogDetail() {
             sit vitae eget. Nisi sit lacus, fusce diam. Massa odio sit velit sed
             purus quis dolor.
           </p>
-          <ul className="mb-2 list-disc">
-            <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit</li>
-            <li>Massa odio sit velit sed purus quis dolor.</li>
-            <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-            <li>Proin sed in nunc purus. Non duis eu pretium dictumst</li>
-          </ul>
         </div>
       </div>
+      <Image
+        src="https://via.placeholder.com/1170x700"
+        alt="Profile Picture"
+        width={1170}
+        height={700}
+        className="rounded-3xl mb-12"
+      />
+      <div className="max-w-[925px] mx-auto">
+        <p className="mt-[50px] mb-[32px]">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Gravida quis
+          turpis feugiat sapien venenatis. Iaculis nunc nisl risus mattis elit
+          id lobortis. Proin erat fermentum tempor elementum bibendum. Proin sed
+          in nunc purus. Non duis eu pretium dictumst sed habitant sit vitae
+          eget. Nisi sit lacus, fusce diam. Massa odio sit velit sed purus quis
+          dolor.
+        </p>
+        <ul className="list-none">
+          <li className="mb-[5px]">
+            • Lorem ipsum dolor sit amet, consectetur adipiscing elit
+          </li>
+          <li className="mb-[5px]">
+            • Massa odio sit velit sed purus quis dolor.
+          </li>
+          <li className="mb-[5px]">
+            • Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          </li>
+          <li className="mb-[5px]">
+            • Proin sed in nunc purus. Non duis eu pretium dictumst
+          </li>
+        </ul>
+      </div>
       <div className="justify-center flex">
-        <div className="max-w-[780px] mx-auto">
-          <blockquote className="px-8 py-12 relative text-center mt-10 before:absolute before:top-0 before:transform before:translate-x-[-50%] before:bg-gray-300 before:w-56 before:h-0.5 before:content-[''] after:absolute after:bottom-0 after:transform after:left-1/2 after:translate-x-[-50%] after:bg-gray-300 after:w-56 after:h-0.5 after:content-['']">
-            <p className="italic text-xl leading-7 mb-6">
+        <div className="flex w-[66.66%]">
+          <blockquote className="px-8 py-12 relative text-center mt-10 mb-[50px] before:absolute before:top-0 before:transform before:translate-x-[-50%] before:bg-gray-300 before:w-56 before:h-0.5 before:content-[''] after:absolute after:bottom-0 after:transform after:left-1/2 after:translate-x-[-50%] after:bg-gray-300 after:w-56 after:h-0.5 after:content-['']">
+            <p className="italic text-[21px] leading-7 mb-[20px]">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
               semper purus, at venenatis scelerisque nibh. Nisl sit convallis
               accumsan integer lorem. Nibh nunc in nulla quis pulvinar dictum.
               Eget nisi, praesent proin viverra.
             </p>
-            <span className="text-2xl leading-7 italic text-center text-gray-500">
+            <span className="text-[21px] leading-7 italic text-center text-[#a3a3a3]">
               BY Momen de tomas
             </span>
-            <img
-              src="https://template-intern.l5elb4sxvvqkvl.flashvps.xyz/mypham/downloadable-files/brancy-html/assets/images/icons/quote1.webp"
+            <Image
+              src="/quote1.jpg"
               alt="Icon"
               width={84}
               height={60}
-              className="absolute bottom-4 left-1/2 -translate-x-1/2 z-[-1]"
+              className="absolute bottom-[22px] left-1/2 -translate-x-1/2 z-[-1]"
             />
           </blockquote>
         </div>
       </div>
-      <div className="justify-center flex">
+      <div className="justify-center">
         <div className="max-w-[925px] mx-auto">
-          <p className="py-10 mb-6">
+          <p className="mb-[50px]">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Gravida
             quis turpis feugiat sapien venenatis. Iaculis nunc nisl risus mattis
             elit id lobortis. Proin erat fermentum tempor elementum bibendum.
@@ -152,24 +192,23 @@ export default function BlogDetail() {
           <Image
             src="https://via.placeholder.com/970x340"
             alt="Image"
-            width={1000}
+            width={970}
             height={340}
             className="rounded-3xl"
           />
         </div>
       </div>
-      <div className="pb-0 pt-28">
+      <div className="pb-0 pt-[115px]">
         <a
-          href=""
-          className="block before:bg-gray-100/10 rounded-lg overflow-hidden relative before:absolute before:top-[-50%] before:h-48 before:w-20 before:z-10 before:bg-gray-900 before:rotate-45 before:transition-all before:duration-2000 before:left-[-280px]
-     after:top-[-50%] after:bg-gray-100/10 after:h-48 after:w-20 after:z-10 after:bg-gray-900 after:rotate-45 after:transition-all after:duration-2000 after:left-[180px]"
+          href="#"
+          className="block rounded-[10px] overflow-hidden relative z-[1]"
         >
           <Image
             src="https://via.placeholder.com/1170x200"
-            alt="Image-HasTech"
+            alt="Image"
             width={1170}
             height={200}
-            className="rounded-3xl"
+            className="rounded-[10px] transition duration-500 w-[100%] hover:scale-110"
           />
         </a>
       </div>

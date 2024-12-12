@@ -1,6 +1,6 @@
-import SideBarBlog from "@/app/components/SideBarBlog";
-import BlogBanner from "@/app/components/BlogBanner";
-import BlogList from "@/app/components/BlogtList";
+import SideBarBlog from '@/app/components/SideBarBlog';
+import BlogBanner from '@/app/components/BlogBanner';
+import BlogList from '@/app/components/BlogtList';
 
 export default function BlogPage() {
   return (

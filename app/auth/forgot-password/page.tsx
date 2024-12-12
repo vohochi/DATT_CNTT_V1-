@@ -9,10 +9,11 @@ const Page = () => {
         {/* Left side - Image */}
         <div className="w-full lg:w-1/2 h-[300px] lg:h-[680px] relative">
           <Image
-            src="/path-to-your-image.svg"
-            alt="Forgot Password Illustration"
-            layout="fill"
-            objectFit="contain"
+            src="/forgetPass.jpg" // Replace with your image path
+            alt="Forgot Image"
+            layout="fill" // Fill the container
+            objectFit="cover" // Cover the container
+            className="rounded-lg"
           />
         </div>
 
@@ -51,7 +52,7 @@ const Page = () => {
                     <input
                       key={num}
                       type="text"
-                      maxLength="1"
+                      // maxLength="1"
                       className="w-12 h-12 text-center border border-gray-300 rounded"
                     />
                   ))}
@@ -61,9 +62,12 @@ const Page = () => {
             </div>
           </div>
           <div className="w-full space-y-4">
-            <button className="w-full px-12 py-4 bg-amber-400 rounded text-white text-base font-medium hover:bg-amber-500 transition-colors">
-              Xác thực
-            </button>
+            <Link href="/auth/reset-password">
+              {' '}
+              <button className="w-full px-12 py-4 bg-amber-400 rounded text-white text-base font-medium hover:bg-amber-500 transition-colors">
+                Xác thực
+              </button>
+            </Link>
             <Link href="/auth/login">
               <p className="text-center text-black text-base hover:underline cursor-pointer">
                 Trở về
