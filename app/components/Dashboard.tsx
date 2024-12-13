@@ -25,6 +25,7 @@ const Dashboard = () => {
           setLoading(false); // Dừng trạng thái loading
         })
         .catch((err) => {
+          console.log(err);
           setError('Failed to fetch user data');
           setLoading(false); // Dừng trạng thái loading
         });

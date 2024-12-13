@@ -88,12 +88,49 @@ const Header = () => {
           >
             home
           </Link>
+          <Link
+            href="/about"
+            className="text-neutral-800 text-[15px] font-medium capitalize leading-[80px] cursor-pointer"
+          >
+            about
+          </Link>
+          <Link
+            href="/shop"
+            className="text-neutral-800 text-[15px] font-medium capitalize leading-[80px] cursor-pointer"
+          >
+            shop
+          </Link>
           <div className="relative group">
             <Link
-              href="/shop"
+              href="/blog"
               className="text-neutral-800 text-[15px] font-medium capitalize leading-[80px] cursor-pointer"
             >
-              shop
+              blog
+            </Link>
+            {/* Dropdown */}
+            <ul className="absolute hidden group-hover:flex bg-white shadow-lg -mt-3">
+              <table className="w-[250px] table-fixed">
+                <tbody>
+                  <tr className="border-t">
+                    <td className="text-center border-b border-gray-200 p-4 hover:bg-gray-200 border-r">
+                      <Link
+                        href="/account"
+                        className="text-gray-700 hover:text-[#ff6565]"
+                      >
+                        blog detail
+                      </Link>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </ul>
+          </div>
+          <div className="relative group">
+            <Link
+              href="#"
+              className="text-neutral-800 text-[15px] font-medium capitalize leading-[80px] cursor-pointer"
+            >
+              page
             </Link>
             {/* Dropdown */}
             <ul className="absolute hidden group-hover:flex bg-white shadow-lg -mt-3">
@@ -167,30 +204,6 @@ const Header = () => {
               </table>
             </ul>
           </div>
-          <Link
-            href="/detail"
-            className="text-neutral-800 text-[15px] font-medium capitalize leading-[80px] cursor-pointer"
-          >
-            shop detail
-          </Link>
-          <Link
-            href="/about"
-            className="text-neutral-800 text-[15px] font-medium capitalize leading-[80px] cursor-pointer"
-          >
-            about
-          </Link>
-          <Link
-            href="/blog"
-            className="text-neutral-800 text-[15px] font-medium capitalize leading-[80px] cursor-pointer"
-          >
-            Blog
-          </Link>
-          <Link
-            href="/blogdetail"
-            className="text-neutral-800 text-[15px] font-medium capitalize leading-[80px] cursor-pointer"
-          >
-            BlogDetail
-          </Link>
           <Link
             href="/contact"
             className="text-neutral-800 text-[15px] font-medium capitalize leading-[80px] cursor-pointer"
