@@ -10,7 +10,7 @@ export default function Checkout() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  
+
   // Form state
   const [formData, setFormData] = useState({
     firstName: '',
@@ -27,26 +27,28 @@ export default function Checkout() {
     orderNotes: '',
     shippingDifferent: false,
     paymentMethod: '',
-    agreeToTerms: false
+    agreeToTerms: false,
   });
 
   // Handle input changes
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
   ) => {
     const { name, value, type } = e.target;
     const checked = (e.target as HTMLInputElement).checked;
 
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : value
+      [name]: type === 'checkbox' ? checked : value,
     }));
   };
 
   // Handle order submission
   const handleSubmitOrder = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!formData.agreeToTerms) {
       setError('Please agree to terms and conditions');
       return;
@@ -74,10 +76,10 @@ export default function Checkout() {
         shipping_address: `${formData.streetAddress}, ${formData.townCity}, ${formData.country}`,
         payment_method: getPaymentMethodId(formData.paymentMethod),
         shipping_unit: 1,
-        shipping_costs: 2.00,
+        shipping_costs: 2.0,
         total_order: 89.99, // Từ giỏ hàng
         total: 91.99, // total_order + shipping_costs
-        status: 'pending'
+        status: 'pending',
       } as Order;
 
       const response = await createOrder(orderData);
@@ -286,7 +288,7 @@ export default function Checkout() {
                     { id: 'bank', label: 'DIRECT BANK TRANSFER' },
                     { id: 'check', label: 'CHECK PAYMENTS' },
                     { id: 'cod', label: 'CASH ON DELIVERY' },
-                    { id: 'paypal', label: 'PAYPAL' }
+                    { id: 'paypal', label: 'PAYPAL' },
                   ].map((method) => (
                     <div key={method.id}>
                       <input
@@ -492,10 +494,15 @@ export default function Checkout() {
 
 function getPaymentMethodId(method: string): number {
   switch (method) {
-    case 'bank': return 1;
-    case 'check': return 2;
-    case 'cod': return 3;
-    case 'paypal': return 4;
-    default: return 1;
+    case 'bank':
+      return 1;
+    case 'check':
+      return 2;
+    case 'cod':
+      return 3;
+    case 'paypal':
+      return 4;
+    default:
+      return 1;
   }
 }
