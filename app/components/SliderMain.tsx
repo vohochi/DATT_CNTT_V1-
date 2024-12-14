@@ -40,7 +40,7 @@ const SliderMain = () => {
   const currentBanner = banners[currentSlide];
 
   return (
-    <div className="flex flex-row justify-between w-screen -mt-[90px] sm:h-auto md:h-[1000px] h-[auto] relative">
+    <div className="flex flex-row justify-between w-full -mt-[90px] sm:h-auto md:h-[1000px] h-[auto] relative">
       {/* Left Section */}
       <div
         className="flex flex-col justify-center items-center w-1/2 bg-white min-h-[400px] sm:min-h-[600px] md:min-h-[800px] relative"
