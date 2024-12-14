@@ -1,5 +1,6 @@
 'use client';
-import { useEffect, useState } from 'react';
+
+import { useEffect, useState, useMemo } from 'react';
 import { Image } from '@nextui-org/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
@@ -10,14 +11,17 @@ import { useParams } from 'next/navigation';
 
 const Detail = () => {
   const { id } = useParams();
-  const numericId = Array.isArray(id) ? parseInt(id[0], 10) : parseInt(id, 10);
 
-  const [product, setProduct] = useState<Product | null>(null); // state lưu sản phẩm
+  const numericId = useMemo(() => {
+    return Array.isArray(id) ? parseInt(id[0], 10) : parseInt(id, 10);
+  }, [id]);
+
+  const [product, setProduct] = useState<Product | null>(null);
   const [activeTab, setActiveTab] = useState('Specification');
   const [quantity, setQuantity] = useState(1);
   const [isChecked, setIsChecked] = useState(false);
+
   useEffect(() => {
-    // Lấy sản phẩm khi component được mount
     const fetchProduct = async () => {
       try {
         const data = await getProductById(numericId);
@@ -29,10 +33,10 @@ const Detail = () => {
     };
 
     fetchProduct();
-  }, [id]);
+  }, [numericId]);
 
   if (!product) {
-    return <div>Loading...</div>; // Nếu chưa có sản phẩm, hiển thị loading
+    return <div>Loading...</div>;
   }
 
   return (
@@ -94,27 +98,7 @@ const Detail = () => {
                     />
                   ))}
                 </div>
-                {/* <p className="text-sm md:text-gray-600 mb-2">
-                  {product.reviews || '150 reviews'}
-                </p> */}
               </div>
-
-              <hr />
-
-              {/* <div className="mt-5 md:mt-10 mb-5 md:mb-10">
-                {product.sizes?.map((size: string) => (
-                  <label key={size} className="block mb-3">
-                    <input
-                      type="radio"
-                      name="size"
-                      value={size}
-                      className="mr-2"
-                      defaultChecked={size === product.selectedSize}
-                    />
-                    {size} <strong>{product.price}</strong>
-                  </label>
-                ))}
-              </div> */}
 
               <hr />
 

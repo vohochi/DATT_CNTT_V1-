@@ -1,6 +1,9 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Cookies from 'js-cookie';
+import { fetchProfile } from '@/_lib/customer';
+import { Customer } from '@/types/Customer';
 
 function ProfileForm() {
   const [firstName, setFirstName] = useState('');
@@ -11,7 +14,21 @@ function ProfileForm() {
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
-
+  const [userProfile, setUserProfile] = useState<Customer | null>(null);
+  console.log(userProfile);
+  useEffect(() => {
+    const userId = Cookies.get('user_id');
+    if (userId) {
+      fetchProfile(parseInt(userId))
+        .then((data) => {
+          console.log(data);
+          setUserProfile(data.data);
+        })
+        .catch((error) => {
+          console.error('Error fetching user profile:', error);
+        });
+    }
+  }, []);
   const router = useRouter();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {

@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import React, { useEffect, useState } from 'react';
 import { fetchAllBanner } from '@/_lib/banner';
 import { Banner } from '@/types/Banner';
@@ -88,10 +88,9 @@ const SliderMain = () => {
               className={`w-[30px] h-[30px] flex justify-center items-center`}
             >
               <div
-                className={`w-6 h-6 rounded-full transition-all duration-300 ${index === currentSlide
-                  ? 'bg-[#ff4949]'
-                  : 'bg-gray-300'
-                  }`}
+                className={`w-6 h-6 rounded-full transition-all duration-300 ${
+                  index === currentSlide ? 'bg-[#ff4949]' : 'bg-gray-300'
+                }`}
               />
             </div>
           ))}
