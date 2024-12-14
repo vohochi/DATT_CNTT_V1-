@@ -1,10 +1,11 @@
 'use client';
 
 import { useState } from 'react';
-import { createOrder } from '@/_lib/order';
+import { createOrder, createPaymentHistory } from '@/_lib/order';
 import { Order } from '@/types/Order';
 import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
+import { PaymentType, PaymentStatus } from '@/types/Payment';
 
 export default function Checkout() {
   const router = useRouter();
@@ -68,6 +69,7 @@ export default function Checkout() {
         throw new Error('Please login to place order');
       }
 
+      // 1. Create order first
       const orderData: Order = {
         code: `ORD${Date.now()}`,
         user_id: parseInt(userId),
@@ -77,20 +79,48 @@ export default function Checkout() {
         payment_method: getPaymentMethodId(formData.paymentMethod),
         shipping_unit: 1,
         shipping_costs: 2.0,
-        total_order: 89.99, // Từ giỏ hàng
-        total: 91.99, // total_order + shipping_costs
+        total_order: 89.99,
+        total: 91.99,
         status: 'pending',
       } as Order;
 
-      const response = await createOrder(orderData);
+      const orderResponse = await createOrder(orderData);
 
-      if (response.status === 'success') {
-        router.push('/order-success');
+      if (orderResponse.status === 'success') {
+        // 2. Create payment history
+        const paymentData = {
+          user_id: Number(userId),
+          transaction_id: `TRX-${Date.now()}`,
+          date: new Date().toISOString(),
+          type: PaymentType.RECHARGE,
+          method: formData.paymentMethod,
+          status: PaymentStatus.PENDING,
+          total_pay: orderData.total,
+          balance: 0,
+          data: JSON.stringify({
+            order_id: orderResponse.data.id,
+            order_code: orderData.code,
+            shipping_address: orderData.shipping_address,
+            payment_method: formData.paymentMethod
+          }),
+          note: `Payment for order ${orderData.code}`,
+          is_active: true,
+          created_by: Number(userId)
+        };
+
+        const paymentResponse = await createPaymentHistory(paymentData);
+
+        if (paymentResponse.data) {
+          router.push(`/checkout/success?transaction_id=${paymentResponse.data.transaction_id}`);
+        } else {
+          throw new Error('Payment creation failed');
+        }
       } else {
-        setError(response.message || 'Failed to create order');
+        throw new Error(orderResponse.message || 'Order creation failed');
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to create order');
+      console.error('Checkout Error:', err);
+      setError(err instanceof Error ? err.message : 'Checkout failed');
     } finally {
       setIsLoading(false);
     }
@@ -285,27 +315,48 @@ export default function Checkout() {
                 {/* Payment Methods */}
                 <div className="space-y-4">
                   {[
-                    { id: 'bank', label: 'DIRECT BANK TRANSFER' },
-                    { id: 'check', label: 'CHECK PAYMENTS' },
-                    { id: 'cod', label: 'CASH ON DELIVERY' },
-                    { id: 'paypal', label: 'PAYPAL' },
+                    { 
+                      id: 'bank', 
+                      label: 'DIRECT BANK TRANSFER',
+                      description: 'Make your payment directly into our bank account. Please use your Order ID as the payment reference.'
+                    },
+                    { 
+                      id: 'check', 
+                      label: 'CHECK PAYMENTS' 
+                    },
+                    { 
+                      id: 'cod', 
+                      label: 'CASH ON DELIVERY' 
+                    },
+                    { 
+                      id: 'paypal', 
+                      label: 'PAYPAL',
+                      description: 'Your personal data will be used to process your order, support your experience throughout this website.'
+                    },
                   ].map((method) => (
-                    <div key={method.id}>
-                      <input
-                        type="radio"
-                        id={method.id}
-                        name="paymentMethod"
-                        value={method.id}
-                        checked={formData.paymentMethod === method.id}
-                        onChange={handleInputChange}
-                        className="h-4 w-4 text-blue-600 border-gray-300 rounded"
-                      />
-                      <label
-                        htmlFor={method.id}
-                        className="ml-2 text-sm text-gray-700 font-medium"
-                      >
-                        {method.label}
-                      </label>
+                    <div key={method.id} className="p-4 border rounded hover:border-blue-500">
+                      <div className="flex items-center">
+                        <input
+                          type="radio"
+                          id={method.id}
+                          name="paymentMethod"
+                          value={method.id}
+                          checked={formData.paymentMethod === method.id}
+                          onChange={handleInputChange}
+                          className="h-4 w-4 text-blue-600 border-gray-300"
+                        />
+                        <label
+                          htmlFor={method.id}
+                          className="ml-2 text-sm font-medium text-gray-700"
+                        >
+                          {method.label}
+                        </label>
+                      </div>
+                      {method.description && (
+                        <p className="mt-1 ml-6 text-sm text-gray-500">
+                          {method.description}
+                        </p>
+                      )}
                     </div>
                   ))}
                 </div>
