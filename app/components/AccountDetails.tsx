@@ -15,7 +15,7 @@ function ProfileForm() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [userProfile, setUserProfile] = useState<Customer | null>(null);
-
+  console.log(userProfile);
   useEffect(() => {
     const userId = Cookies.get('user_id');
     if (userId) {
