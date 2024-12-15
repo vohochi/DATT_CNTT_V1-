@@ -101,17 +101,19 @@ export default function Checkout() {
             order_id: orderResponse.data.id,
             order_code: orderData.code,
             shipping_address: orderData.shipping_address,
-            payment_method: formData.paymentMethod
+            payment_method: formData.paymentMethod,
           }),
           note: `Payment for order ${orderData.code}`,
           is_active: true,
-          created_by: Number(userId)
+          created_by: Number(userId),
         };
 
         const paymentResponse = await createPaymentHistory(paymentData);
 
         if (paymentResponse.data) {
-          router.push(`/checkout/success?transaction_id=${paymentResponse.data.transaction_id}`);
+          router.push(
+            `/checkout/success?transaction_id=${paymentResponse.data.transaction_id}`
+          );
         } else {
           throw new Error('Payment creation failed');
         }
@@ -315,26 +317,31 @@ export default function Checkout() {
                 {/* Payment Methods */}
                 <div className="space-y-4">
                   {[
-                    { 
-                      id: 'bank', 
+                    {
+                      id: 'bank',
                       label: 'DIRECT BANK TRANSFER',
-                      description: 'Make your payment directly into our bank account. Please use your Order ID as the payment reference.'
+                      description:
+                        'Make your payment directly into our bank account. Please use your Order ID as the payment reference.',
                     },
-                    { 
-                      id: 'check', 
-                      label: 'CHECK PAYMENTS' 
+                    {
+                      id: 'check',
+                      label: 'CHECK PAYMENTS',
                     },
-                    { 
-                      id: 'cod', 
-                      label: 'CASH ON DELIVERY' 
+                    {
+                      id: 'cod',
+                      label: 'CASH ON DELIVERY',
                     },
-                    { 
-                      id: 'paypal', 
+                    {
+                      id: 'paypal',
                       label: 'PAYPAL',
-                      description: 'Your personal data will be used to process your order, support your experience throughout this website.'
+                      description:
+                        'Your personal data will be used to process your order, support your experience throughout this website.',
                     },
                   ].map((method) => (
-                    <div key={method.id} className="p-4 border rounded hover:border-blue-500">
+                    <div
+                      key={method.id}
+                      className="p-4 border rounded hover:border-blue-500"
+                    >
                       <div className="flex items-center">
                         <input
                           type="radio"
