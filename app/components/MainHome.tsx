@@ -1,10 +1,21 @@
+'use client';
 import BlogMain from '@/app/components/BlogMain';
 import CategoryMain from '@/app/components/CategoryMain';
 import SliderMain from '@/app/components/SliderMain';
 import TopSaleMain from '@/app/components/TopSaleMain';
+import { useCorsAnywhere } from '@/util/corsAnywhere';
 import { FaPaperPlane } from 'react-icons/fa';
 
 const MainHome = () => {
+  const corsReady = useCorsAnywhere();
+
+  if (!corsReady) {
+    return (
+      <div className="w-full h-screen flex justify-center items-center">
+        <div className="text-2xl font-bold text-gray-600">Loading...</div>
+      </div>
+    );
+  }
   return (
     <div className="w-full container mx-auto">
       <SliderMain />

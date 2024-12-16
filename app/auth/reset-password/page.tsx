@@ -45,7 +45,11 @@ const ResetPasswordPage = () => {
         throw new Error('Thông tin xác thực không hợp lệ');
       }
 
-      const res = await resetPassword({ email, otp, new_password });
+      const res = await resetPassword({
+        email,
+        new_password,
+        new_password_confirmation,
+      });
       console.log(res);
       alert('Đặt lại mật khẩu thành công');
       sessionStorage.removeItem('resetPasswordEmail');

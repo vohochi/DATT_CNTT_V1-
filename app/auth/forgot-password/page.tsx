@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { sendOTP } from '@/_lib/auth';
+import { sendOTP, verifyOTP } from '@/_lib/auth';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 
@@ -63,13 +63,17 @@ const ForgotPasswordPage = () => {
 
     setIsLoading(true);
     try {
-      // Ở đây bạn sẽ gọi API để xác thực OTP
-      // await verifyOTP({ email, otp: otpString });
-      sessionStorage.setItem('resetPasswordOTP', otpString);
-      router.push('/auth/reset-password');
+      console.log(email, otpString);
+      const response = await verifyOTP({ email, otp: otpString });
+      if (response && response.success) {
+        sessionStorage.setItem('resetPasswordOTP', otpString);
+        router.push('/auth/reset-password');
+      } else {
+        alert('Xác thực OTP thất bại. Vui lòng thử lại.');
+      }
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
-        alert('Xác thực OTP thất bại. Vui lòng thử lại.');
+        alert(`Xác thực OTP thất bại: ${error.response.data.message}`);
       } else {
         alert('Đã xảy ra lỗi. Vui lòng thử lại sau.');
       }
