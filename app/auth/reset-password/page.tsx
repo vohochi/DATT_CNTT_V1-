@@ -15,6 +15,7 @@ const ResetPasswordPage = () => {
   useEffect(() => {
     const storedEmail = sessionStorage.getItem('resetPasswordEmail');
     const otp = sessionStorage.getItem('resetPasswordOTP');
+    console.log(storedEmail, otp);
     if (!storedEmail || !otp) {
       alert('Thông tin xác thực không hợp lệ');
       router.push('/auth/forgot-password');
@@ -44,11 +45,12 @@ const ResetPasswordPage = () => {
         throw new Error('Thông tin xác thực không hợp lệ');
       }
 
-      await resetPassword({ email, otp, new_password });
+      const res = await resetPassword({ email, otp, new_password });
+      console.log(res);
       alert('Đặt lại mật khẩu thành công');
       sessionStorage.removeItem('resetPasswordEmail');
       sessionStorage.removeItem('resetPasswordOTP');
-      router.push('/auth/login');
+      // router.push('/auth/login');
     } catch (error) {
       console.log(error);
       alert('Đặt lại mật khẩu thất bại. Vui lòng thử lại.');
