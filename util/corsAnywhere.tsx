@@ -1,14 +1,14 @@
-// hooks/useCorsAnywhere.js hoặc utils/corsAnywhere.js
-
 import { useState, useEffect } from 'react';
 
-const CORS_ANYWHERE_URL = 'https://cors-anywhere.herokuapp.com/';
+const CORS_ANYWHERE_URL = 'https://cors-anywhere.herokuapp.com/corsdemo';
 
-export function useCorsAnywhere() {
+export function useCorsAnywhere(shouldActivate = true) {
   const [corsReady, setCorsReady] = useState(false);
 
   useEffect(() => {
     async function activateCorsAnywhere() {
+      if (!shouldActivate) return;
+
       try {
         const response = await fetch(CORS_ANYWHERE_URL, {
           method: 'GET',
@@ -31,7 +31,7 @@ export function useCorsAnywhere() {
     }
 
     activateCorsAnywhere();
-  }, []);
+  }, [shouldActivate]);
 
   return corsReady;
 }
