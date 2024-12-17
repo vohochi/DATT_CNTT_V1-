@@ -18,6 +18,7 @@ const Page = () => {
     const token = Cookies.get('token'); // Lấy token từ cookie
     if (token) {
       router.push('/'); // Nếu đã có token, chuyển hướng về trang chủ
+      console.log(token)
     }
   }, [router]);
 
