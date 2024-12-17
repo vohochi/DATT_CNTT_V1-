@@ -12,7 +12,8 @@ export const fetchProfile = async (id: number) => {
         },
       }
     );
-    return response.data.data;
+    console.log(response);
+    return response.data;
   } catch (error) {
     console.error('Error fetching data: ', error);
   }

@@ -1,16 +1,16 @@
-"use client";
-import React, { useState, useEffect } from "react";
+'use client';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { fetchProducts } from '@/_lib/product';
 import {
   Card,
   CardBody,
   CardFooter,
-  Image,
+  // Image,
   Button,
   Pagination,
-} from "@nextui-org/react";
-import { Heart, Maximize } from "lucide-react";
+} from '@nextui-org/react';
+import { Heart, Maximize } from 'lucide-react';
 import { Product } from '@/types/Product';
 
 const ProductList: React.FC = () => {
@@ -40,14 +40,17 @@ const ProductList: React.FC = () => {
       setIsMobile(window.innerWidth < 768);
     };
     checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
   // Paginate products
   const indexOfLastProduct = currentPage * itemsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - itemsPerPage;
-  const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
+  const currentProducts = products.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  );
 
   if (products.length === 0) {
     return <div>Loading...</div>;
@@ -75,13 +78,13 @@ const ProductList: React.FC = () => {
             <CardBody className="p-0">
               <div className="relative aspect-square">
                 <Link href={`/detail/${product.id}`}>
-                  <Image
+                  {/* <Image
                     src={product.thumbnail || '/placeholder.png'}
                     alt={product.name}
                     width={360}
                     height={450}
                     className="w-full h-full object-cover rounded-[10px]"
-                  />
+                  /> */}
                 </Link>
                 <span
                   className={`absolute top-0 right-0 text-xs z-10 font-bold px-6 py-2 m-4 rounded-[20px] ${
