@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/store';
-import { fetchAddressGroups } from '@/store/slice/addressSlice';
+// import { fetchAddressGroups } from '@/store/slice/addressSlice';
 import { useEffect } from 'react';
 
 const Address = () => {

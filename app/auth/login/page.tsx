@@ -33,7 +33,7 @@ const Page = () => {
 
     try {
       const response = await Login(data); // Gọi API đăng nhập
-
+      console.log(response);
       if (response.user_id) {
         // Lưu token vào cookie với thời gian hết hạn là 7 ngày
         Cookies.set('user_id', response.user_id, {
@@ -50,9 +50,9 @@ const Page = () => {
       } else {
         setError('Không có token trong phản hồi từ máy chủ');
       }
-    } catch (err: any) {
+    } catch (err) {
       console.error('Login Error:', err);
-      setError(err.message || 'Đã xảy ra lỗi không xác định');
+      // setError(err.message || 'Đã xảy ra lỗi không xác định');
     } finally {
       setLoading(false);
     }

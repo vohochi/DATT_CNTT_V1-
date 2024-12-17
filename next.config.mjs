@@ -13,7 +13,17 @@ const nextConfig = {
   // },
   // output: 'export',
   images: {
-    domains: ['via.placeholder.com'], // Add the domain
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'via.placeholder.com', // Thêm tên miền cần thiết
+      },
+      {
+        protocol: 'https',
+        hostname: 'api-core.dsp.one', // Nếu bạn đang sử dụng domain này
+        pathname: '/**',
+      },
+    ],
   },
 };
 
