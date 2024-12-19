@@ -1,36 +1,3 @@
-<<<<<<< HEAD
-// pages/checkout.js
-import { fetchDictrict, fetchProvince, fetchWard } from '@/_lib/address';
-import React, { useEffect, useState } from 'react';
-
-export default function Checkout() {
-
-  const [Dictrict, setDictrict] = useState('');
-  const [Province,setProvince] = useState('');
-  const [Ward,setWard] = useState('');
-
-  useEffect(() => {
-    const getAddress = async () => {
-      try {
-        const dictricts = await fetchDictrict();
-        const provinces = await fetchProvince();
-        const wards = await fetchWard();
-
-        console.log(dictricts, provinces, wards);
-
-        setDictrict(dictricts);
-        setProvince(provinces);
-        setWard(wards);
-      } catch (error) {
-        console.error('Failed to fetch products:', error);
-      }
-    };
-
-    getAddress();
-  }, []);
-
-  console.log(1)
-=======
 'use client';
 
 import { useState } from 'react';
@@ -160,7 +127,6 @@ export default function Checkout() {
       setIsLoading(false);
     }
   };
->>>>>>> 0fbf46e4e081dac5c98991a322330d230d57d9ec
 
   return (
     <>

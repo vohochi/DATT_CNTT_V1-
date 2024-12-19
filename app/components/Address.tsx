@@ -1,16 +1,43 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '@/store';
-// import { fetchAddressGroups } from '@/store/slice/addressSlice';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { fetchDictrict, fetchProvince, fetchWard } from '@/_lib/address';
 
 const Address = () => {
-  const dispatch = useDispatch<AppDispatch>();
-  const { groups, status, error } = useSelector((state: RootState) => state.address);
+  const [addresses, setAddresses] = useState<any[]>([]);
+  const [status, setStatus] = useState<'loading' | 'success' | 'failed'>('loading');
+  const [error, setError] = useState<string | null>(null);  
 
-  // Fetch addresses on component mount
   useEffect(() => {
-    dispatch(fetchAddressGroups());
-  }, [dispatch]);
+    const fetchAddressData = async () => {
+      try {
+        setStatus('loading');
+        const [districtData, provinceData, wardData] = await Promise.all([
+          fetchDictrict(),
+          fetchProvince(),
+          fetchWard(),
+        ]);
+
+        // Combine address data
+        const combinedAddresses = districtData.map((district: any) => {
+          const province = provinceData.find((p: any) => p.id === district.province_id);
+          const ward = wardData.find((w: any) => w.district_id === district.id);
+          return {
+            ...district,
+            province: province ? province.name : 'Unknown Province',
+            ward: ward ? ward.name : 'Unknown Ward',
+          };
+        });
+
+        setAddresses(combinedAddresses);
+        setStatus('success');
+      } catch (err) {
+        console.error(err);
+        setError('Failed to fetch address data');
+        setStatus('failed');
+      }
+    };
+
+    fetchAddressData();
+  }, []);
 
   if (status === 'loading') {
     return <p>Loading...</p>;
@@ -21,7 +48,7 @@ const Address = () => {
       <div>
         <p>Error: {error}</p>
         <button
-          onClick={() => dispatch(fetchAddressGroups())}
+          onClick={() => setStatus('loading')}
           className="mt-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition duration-300"
         >
           Retry
@@ -30,7 +57,7 @@ const Address = () => {
     );
   }
 
-  if (!groups.length) {
+  if (!addresses.length) {
     return <p>No addresses found.</p>;
   }
 
@@ -39,20 +66,18 @@ const Address = () => {
       <h3 className="text-2xl mb-4 border-b border-dashed border-gray-300">
         Billing Address
       </h3>
-      {groups.map((address) => (
+      {addresses.map((address) => (
         <address key={address.id} className="mb-6">
           <p className="text-xl font-semibold text-gray-800">
-            {address.house_number}
+            District: {address.name}
           </p>
           <p className="text-gray-700">
-            {address.ward}, {address.district}, {address.province} <br />
-            <small className="text-gray-500">
-              Ward Code: {address.ward_code}, District Code: {address.district_code}
-            </small>
+            Ward: {address.ward}, Province: {address.province}
           </p>
-          <p className={`mt-2 ${address.is_primary ? 'text-green-600' : 'text-gray-600'}`}>
-            {address.is_primary ? 'Primary Address' : 'Secondary Address'}
-          </p>
+          <small className="text-gray-500">
+            District Code: {address.code}
+          </small>
+          <p className="mt-2 text-gray-600">Secondary Address</p>
           <a
             href="#"
             className="mt-2 inline-flex items-center text-blue-600 hover:text-blue-800 transition duration-300"
