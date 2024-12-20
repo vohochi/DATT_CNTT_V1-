@@ -1,23 +1,53 @@
+'use client'
+import { getPostById } from '@/_lib/post';
+import { Post } from '@/types/PostBlog';
 import Image from 'next/image';
+import { useParams } from 'next/navigation';
+import { useEffect, useMemo, useState } from 'react';
 
 export default function BlogDetail() {
+  const { id } = useParams();
+
+  const numericId = useMemo(() => {
+    return Array.isArray(id) ? parseInt(id[0], 10) : parseInt(id, 10);
+  }, [id]);
+
+  const [post, setPost] = useState<Post | null>(null);
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const data = await getPostById(numericId);
+        setPost(data);
+        console.log(data);
+      } catch (error) {
+        console.error('Failed to fetch product:', error);
+      }
+    };
+
+    fetchProduct();
+  }, [numericId]);
+
+  if (!post) {
+    return <div>Loading...</div>;
+  }
   return (
     <div className="max-w-[1200px] mx-auto">
       <h3 className="text-6xl font-light mb-12 pt-28 text-gray-800 leading-snug">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit
+        {post.title}
       </h3>
       <div className="flex mb-12 ">
         <a
           href="#"
           className="bg-[#ff9c9c] text-white  font-medium font-['Inter'] text-[13px] uppercase inline-block rounded-full px-[31px] py-[7px]"
         >
-          Beauty
+          {post.tags}
         </a>
         <a
           href="#"
           className="bg-[#957afe] text-white font-medium font-['Inter'] text-[13px] uppercase inline-block rounded-full px-[31px] py-[7px] ml-5"
         >
-          Fashion
+          {post.tags}
         </a>
       </div>
       <Image
@@ -35,14 +65,14 @@ export default function BlogDetail() {
               <ul className="flex">
                 <li className="flex items-center text-center text-2xl leading-7">
                   <Image
-                    src="https://template-intern.l5elb4sxvvqkvl.flashvps.xyz/mypham/downloadable-files/brancy-html/assets/images/blog/admin.webp"
+                    src=""
                     alt=""
                     className="border-4 rounded-full mr-6"
                   />{' '}
-                  Tomas Alva Addison
+                  {post.author}
                 </li>
                 <li className="ml-12 flex items-center text-center text-2xl leading-7">
-                  February 13, 2022
+                  {post.updated_at}
                 </li>
               </ul>
             </div>
@@ -103,26 +133,10 @@ export default function BlogDetail() {
             </div>
           </div>
           <p className="mb-[32px] mt-[35px]">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae
-            mauris, feugiat malesuada adipiscing est. Turpis at cras scelerisque
-            cursus et enim. Tellus integer purus scelerisque convallis gravida
-            volutpat elit. In purus amet, suspendisse et lorem. At in id et
-            facilisi molestie interdum blandit elementum. Arcu lectus in
-            ultrices mauris amet, volutpat arcu. Habitant ac vitae, quam egestas
-            in sed. Dignissim odio nunc fermentum donec risus. Volutpat
-            elementum aliquet nec ligula. Rhoncus sem condimentum egestas
-            scelerisque. Ac commodo neque auctor porttitor enim, tristique
-            mollis laoreet. Interdum tellus tortor senectus erat enim in.
-            Penatibus odio sed in dui a id urna. Tellus odio adipiscing erat
-            viverra tempor.
+            {post.content}
           </p>
           <p className="mb-[50px]">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Gravida
-            quis turpis feugiat sapien venenatis. Iaculis nunc nisl risus mattis
-            elit id lobortis. Proin erat fermentum tempor elementum bibendum.
-            Proin sed in nunc purus. Non duis eu pretium dictumst sed habitant
-            sit vitae eget. Nisi sit lacus, fusce diam. Massa odio sit velit sed
-            purus quis dolor.
+            {post.slug}
           </p>
         </div>
       </div>

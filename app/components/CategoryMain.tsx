@@ -48,12 +48,12 @@ const CategorySection: React.FC = () => {
                     src={category.file ? `` : '/default-image.jpg'}
                     width={80}
                     height={80}
-                    alt={category.file?.filename ? `/${category.file.filename}` :'null'}
+                    alt={category.file?.filename ? `/${category.file.filename}` : 'null'}
                   />
                 </div>
 
                 <hr className="w-10 mx-auto border-t border-[#ff6565] mt-8" />
-                <h3 className="title text-center text-lg font-semibold mt-4 overflow-ellipsis">
+                <h3 className="title text-center text-lg font-semibold mt-4 overflow-ellipsis whitespace-nowrap overflow-hidden max-w-full">
                   {category.name}
                 </h3>
               </a>
