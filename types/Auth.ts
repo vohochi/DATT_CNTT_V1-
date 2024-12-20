@@ -10,7 +10,8 @@ export interface IAuth {
   updated_at?: string;
   created_at?: string;
   id?: number;
-  otp?: number | string;
+  otp?: string;
+  password?: string;
   new_password?: string;
   new_password_confirmation?: string;
 }

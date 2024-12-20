@@ -6,6 +6,21 @@ import Link from 'next/link';
 import { Register } from '@/_lib/auth';
 import { useRouter } from 'next/navigation';
 
+interface FormErrors {
+  name?: string;
+  nick_name?: string;
+  email?: string;
+  phone?: string;
+  password?: string;
+  password_confirmation?: string;
+  code?: string;
+}
+
+interface Message {
+  type: 'success' | 'error';
+  content: string;
+}
+
 const Page = () => {
   const router = useRouter();
 
@@ -16,13 +31,50 @@ const Page = () => {
     phone: '',
     password: '',
     password_confirmation: '',
-    code: '', // Thêm trường code
+    code: '',
   });
 
+  const [errors, setErrors] = useState<FormErrors>({});
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [message, setMessage] = useState<Message | null>(null);
 
-  // Xử lý sự thay đổi giá trị form
+  const validateForm = (): boolean => {
+    const newErrors: FormErrors = {};
+
+    if (!formData.name.trim()) {
+      newErrors.name = 'Họ và tên là bắt buộc';
+    }
+
+    if (!formData.nick_name.trim()) {
+      newErrors.nick_name = 'Tên gọi là bắt buộc';
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!formData.email.trim() || !emailRegex.test(formData.email)) {
+      newErrors.email = 'Email không hợp lệ';
+    }
+
+    const phoneRegex = /^[0-9]{10}$/;
+    if (!formData.phone.trim() || !phoneRegex.test(formData.phone)) {
+      newErrors.phone = 'Số điện thoại không hợp lệ';
+    }
+
+    if (formData.password.length < 6) {
+      newErrors.password = 'Mật khẩu phải có ít nhất 6 ký tự';
+    }
+
+    if (formData.password !== formData.password_confirmation) {
+      newErrors.password_confirmation = 'Mật khẩu xác nhận không khớp';
+    }
+
+    if (!formData.code.trim()) {
+      newErrors.code = 'Mã xác thực là bắt buộc';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
@@ -31,40 +83,70 @@ const Page = () => {
     }));
   };
 
-  // Xử lý sự kiện submit form
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      setLoading(true);
-      const response = await Register(formData); // Gọi API Register với formData
-      console.log('Registration successful:', response);
-      // Xử lý sau khi đăng ký thành công
-      alert('Bạn đã đăng ký thành công');
-      router.push('/auth/login');
-    } catch (error) {
-      console.error('Error during registration:', error);
-      setError('Đăng ký không thành công, vui lòng thử lại.');
-      alert('bạn đã đăng ký thất bại');
-    } finally {
-      setLoading(false);
+    if (validateForm()) {
+      try {
+        setLoading(true);
+        const response = await Register(formData);
+        console.log('Registration response:', response);
+
+        if (response) {
+          setMessage({
+            type: 'success',
+            content: 'Bạn đã đăng ký thành công.',
+          });
+          alert('đăng ký thành công');
+          // Thêm một độ trễ nhỏ để người dùng thấy được thông báo thành công
+          setTimeout(() => {
+            router.push('/auth/login');
+          }, 1500);
+        } else if (response.error) {
+          // Xử lý trường hợp có error từ API
+          setMessage({
+            type: 'error',
+            content: response.error || 'Đăng ký thất bại, vui lòng thử lại.',
+          });
+        } else if (response.message) {
+          // Xử lý các trường hợp có message từ API
+          if (response.message.toLowerCase().includes('code đã tồn tại')) {
+            setMessage({
+              type: 'error',
+              content: 'Mã code đã tồn tại, vui lòng thay đổi.',
+            });
+          } else {
+            setMessage({
+              type: 'error',
+              content: response.message,
+            });
+          }
+        }
+      } catch (error: any) {
+        console.error('Error during registration:', error);
+        setMessage({
+          type: 'error',
+          content:
+            error?.errors.code[0] || 'Đăng ký thất bại, vui lòng thử lại.',
+        });
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
   return (
     <div className="w-full min-h-screen py-10 px-4 flex flex-col justify-center items-center">
       <div className="w-full max-w-7xl flex flex-col lg:flex-row justify-between items-center gap-10">
-        {/* Left side - Image */}
         <div className="w-full lg:w-1/2 h-[300px] lg:h-[680px] relative">
           <Image
-            src="/register.jpg" // Thay bằng đường dẫn ảnh của bạn
+            src="/register.jpg"
             alt="register Image"
-            layout="fill" // Để ảnh chiếm toàn bộ container
-            objectFit="cover" // Làm ảnh phủ toàn bộ container
+            layout="fill"
+            objectFit="cover"
             className="rounded-lg"
           />
         </div>
 
-        {/* Right side - Register Form */}
         <div className="w-full lg:w-1/2 max-w-[626px] flex-col justify-start items-start gap-10 inline-flex">
           <div className="w-full space-y-8">
             <div className="space-y-4">
@@ -75,8 +157,22 @@ const Page = () => {
                 Vui lòng nhập thông tin đăng ký!
               </p>
             </div>
-            <div className="space-y-6">
-              {/* Full Name */}
+            {message && (
+              <div
+                className={`${
+                  message.type === 'success'
+                    ? 'bg-green-100 border-green-400 text-green-700'
+                    : 'bg-red-100 border-red-400 text-red-700'
+                } px-4 py-3 rounded relative`}
+                role="alert"
+              >
+                <strong className="font-bold">
+                  {message.type === 'success' ? 'Thành công! ' : 'Lỗi! '}
+                </strong>
+                <span className="block sm:inline">{message.content}</span>
+              </div>
+            )}
+            <form onSubmit={handleSubmit} className="space-y-6">
               <div className="space-y-2">
                 <label
                   htmlFor="name"
@@ -93,9 +189,11 @@ const Page = () => {
                   className="w-full border-b border-black opacity-50 pb-2 focus:outline-none focus:border-amber-400"
                   placeholder="John Doe"
                 />
+                {errors.name && (
+                  <p className="text-red-500 text-sm">{errors.name}</p>
+                )}
               </div>
 
-              {/* Nick Name */}
               <div className="space-y-2">
                 <label
                   htmlFor="nick_name"
@@ -112,9 +210,11 @@ const Page = () => {
                   className="w-full border-b border-black opacity-50 pb-2 focus:outline-none focus:border-amber-400"
                   placeholder="john"
                 />
+                {errors.nick_name && (
+                  <p className="text-red-500 text-sm">{errors.nick_name}</p>
+                )}
               </div>
 
-              {/* Email */}
               <div className="space-y-2">
                 <label
                   htmlFor="email"
@@ -129,11 +229,13 @@ const Page = () => {
                   value={formData.email}
                   onChange={handleChange}
                   className="w-full border-b border-black opacity-50 pb-2 focus:outline-none focus:border-amber-400"
-                  placeholder="josasssshn@example.com"
+                  placeholder="john@example.com"
                 />
+                {errors.email && (
+                  <p className="text-red-500 text-sm">{errors.email}</p>
+                )}
               </div>
 
-              {/* Phone */}
               <div className="space-y-2">
                 <label
                   htmlFor="phone"
@@ -150,9 +252,11 @@ const Page = () => {
                   className="w-full border-b border-black opacity-50 pb-2 focus:outline-none focus:border-amber-400"
                   placeholder="0123456789"
                 />
+                {errors.phone && (
+                  <p className="text-red-500 text-sm">{errors.phone}</p>
+                )}
               </div>
 
-              {/* Password */}
               <div className="space-y-2">
                 <label
                   htmlFor="password"
@@ -167,11 +271,13 @@ const Page = () => {
                   value={formData.password}
                   onChange={handleChange}
                   className="w-full border-b border-black opacity-50 pb-2 focus:outline-none focus:border-amber-400"
-                  placeholder="password123"
+                  placeholder="••••••••"
                 />
+                {errors.password && (
+                  <p className="text-red-500 text-sm">{errors.password}</p>
+                )}
               </div>
 
-              {/* Confirm Password */}
               <div className="space-y-2">
                 <label
                   htmlFor="password_confirmation"
@@ -186,11 +292,15 @@ const Page = () => {
                   value={formData.password_confirmation}
                   onChange={handleChange}
                   className="w-full border-b border-black opacity-50 pb-2 focus:outline-none focus:border-amber-400"
-                  placeholder="password123"
+                  placeholder="••••••••"
                 />
+                {errors.password_confirmation && (
+                  <p className="text-red-500 text-sm">
+                    {errors.password_confirmation}
+                  </p>
+                )}
               </div>
 
-              {/* Code */}
               <div className="space-y-2">
                 <label
                   htmlFor="code"
@@ -207,26 +317,28 @@ const Page = () => {
                   className="w-full border-b border-black opacity-50 pb-2 focus:outline-none focus:border-amber-400"
                   placeholder="Nhập mã xác thực"
                 />
+                {errors.code && (
+                  <p className="text-red-500 text-sm">{errors.code}</p>
+                )}
               </div>
 
-              {/* Error Message */}
-              {error && <p className="text-red-500 text-sm">{error}</p>}
-            </div>
-          </div>
-
-          <div className="w-full space-y-4">
-            <button
-              onClick={handleSubmit}
-              disabled={loading}
-              className="w-full px-12 py-4 bg-amber-400 rounded text-white text-base font-medium hover:bg-amber-500 transition-colors"
-            >
-              {loading ? 'Đang đăng ký...' : 'Đăng Ký Ngay'}
-            </button>
-            <p className="text-center text-black text-base">
-              <Link href={'/auth/login'}>
-                <span className="text-amber-400 hover:underline">trở về</span>
-              </Link>
-            </p>
+              <div className="w-full space-y-4">
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full px-12 py-4 bg-amber-400 rounded text-white text-base font-medium hover:bg-amber-500 transition-colors"
+                >
+                  {loading ? 'Đang đăng ký...' : 'Đăng Ký Ngay'}
+                </button>
+                <p className="text-center text-black text-base">
+                  <Link href={'/auth/login'}>
+                    <span className="text-amber-400 hover:underline">
+                      trở về
+                    </span>
+                  </Link>
+                </p>
+              </div>
+            </form>
           </div>
         </div>
       </div>
