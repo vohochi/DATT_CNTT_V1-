@@ -34,7 +34,7 @@ export const getPostById = async (id:number) => {
       );
       console.log('post blog detail:',response.data);
   
-      return response.data;
+      return response.data.data;
     } catch (error) {
       console.error('Error fetching data: ', error);
     }

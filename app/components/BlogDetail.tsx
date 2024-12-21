@@ -15,17 +15,17 @@ export default function BlogDetail() {
   const [post, setPost] = useState<Post | null>(null);
 
   useEffect(() => {
-    const fetchProduct = async () => {
+    const fetchBlog = async () => {
       try {
         const data = await getPostById(numericId);
         setPost(data);
-        console.log(data);
+        console.log('post',data);
       } catch (error) {
         console.error('Failed to fetch product:', error);
       }
     };
 
-    fetchProduct();
+    fetchBlog();
   }, [numericId]);
 
   if (!post) {
@@ -51,10 +51,10 @@ export default function BlogDetail() {
         </a>
       </div>
       <Image
-        src="https://via.placeholder.com/1170x1012"
-        alt="Profile Picture"
-        width={1170}
-        height={1012}
+        src={post.thumbnail}
+        alt=""
+        width={640}
+        height={480}
         className="rounded-3xl mb-12"
       />
 
@@ -149,12 +149,7 @@ export default function BlogDetail() {
       />
       <div className="max-w-[925px] mx-auto">
         <p className="mt-[50px] mb-[32px]">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Gravida quis
-          turpis feugiat sapien venenatis. Iaculis nunc nisl risus mattis elit
-          id lobortis. Proin erat fermentum tempor elementum bibendum. Proin sed
-          in nunc purus. Non duis eu pretium dictumst sed habitant sit vitae
-          eget. Nisi sit lacus, fusce diam. Massa odio sit velit sed purus quis
-          dolor.
+          {post.description}
         </p>
         <ul className="list-none">
           <li className="mb-[5px]">
