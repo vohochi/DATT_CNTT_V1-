@@ -20,7 +20,13 @@ interface Message {
   type: 'success' | 'error';
   content: string;
 }
-
+interface ApiResponse {
+  error?: string;
+  message?: string;
+  errors?: {
+    code?: string[];
+  };
+}
 const Page = () => {
   const router = useRouter();
 
@@ -88,27 +94,24 @@ const Page = () => {
     if (validateForm()) {
       try {
         setLoading(true);
-        const response = await Register(formData);
+        const response: ApiResponse = await Register(formData);
         console.log('Registration response:', response);
 
-        if (response) {
+        if (!response.error && !response.message) {
           setMessage({
             type: 'success',
             content: 'Bạn đã đăng ký thành công.',
           });
           alert('đăng ký thành công');
-          // Thêm một độ trễ nhỏ để người dùng thấy được thông báo thành công
           setTimeout(() => {
             router.push('/auth/login');
           }, 1500);
         } else if (response.error) {
-          // Xử lý trường hợp có error từ API
           setMessage({
             type: 'error',
             content: response.error || 'Đăng ký thất bại, vui lòng thử lại.',
           });
         } else if (response.message) {
-          // Xử lý các trường hợp có message từ API
           if (response.message.toLowerCase().includes('code đã tồn tại')) {
             setMessage({
               type: 'error',
@@ -121,12 +124,13 @@ const Page = () => {
             });
           }
         }
-      } catch (error: any) {
+      } catch (error) {
         console.error('Error during registration:', error);
         setMessage({
           type: 'error',
           content:
-            error?.errors.code[0] || 'Đăng ký thất bại, vui lòng thử lại.',
+            (error as ApiResponse)?.errors?.code?.[0] ||
+            'Đăng ký thất bại, vui lòng thử lại.',
         });
       } finally {
         setLoading(false);
