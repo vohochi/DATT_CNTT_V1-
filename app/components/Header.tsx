@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
-import { FaSearch, FaShoppingCart, FaUser } from 'react-icons/fa';
+import { FaSearch, FaShoppingCart, FaSignOutAlt, FaUser } from 'react-icons/fa';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { MdOutlineArrowBackIos } from 'react-icons/md';
 import SearchModal from './SearchTopBar';
@@ -12,6 +12,8 @@ import CartSideBarModal from './CartRightSideBar';
 import Cookies from 'js-cookie';
 import { fetchProfile } from '@/_lib/customer';
 import { Customer } from '@/types/Customer';
+import { useRouter } from 'next/navigation';
+import { Logout } from '@/_lib/auth';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -21,7 +23,7 @@ const Header = () => {
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
   const [isCartModalOpen, setIsCartModalOpen] = useState(false);
   const [userProfile, setUserProfile] = useState<Customer | null>(null);
-
+  const router = useRouter();
   useEffect(() => {
     const userId = Cookies.get('user_id');
     if (userId) {
@@ -52,6 +54,12 @@ const Header = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, [lastScrollY]);
+  const handleLogout = async () => {
+    await Logout();
+    Cookies.remove('user_id');
+    setUserProfile(null);
+    router.push('/auth/login');
+  };
 
   //cant scroll when open mobi menu
   useEffect(() => {
@@ -227,17 +235,21 @@ const Header = () => {
         >
           <FaShoppingCart className="w-6 h-6 text-[#1f1f1f]" />
         </div>
-        <div className="w-[30px] h-[30px] flex justify-center items-center cursor-pointer">
+        <div className="w-[30px] h-[30px] flex flex-col justify-center items-center cursor-pointer">
+          {' '}
+          {/* Changed to flex-col */}
           {userProfile ? (
-            <div className="flex items-center">
-              {/* <Image
-                src={userProfile.avatar || '/default-avatar.png'}
-                alt="User Avatar"
-                width={30}
-                height={30}
-                className="rounded-full"
-              /> */}
-              <span className="ml-2 text-sm">{userProfile.name}</span>
+            <div className="flex flex-col items-center">
+              {' '}
+              {/* Changed to flex-col */}
+              <span className="text-sm">{userProfile.name}</span>{' '}
+              {/* Removed unnecessary ml-2 */}
+              <button
+                onClick={handleLogout}
+                className="ml-2 mt-1 text-sm text-red-500 hover:text-red-700"
+              >
+                <FaSignOutAlt />
+              </button>
             </div>
           ) : (
             <Link href="/auth/login">
