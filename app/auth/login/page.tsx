@@ -1,9 +1,9 @@
 'use client';
 import { useState, useEffect } from 'react';
-import Cookies from 'js-cookie'; // Import thư viện js-cookie
+import Cookies from 'js-cookie';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Login } from '@/_lib/auth'; // Giả sử Login là hàm gọi API đăng nhập
+import { Login } from '@/_lib/auth';
 import { useRouter } from 'next/navigation';
 
 const Page = () => {
@@ -11,51 +11,65 @@ const Page = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [errors, setErrors] = useState<{ email?: string; password?: string }>(
+    {}
+  );
 
-  // Kiểm tra nếu đã có token trong cookie thì chuyển hướng về trang chính
   useEffect(() => {
-    const token = Cookies.get('token'); // Lấy token từ cookie
+    const token = Cookies.get('token');
     if (token) {
+<<<<<<< HEAD
       router.push('/'); // Nếu đã có token, chuyển hướng về trang chủ
       console.log(token)
+=======
+      router.push('/');
+>>>>>>> dccb8dfe47953366e266276592b9e0aeab638803
     }
   }, [router]);
 
-  // Hàm xử lý đăng nhập
+  const validateForm = () => {
+    const newErrors: { email?: string; password?: string } = {};
+
+    // Validate email
+    if (!email) {
+      newErrors.email = 'Email là bắt buộc';
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      newErrors.email = 'Email không hợp lệ';
+    }
+
+    // Validate password
+    if (!password) {
+      newErrors.password = 'Mật khẩu là bắt buộc';
+    } else if (password.length < 6) {
+      newErrors.password = 'Mật khẩu phải có ít nhất 6 ký tự';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleLogin = async () => {
-    setLoading(true);
-    setError(null); // Reset bất kỳ lỗi nào trước đó
-
-    const data = {
-      email,
-      password,
-    };
-
-    try {
-      const response = await Login(data); // Gọi API đăng nhập
-      console.log(response);
-      if (response.user_id) {
-        // Lưu token vào cookie với thời gian hết hạn là 7 ngày
-        Cookies.set('user_id', response.user_id, {
-          expires: 7,
-          secure: true,
-          sameSite: 'Strict',
-        });
-
-        // Thông báo đăng nhập thành công
-        alert('Đăng nhập thành công');
-
-        // Chuyển hướng về trang chủ sau khi đăng nhập thành công
-        router.push('/');
-      } else {
-        setError('Không có token trong phản hồi từ máy chủ');
+    if (validateForm()) {
+      setLoading(true);
+      try {
+        const response = await Login({ email, password });
+        if (response.user_id) {
+          Cookies.set('user_id', response.user_id, {
+            expires: 7,
+            secure: true,
+            sameSite: 'Strict',
+          });
+          alert('Đăng nhập thành công');
+          router.push('/');
+        } else {
+          setErrors({ password: 'Thông tin đăng nhập không chính xác' });
+        }
+      } catch (err) {
+        console.error('Login Error:', err);
+        setErrors({ password: `${err}` });
+      } finally {
+        setLoading(false);
       }
-    } catch (err) {
-      console.error('Login Error:', err);
-      // setError(err.message || 'Đã xảy ra lỗi không xác định');
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -65,7 +79,7 @@ const Page = () => {
         {/* Left side - Image */}
         <div className="w-full lg:w-1/2 h-[300px] lg:h-[680px] relative">
           <Image
-            src="/login.jpg" // Thay thế với đường dẫn hình ảnh của bạn
+            src="/login.jpg"
             alt="Login Image"
             layout="fill"
             objectFit="cover"
@@ -99,6 +113,9 @@ const Page = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
+                {errors.email && (
+                  <p className="text-red-500 text-sm">{errors.email}</p>
+                )}
               </div>
               <div className="space-y-2">
                 <label
@@ -114,10 +131,12 @@ const Page = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
+                {errors.password && (
+                  <p className="text-red-500 text-sm">{errors.password}</p>
+                )}
               </div>
             </div>
           </div>
-          {error && <p className="text-red-500 text-center">{error}</p>}
           <div className="w-full space-y-4">
             <button
               onClick={handleLogin}

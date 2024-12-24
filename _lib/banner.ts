@@ -13,7 +13,7 @@ export const fetchAllBanner = async () => {
       }
     );
     console.log('banenr', response.data);
-    
+
     return response.data;
   } catch (error) {
     console.error('Error fetching data: ', error);

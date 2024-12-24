@@ -20,7 +20,7 @@ export const fetchAllCategory = async () => {
   }
 };
 
-export const fetchCategoryById = async (id:number) => {
+export const fetchCategoryById = async (id: number) => {
   try {
     const response = await axios.get(
       `https://cors-anywhere.herokuapp.com/https://api-core.dsp.one/api/auth/category/${id}`,
