@@ -28,6 +28,8 @@ function ProfileForm() {
           const profile = data.data;
           setUserProfile(profile);
 
+          console.log('User Profile Data:', profile);
+
           // Pre-fill form inputs with fetched user data
           setName(profile.name || '');
           setNickName(profile.nick_name || '');
