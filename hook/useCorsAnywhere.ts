@@ -9,6 +9,7 @@ export function useCorsAnywhere() {
       try {
         const response = await fetch('/api/cors-anywhere');
         const data = await response.json();
+        console.log(data);
         if (data.data) {
           console.log('CORS Anywhere đã được kích hoạt');
           setCorsReady(true);
