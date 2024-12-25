@@ -18,7 +18,8 @@ const Page = () => {
   useEffect(() => {
     const token = Cookies.get('token');
     if (token) {
-      router.push('/');
+      router.push('/'); // Nếu đã có token, chuyển hướng về trang chủ
+      console.log(token)
     }
   }, [router]);
 

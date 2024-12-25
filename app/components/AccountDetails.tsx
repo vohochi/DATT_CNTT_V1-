@@ -1,4 +1,3 @@
-'use client';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
@@ -6,30 +5,44 @@ import { fetchProfile } from '@/_lib/customer';
 import { Customer } from '@/types/Customer';
 
 function ProfileForm() {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [displayName, setDisplayName] = useState('');
+  const [name, setName] = useState('');
+  const [nickName, setNickName] = useState('');
   const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [address, setAddress] = useState('');
+  const [birthday, setBirthday] = useState('');
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [userProfile, setUserProfile] = useState<Customer | null>(null);
-  console.log(userProfile);
+
+  const router = useRouter();
+
   useEffect(() => {
     const userId = Cookies.get('user_id');
+
     if (userId) {
       fetchProfile(parseInt(userId))
         .then((data) => {
-          console.log(data);
-          setUserProfile(data.data);
+          const profile = data.data;
+          setUserProfile(profile);
+
+          console.log('User Profile Data:', profile);
+
+          // Pre-fill form inputs with fetched user data
+          setName(profile.name || '');
+          setNickName(profile.nick_name || '');
+          setEmail(profile.email || '');
+          setPhone(profile.phone || '');
+          setAddress(profile.address || '');
+          setBirthday(profile.birthday || '');
         })
         .catch((error) => {
           console.error('Error fetching user profile:', error);
         });
     }
   }, []);
-  const router = useRouter();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -54,10 +67,12 @@ function ProfileForm() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          firstName,
-          lastName,
-          displayName,
+          name,
+          nickName,
           email,
+          phone,
+          address,
+          birthday,
           currentPassword,
           newPassword,
         }),
@@ -81,51 +96,28 @@ function ProfileForm() {
         Account Details
       </h3>
       <form onSubmit={handleSubmit} className="mt-6 pb-8">
-        <div className="grid grid-cols-2 gap-4 mb-6">
-          <div>
-            <label
-              htmlFor="firstName"
-              className="block text-gray-700 text-base mb-2"
-            >
-              First Name
-            </label>
-            <input
-              type="text"
-              id="firstName"
-              className="border w-full py-3 px-3 text-gray-700"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-            />
-          </div>
-          <div>
-            <label
-              htmlFor="lastName"
-              className="block text-gray-700 text-base mb-2"
-            >
-              Last Name
-            </label>
-            <input
-              type="text"
-              id="lastName"
-              className="border w-full py-3 px-3 text-gray-700"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-            />
-          </div>
-        </div>
         <div className="mb-6">
-          <label
-            htmlFor="displayName"
-            className="block text-gray-700 text-base mb-2"
-          >
-            Display Name
+          <label htmlFor="name" className="block text-gray-700 text-base mb-2">
+            Full Name
           </label>
           <input
             type="text"
-            id="displayName"
+            id="name"
             className="border w-full py-3 px-3 text-gray-700"
-            value={displayName}
-            onChange={(e) => setDisplayName(e.target.value)}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+        </div>
+        <div className="mb-6">
+          <label htmlFor="nickName" className="block text-gray-700 text-base mb-2">
+            Nickname
+          </label>
+          <input
+            type="text"
+            id="nickName"
+            className="border w-full py-3 px-3 text-gray-700"
+            value={nickName}
+            onChange={(e) => setNickName(e.target.value)}
           />
         </div>
         <div className="mb-6">
@@ -140,12 +132,45 @@ function ProfileForm() {
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
+        <div className="mb-6">
+          <label htmlFor="phone" className="block text-gray-700 text-base mb-2">
+            Phone Number
+          </label>
+          <input
+            type="text"
+            id="phone"
+            className="border w-full py-3 px-3 text-gray-700"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+          />
+        </div>
+        <div className="mb-6">
+          <label htmlFor="address" className="block text-gray-700 text-base mb-2">
+            Address
+          </label>
+          <input
+            type="text"
+            id="address"
+            className="border w-full py-3 px-3 text-gray-700"
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+          />
+        </div>
+        <div className="mb-6">
+          <label htmlFor="birthday" className="block text-gray-700 text-base mb-2">
+            Birthday
+          </label>
+          <input
+            type="date"
+            id="birthday"
+            className="border w-full py-3 px-3 text-gray-700"
+            value={birthday}
+            onChange={(e) => setBirthday(e.target.value)}
+          />
+        </div>
         <h3 className="mb-2 text-xl">Password change</h3>
         <div className="mb-6">
-          <label
-            htmlFor="currentPassword"
-            className="block text-gray-700 text-base mb-2"
-          >
+          <label htmlFor="currentPassword" className="block text-gray-700 text-base mb-2">
             Current Password
           </label>
           <input
@@ -158,10 +183,7 @@ function ProfileForm() {
         </div>
         <div className="grid grid-cols-2 gap-4 mb-6">
           <div>
-            <label
-              htmlFor="newPassword"
-              className="block text-gray-700 text-base mb-2"
-            >
+            <label htmlFor="newPassword" className="block text-gray-700 text-base mb-2">
               New Password
             </label>
             <input
@@ -173,10 +195,7 @@ function ProfileForm() {
             />
           </div>
           <div>
-            <label
-              htmlFor="confirmPassword"
-              className="block text-gray-700 text-base mb-2"
-            >
+            <label htmlFor="confirmPassword" className="block text-gray-700 text-base mb-2">
               Confirm Password
             </label>
             <input
