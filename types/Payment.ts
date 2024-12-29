@@ -28,8 +28,8 @@ export interface PaymentHistoryMeta {
       previous: string | null;
       current: string;
       next: string | null;
-    }
-  }
+    };
+  };
 }
 
 // Interface cho toàn bộ response từ API
@@ -50,9 +50,9 @@ export interface CreatePaymentHistoryRequest {
   user_id: number;
   transaction_id: string;
   date: string; // Format: "2024-12-13T03:51:00.332Z"
-  type: "RECHARGE" | string; // Có thể thêm các type khác nếu có
+  type: 'RECHARGE' | string; // Có thể thêm các type khác nếu có
   method: string;
-  status: "FAIL" | "SUCCESS" | "PENDING"; // Các trạng thái có thể có
+  status: 'FAIL' | 'SUCCESS' | 'PENDING'; // Các trạng thái có thể có
   total_pay: number;
   balance: number;
   data: string;
@@ -78,14 +78,14 @@ export interface CreatePaymentHistoryError {
 
 // Enum cho các loại payment type
 export enum PaymentType {
-  RECHARGE = "RECHARGE",
+  RECHARGE = 'RECHARGE',
 }
 
 // Enum cho các trạng thái payment
 export enum PaymentStatus {
-  FAIL = "FAIL",
-  SUCCESS = "SUCCESS", 
-  PENDING = "PENDING"
+  FAIL = 'FAIL',
+  SUCCESS = 'SUCCESS',
+  PENDING = 'PENDING',
 }
 
 // Interface cho request body khi update payment history

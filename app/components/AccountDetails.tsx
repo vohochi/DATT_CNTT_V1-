@@ -16,7 +16,7 @@ function ProfileForm() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [userProfile, setUserProfile] = useState<Customer | null>(null);
-
+  console.log(userProfile);
   const router = useRouter();
 
   useEffect(() => {
@@ -109,7 +109,10 @@ function ProfileForm() {
           />
         </div>
         <div className="mb-6">
-          <label htmlFor="nickName" className="block text-gray-700 text-base mb-2">
+          <label
+            htmlFor="nickName"
+            className="block text-gray-700 text-base mb-2"
+          >
             Nickname
           </label>
           <input
@@ -145,7 +148,10 @@ function ProfileForm() {
           />
         </div>
         <div className="mb-6">
-          <label htmlFor="address" className="block text-gray-700 text-base mb-2">
+          <label
+            htmlFor="address"
+            className="block text-gray-700 text-base mb-2"
+          >
             Address
           </label>
           <input
@@ -157,7 +163,10 @@ function ProfileForm() {
           />
         </div>
         <div className="mb-6">
-          <label htmlFor="birthday" className="block text-gray-700 text-base mb-2">
+          <label
+            htmlFor="birthday"
+            className="block text-gray-700 text-base mb-2"
+          >
             Birthday
           </label>
           <input
@@ -170,7 +179,10 @@ function ProfileForm() {
         </div>
         <h3 className="mb-2 text-xl">Password change</h3>
         <div className="mb-6">
-          <label htmlFor="currentPassword" className="block text-gray-700 text-base mb-2">
+          <label
+            htmlFor="currentPassword"
+            className="block text-gray-700 text-base mb-2"
+          >
             Current Password
           </label>
           <input
@@ -183,7 +195,10 @@ function ProfileForm() {
         </div>
         <div className="grid grid-cols-2 gap-4 mb-6">
           <div>
-            <label htmlFor="newPassword" className="block text-gray-700 text-base mb-2">
+            <label
+              htmlFor="newPassword"
+              className="block text-gray-700 text-base mb-2"
+            >
               New Password
             </label>
             <input
@@ -195,7 +210,10 @@ function ProfileForm() {
             />
           </div>
           <div>
-            <label htmlFor="confirmPassword" className="block text-gray-700 text-base mb-2">
+            <label
+              htmlFor="confirmPassword"
+              className="block text-gray-700 text-base mb-2"
+            >
               Confirm Password
             </label>
             <input

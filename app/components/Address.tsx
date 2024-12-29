@@ -1,12 +1,29 @@
+// Định nghĩa interfaces cho response data
+interface UserAddress {
+  address: string;
+}
+
+interface ApiResponse {
+  data: UserAddress[];
+  message?: string;
+  status?: number;
+}
+
+interface CustomError extends Error {
+  message: string;
+}
+
 import { useEffect, useState } from 'react';
 
 const AddressList = () => {
   const [addresses, setAddresses] = useState<string[]>([]);
-  const [status, setStatus] = useState<'loading' | 'success' | 'failed'>('loading');
+  const [status, setStatus] = useState<'loading' | 'success' | 'failed'>(
+    'loading'
+  );
   const [error, setError] = useState<string | null>(null);
-  const token = localStorage.getItem('authToken'); // Lấy token từ localStorage.
+  const token = localStorage.getItem('authToken');
 
-  const fetchAddresses = async () => {
+  const fetchAddresses = async (): Promise<void> => {
     try {
       setStatus('loading');
       if (!token) {
@@ -24,19 +41,21 @@ const AddressList = () => {
         throw new Error('Failed to fetch user data');
       }
 
-      const result = await response.json();
+      const result: ApiResponse = await response.json();
 
       if (!result.data || result.data.length === 0) {
         throw new Error('No addresses found for this user');
       }
 
-      // Xử lý trường hợp address rỗng
-      const userAddresses = result.data.map((item: { address: string }) => item.address || 'Rỗng');
+      const userAddresses: string[] = result.data.map(
+        (item: UserAddress) => item.address || 'Rỗng'
+      );
 
       setAddresses(userAddresses);
       setStatus('success');
-    } catch (err: any) {
-      setError(err.message || 'An error occurred');
+    } catch (err) {
+      const error = err as CustomError;
+      setError(error.message || 'An error occurred');
       setStatus('failed');
     }
   };
@@ -45,7 +64,7 @@ const AddressList = () => {
     fetchAddresses();
   }, [token]);
 
-  const handleRetry = () => {
+  const handleRetry = (): void => {
     setError(null);
     fetchAddresses();
   };
@@ -74,9 +93,11 @@ const AddressList = () => {
 
   return (
     <div>
-      <h3 className="text-2xl mb-4 border-b border-dashed border-gray-300">User Addresses</h3>
+      <h3 className="text-2xl mb-4 border-b border-dashed border-gray-300">
+        User Addresses
+      </h3>
       <ul className="list-disc ml-6">
-        {addresses.map((address, index) => (
+        {addresses.map((address: string, index: number) => (
           <li key={index} className="mb-2 text-gray-800">
             {address}
           </li>

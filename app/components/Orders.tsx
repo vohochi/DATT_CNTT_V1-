@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import {  getOrderDetail, getOrderHistory } from '@/_lib/order';
+import { useState, useEffect, useCallback } from 'react';
+import { getOrderDetail, getOrderHistory } from '@/_lib/order';
 import { Order } from '@/types/Order';
 import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
@@ -15,11 +15,19 @@ const Orders = () => {
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [loadingDetail, setLoadingDetail] = useState(false);
 
-  useEffect(() => {
-    fetchOrders();
-  }, [router]);
+  const handleError = useCallback(
+    (err: Error) => {
+      const errorMessage = err.message;
+      setError(errorMessage);
+      if (errorMessage.includes('not authorized')) {
+        Cookies.remove('token');
+        router.push('/auth/login');
+      }
+    },
+    [router]
+  );
 
-  const fetchOrders = async () => {
+  const fetchOrders = useCallback(async () => {
     try {
       const token = Cookies.get('token');
       if (!token) {
@@ -38,40 +46,39 @@ const Orders = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [handleError]);
 
-  const handleViewDetail = async (code: string) => {
-    try {
-      setLoadingDetail(true);
-      if (selectedOrder?.code === code) {
-        setSelectedOrder(null);
-        return;
+  const handleViewDetail = useCallback(
+    async (code: string) => {
+      try {
+        setLoadingDetail(true);
+        if (selectedOrder?.code === code) {
+          setSelectedOrder(null);
+          return;
+        }
+
+        const response = await getOrderDetail(code);
+        if (response.status === 'success' && response.data.length > 0) {
+          setSelectedOrder(response.data[0]);
+        } else {
+          setError(response.message || 'Failed to fetch order details');
+        }
+      } catch (err) {
+        handleError(err as Error);
+      } finally {
+        setLoadingDetail(false);
       }
+    },
+    [selectedOrder, handleError]
+  );
 
-      const response = await getOrderDetail(code);
-      if (response.status === 'success' && response.data.length > 0) {
-        setSelectedOrder(response.data[0]);
-      } else {
-        setError(response.message || 'Failed to fetch order details');
-      }
-    } catch (err) {
-      handleError(err as Error);
-    } finally {
-      setLoadingDetail(false);
-    }
-  };
-
-  const handleError = (err: Error) => {
-    const errorMessage = err.message;
-    setError(errorMessage);
-    if (errorMessage.includes('not authorized')) {
-      Cookies.remove('token');
-      router.push('/auth/login');
-    }
-  };
+  useEffect(() => {
+    fetchOrders();
+  }, [fetchOrders]);
 
   if (loading) return <div className="text-center py-4">Loading...</div>;
-  if (error) return <div className="text-red-500 text-center py-4">Error: {error}</div>;
+  if (error)
+    return <div className="text-red-500 text-center py-4">Error: {error}</div>;
 
   return (
     <div className="container mx-auto p-4">
@@ -96,17 +103,21 @@ const Orders = () => {
                     {new Date(order.created_at).toLocaleDateString()}
                   </td>
                   <td className="px-6 py-4">
-                    <span className={`px-2 py-1 rounded ${
-                      order.status === 'completed' ? 'bg-green-100 text-green-800' :
-                      order.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
-                      'bg-red-100 text-red-800'
-                    }`}>
+                    <span
+                      className={`px-2 py-1 rounded ${
+                        order.status === 'completed'
+                          ? 'bg-green-100 text-green-800'
+                          : order.status === 'pending'
+                          ? 'bg-yellow-100 text-yellow-800'
+                          : 'bg-red-100 text-red-800'
+                      }`}
+                    >
                       {order.status}
                     </span>
                   </td>
                   <td className="px-6 py-4">${order.total}</td>
                   <td className="px-6 py-4">
-                    <button 
+                    <button
                       onClick={() => handleViewDetail(order.code)}
                       className="text-blue-600 hover:text-blue-800 hover:underline"
                     >
@@ -118,24 +129,32 @@ const Orders = () => {
                   <tr>
                     <td colSpan={5} className="px-6 py-4">
                       {loadingDetail ? (
-                        <div className="text-center py-4">Loading details...</div>
+                        <div className="text-center py-4">
+                          Loading details...
+                        </div>
                       ) : (
                         <div className="bg-gray-50 p-4 rounded-lg">
                           <div className="grid grid-cols-2 gap-4 mb-4">
                             <div>
                               <p className="text-gray-600">Customer Name</p>
-                              <p className="font-semibold">{selectedOrder.name}</p>
+                              <p className="font-semibold">
+                                {selectedOrder.name}
+                              </p>
                             </div>
                             <div>
                               <p className="text-gray-600">Phone Number</p>
-                              <p className="font-semibold">{selectedOrder.phone_number}</p>
+                              <p className="font-semibold">
+                                {selectedOrder.phone_number}
+                              </p>
                             </div>
                             <div className="col-span-2">
                               <p className="text-gray-600">Shipping Address</p>
-                              <p className="font-semibold">{selectedOrder.shipping_address}</p>
+                              <p className="font-semibold">
+                                {selectedOrder.shipping_address}
+                              </p>
                             </div>
                           </div>
-                          
+
                           <div className="border-t pt-4">
                             <div className="space-y-2">
                               <div className="flex justify-between">
@@ -145,7 +164,9 @@ const Orders = () => {
                                 </span>
                               </div>
                               <div className="flex justify-between">
-                                <span className="text-gray-600">Shipping Cost</span>
+                                <span className="text-gray-600">
+                                  Shipping Cost
+                                </span>
                                 <span className="font-semibold">
                                   ${selectedOrder.shipping_costs.toFixed(2)}
                                 </span>

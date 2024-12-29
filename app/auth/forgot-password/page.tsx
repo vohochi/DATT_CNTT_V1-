@@ -63,9 +63,10 @@ const ForgotPasswordPage = () => {
 
     setIsLoading(true);
     try {
-      console.log(email, otpString);
+      // console.log(email, otpString);
       const response = await verifyOTP({ email, otp: otpString });
-      if (response && response.success) {
+      console.log(response);
+      if (response) {
         sessionStorage.setItem('resetPasswordOTP', otpString);
         router.push('/auth/reset-password');
       } else {

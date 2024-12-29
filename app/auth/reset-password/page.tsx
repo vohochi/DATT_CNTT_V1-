@@ -54,7 +54,7 @@ const ResetPasswordPage = () => {
       alert('Đặt lại mật khẩu thành công');
       sessionStorage.removeItem('resetPasswordEmail');
       sessionStorage.removeItem('resetPasswordOTP');
-      // router.push('/auth/login');
+      router.push('/auth/login');
     } catch (error) {
       console.log(error);
       alert('Đặt lại mật khẩu thất bại. Vui lòng thử lại.');

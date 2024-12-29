@@ -3,19 +3,19 @@ import BlogMain from '@/app/components/BlogMain';
 import CategoryMain from '@/app/components/CategoryMain';
 import SliderMain from '@/app/components/SliderMain';
 import TopSaleMain from '@/app/components/TopSaleMain';
-import { useCorsAnywhere } from '@/hook/useCorsAnywhere';
+// import { useCorsAnywhere } from '@/hook/useCorsAnywhere';
 import { FaPaperPlane } from 'react-icons/fa';
 
 const MainHome = () => {
-  const { corsReady, error } = useCorsAnywhere();
+  // const { corsReady, error } = useCorsAnywhere();
 
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
+  // if (error) {
+  //   return <div>Error: {error}</div>;
+  // }
 
-  if (!corsReady) {
-    return <div>Đang kích hoạt CORS Anywhere...</div>;
-  }
+  // if (!corsReady) {
+  //   return <div>Đang kích hoạt CORS Anywhere...</div>;
+  // }
 
   return (
     <div className="w-full container mx-auto">
