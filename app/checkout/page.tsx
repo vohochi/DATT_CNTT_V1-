@@ -1,77 +1,131 @@
-"use client";
+'use client';
 
-// pages/checkout.js
-import { fetchDictrict, fetchProvince, fetchWard } from "@/_lib/address";
-import React, { useEffect, useState } from "react";
-
-interface AddressData {
-  id: string; // Or number, depending on your data
-  name: string;
-}
+import { useState } from 'react';
+import { createOrder, createPaymentHistory } from '@/_lib/order';
+import { Order } from '@/types/Order';
+import { useRouter } from 'next/navigation';
+import Cookies from 'js-cookie';
+import { PaymentType, PaymentStatus } from '@/types/Payment';
 
 export default function Checkout() {
-  const [districts, setDistricts] = useState<AddressData[]>([]);
-  const [provinces, setProvinces] = useState<AddressData[]>([]);
-  const [wards, setWards] = useState<AddressData[]>([]);
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
+  // Form state
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    companyName: "",
-    country: "",
-    streetAddress: "",
-    city: "",
-    district: "",
-    ward: "",
-    phone: "",
-    email: "",
-    orderNotes: "",
-    name: '',
-    id: '',
+    firstName: '',
+    lastName: '',
+    companyName: '',
+    country: '',
+    streetAddress: '',
+    apartment: '',
+    townCity: '',
+    district: '',
+    postcode: '',
+    phone: '',
+    email: '',
+    orderNotes: '',
+    shippingDifferent: false,
+    paymentMethod: '',
+    agreeToTerms: false,
   });
 
-  useEffect(() => {
-    const getAddress = async () => {
-      try {
-        const [districtData, provinceData, wardData] = await Promise.all([
-          fetchDictrict(),
-          fetchProvince(),
-          fetchWard(),
-        ]);
-        setDistricts(districtData || []);
-        setProvinces(provinceData || []);
-        setWards(wardData || []);
-        console.log(provinceData, districtData, wardData)
+  // Handle input changes
+  const handleInputChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
+    const { name, value, type } = e.target;
+    const checked = (e.target as HTMLInputElement).checked;
 
-      } catch (error) {
-        console.error("Failed to fetch address data:", error);
-      }
-    };
+    setFormData((prev) => ({
+      ...prev,
+      [name]: type === 'checkbox' ? checked : value,
+    }));
+  };
 
-    getAddress();
-  }, []);
+  // Handle order submission
+  const handleSubmitOrder = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-  useEffect(() => {
-    if (formData.district) {
-      const fetchWardData = async () => {
-        try {
-          const wardData = await fetchWard(formData.district); // Fetch wards based on selected district
-          setWards(wardData || []);
-        } catch (error) {
-          console.error("Failed to fetch ward data:", error);
-        }
-      };
-
-      fetchWardData();
+    if (!formData.agreeToTerms) {
+      setError('Please agree to terms and conditions');
+      return;
     }
-  }, [formData.district]);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    if (!formData.paymentMethod) {
+      setError('Please select a payment method');
+      return;
+    }
+
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const userId = Cookies.get('user_id');
+      if (!userId) {
+        throw new Error('Please login to place order');
+      }
+
+      // 1. Create order first
+      const orderData: Order = {
+        code: `ORD${Date.now()}`,
+        user_id: parseInt(userId),
+        name: `${formData.firstName} ${formData.lastName}`,
+        phone_number: formData.phone,
+        shipping_address: `${formData.streetAddress}, ${formData.townCity}, ${formData.country}`,
+        payment_method: getPaymentMethodId(formData.paymentMethod),
+        shipping_unit: 1,
+        shipping_costs: 2.0,
+        total_order: 89.99,
+        total: 91.99,
+        status: 'pending',
+      } as Order;
+
+      const orderResponse = await createOrder(orderData);
+
+      if (orderResponse.status === 'success') {
+        // 2. Create payment history
+        const paymentData = {
+          user_id: Number(userId),
+          transaction_id: `TRX-${Date.now()}`,
+          date: new Date().toISOString(),
+          type: PaymentType.RECHARGE,
+          method: formData.paymentMethod,
+          status: PaymentStatus.PENDING,
+          total_pay: orderData.total,
+          balance: 0,
+          data: JSON.stringify({
+            order_id: orderResponse.data.id,
+            order_code: orderData.code,
+            shipping_address: orderData.shipping_address,
+            payment_method: formData.paymentMethod,
+          }),
+          note: `Payment for order ${orderData.code}`,
+          is_active: true,
+          created_by: Number(userId),
+        };
+
+        const paymentResponse = await createPaymentHistory(paymentData);
+
+        if (paymentResponse.data) {
+          router.push(
+            `/checkout/success?transaction_id=${paymentResponse.data.transaction_id}`
+          );
+        } else {
+          throw new Error('Payment creation failed');
+        }
+      } else {
+        throw new Error(orderResponse.message || 'Order creation failed');
+      }
+    } catch (err) {
+      console.error('Checkout Error:', err);
+      setError(err instanceof Error ? err.message : 'Checkout failed');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -91,12 +145,18 @@ export default function Checkout() {
       </nav>
       <div className="min-h-screen">
         <div className="max-w-6xl mx-auto bg-white p-8 shadow-md">
-          <div className="border-b border-gray-300 pb-4 mb-4 ">
+          {error && (
+            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+              {error}
+            </div>
+          )}
+
+          <div className="border-b border-gray-300 pb-4 mb-4">
             <div className="bg-gray-100 p-4 text-gray-700 text-sm flex border-t-2 border-blue-500 ">
               <i className="fas fa-tag mr-2"></i>
               <div className="mr-2">Have a Coupon?</div>
               <a href="#/" className="text-blue-500">
-                {" "}
+                {' '}
                 Click here to enter your code
               </a>
             </div>
@@ -107,29 +167,31 @@ export default function Checkout() {
 
             <div>
               <h2 className="text-2xl font-semibold mb-4">Billing Details</h2>
-              <form className="space-y-4">
+              <form className="space-y-4" onSubmit={handleSubmitOrder}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700">
-                      First Name <span className="text-red-500">*</span>
+                      First name <span className="text-red-500">*</span>
                     </label>
                     <input
                       type="text"
                       name="firstName"
                       value={formData.firstName}
                       onChange={handleInputChange}
+                      required
                       className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
                     />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700">
-                      Last Name <span className="text-red-500">*</span>
+                      Last name <span className="text-red-500">*</span>
                     </label>
                     <input
                       type="text"
                       name="lastName"
                       value={formData.lastName}
                       onChange={handleInputChange}
+                      required
                       className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
                     />
                   </div>
@@ -141,27 +203,29 @@ export default function Checkout() {
                   </label>
                   <input
                     type="text"
+                    name="companyName"
+                    value={formData.companyName}
+                    onChange={handleInputChange}
                     className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
                   />
                 </div>
 
-                {/* Dynamic Country Selection */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700">
                     Country <span className="text-red-500">*</span>
                   </label>
-                  <select
-                    name="country"
-                    value={formData.country}
-                    onChange={handleInputChange}
-                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
-                  >
-                    <option value="">Select a country</option>
-                    {provinces.map((province) => (
-                      <option key={province.id} value={province.name}>
-                        {province.name}
-                      </option>
-                    ))}
+                  <select className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+                    <option>Bangladesh</option>
+                    <option>Afghanistan</option>
+                    <option>Albania</option>
+                    <option>Algeria</option>
+                    <option>Armenia</option>
+                    <option>India</option>
+                    <option>Pakistan </option>
+                    <option>England</option>
+                    <option>London</option>
+                    <option>London</option>
+                    <option>China</option>
                   </select>
                 </div>
 
@@ -191,43 +255,12 @@ export default function Checkout() {
                   />
                 </div>
 
-                {/* Dynamic District Selection */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700">
                     District <span className="text-red-500">*</span>
                   </label>
-                  <select
-                    name="district"
-                    value={formData.district}
-                    onChange={handleInputChange}
-                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
-                  >
-                    <option value="">Select a district</option>
-                    {districts.map((district) => (
-                      <option key={district.id} value={district.name}>
-                        {district.name}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                {/* Dynamic Ward Selection */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">
-                    Ward <span className="text-red-500">*</span>
-                  </label>
-                  <select
-                    name="ward"
-                    value={formData.ward}
-                    onChange={handleInputChange}
-                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
-                  >
-                    <option value="">Select a ward</option>
-                    {wards.map((ward) => (
-                      <option key={ward.id} value={ward.name}>
-                        {ward.name}
-                      </option>
-                    ))}
+                  <select className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+                    <option>Afghanistan</option>
                   </select>
                 </div>
 
@@ -270,20 +303,94 @@ export default function Checkout() {
                     Ship to a different address?
                   </label>
                 </div>
-                {/* Notes */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700">
-                    Order Notes (optional)
+                    Order notes (optional)
                   </label>
                   <textarea
-                    name="orderNotes"
-                    value={formData.orderNotes}
-                    onChange={handleInputChange}
                     className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
                     rows={4}
                     placeholder="Notes about your order, e.g. special notes for delivery."
                   ></textarea>
                 </div>
+
+                {/* Payment Methods */}
+                <div className="space-y-4">
+                  {[
+                    {
+                      id: 'bank',
+                      label: 'DIRECT BANK TRANSFER',
+                      description:
+                        'Make your payment directly into our bank account. Please use your Order ID as the payment reference.',
+                    },
+                    {
+                      id: 'check',
+                      label: 'CHECK PAYMENTS',
+                    },
+                    {
+                      id: 'cod',
+                      label: 'CASH ON DELIVERY',
+                    },
+                    {
+                      id: 'paypal',
+                      label: 'PAYPAL',
+                      description:
+                        'Your personal data will be used to process your order, support your experience throughout this website.',
+                    },
+                  ].map((method) => (
+                    <div
+                      key={method.id}
+                      className="p-4 border rounded hover:border-blue-500"
+                    >
+                      <div className="flex items-center">
+                        <input
+                          type="radio"
+                          id={method.id}
+                          name="paymentMethod"
+                          value={method.id}
+                          checked={formData.paymentMethod === method.id}
+                          onChange={handleInputChange}
+                          className="h-4 w-4 text-blue-600 border-gray-300"
+                        />
+                        <label
+                          htmlFor={method.id}
+                          className="ml-2 text-sm font-medium text-gray-700"
+                        >
+                          {method.label}
+                        </label>
+                      </div>
+                      {method.description && (
+                        <p className="mt-1 ml-6 text-sm text-gray-500">
+                          {method.description}
+                        </p>
+                      )}
+                    </div>
+                  ))}
+                </div>
+
+                {/* Terms and Conditions */}
+                <div className="flex items-center mt-4">
+                  <input
+                    type="checkbox"
+                    name="agreeToTerms"
+                    checked={formData.agreeToTerms}
+                    onChange={handleInputChange}
+                    className="h-4 w-4 text-blue-600 border-gray-300 rounded"
+                  />
+                  <label className="ml-2 block text-sm text-gray-900">
+                    I have read and agree to the website terms and conditions{' '}
+                    <span className="text-red-500">*</span>
+                  </label>
+                </div>
+
+                {/* Place Order Button */}
+                <button
+                  type="submit"
+                  disabled={isLoading}
+                  className="mt-4 w-full bg-red-500 text-white py-2 rounded-md text-sm font-medium disabled:bg-gray-400"
+                >
+                  {isLoading ? 'Processing...' : 'PLACE ORDER'}
+                </button>
               </form>
             </div>
 
@@ -423,7 +530,7 @@ export default function Checkout() {
                     className="h-4 w-4 text-blue-600 border-gray-300 rounded"
                   />
                   <label className="ml-2 block text-sm text-gray-900">
-                    I have read and agree to the website terms and conditions{" "}
+                    I have read and agree to the website terms and conditions{' '}
                     <span className="text-red-500">*</span>
                   </label>
                 </div>
@@ -441,4 +548,19 @@ export default function Checkout() {
       </div>
     </>
   );
+}
+
+function getPaymentMethodId(method: string): number {
+  switch (method) {
+    case 'bank':
+      return 1;
+    case 'check':
+      return 2;
+    case 'cod':
+      return 3;
+    case 'paypal':
+      return 4;
+    default:
+      return 1;
+  }
 }

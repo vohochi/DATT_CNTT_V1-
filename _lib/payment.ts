@@ -38,7 +38,6 @@ export const getAllPaymentHistory =
           Authorization: `Bearer ${token}`,
         },
       });
-
       return response.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {

@@ -19,7 +19,7 @@ const Page = () => {
     const token = Cookies.get('token');
     if (token) {
       router.push('/'); // Nếu đã có token, chuyển hướng về trang chủ
-      console.log(token)
+      console.log(token);
     }
   }, [router]);
 
@@ -56,6 +56,12 @@ const Page = () => {
             sameSite: 'Strict',
           });
           alert('Đăng nhập thành công');
+          console.log(response);
+          Cookies.set('authToken', response.token, {
+            expires: 7,
+            secure: true,
+            sameSite: 'Strict',
+          });
           router.push('/');
         } else {
           setErrors({ password: 'Thông tin đăng nhập không chính xác' });

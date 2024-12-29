@@ -14,6 +14,7 @@ interface CustomError extends Error {
 }
 
 import { useEffect, useState } from 'react';
+import Cookies from 'js-cookie';
 
 const AddressList = () => {
   const [addresses, setAddresses] = useState<string[]>([]);
@@ -21,7 +22,7 @@ const AddressList = () => {
     'loading'
   );
   const [error, setError] = useState<string | null>(null);
-  const token = localStorage.getItem('authToken');
+  const token = Cookies.get('authToken');
 
   const fetchAddresses = async (): Promise<void> => {
     try {
@@ -30,12 +31,15 @@ const AddressList = () => {
         throw new Error('User is not logged in');
       }
 
-      const response = await fetch('http://api-core.dsp.one/api/auth/user', {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await fetch(
+        'https://cors-anywhere.herokuapp.com/http://api-core.dsp.one/api/auth/user',
+        {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       if (!response.ok) {
         throw new Error('Failed to fetch user data');

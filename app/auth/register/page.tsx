@@ -13,7 +13,6 @@ interface FormErrors {
   phone?: string;
   password?: string;
   password_confirmation?: string;
-  address: string;
   code?: string;
 }
 
@@ -21,6 +20,7 @@ interface Message {
   type: 'success' | 'error';
   content: string;
 }
+
 interface ApiResponse {
   error?: string;
   message?: string;
@@ -28,6 +28,7 @@ interface ApiResponse {
     code?: string[];
   };
 }
+
 const Page = () => {
   const router = useRouter();
 
@@ -38,7 +39,6 @@ const Page = () => {
     phone: '',
     password: '',
     password_confirmation: '',
-    address: '',
     code: '',
   });
 
@@ -87,11 +87,10 @@ const Page = () => {
     const { name, value } = e.target;
     setFormData((prevState) => {
       const newState = { ...prevState, [name]: value };
-      console.log('Updated formData:', newState); // Thêm log để kiểm tra dữ liệu
+      console.log('Updated formData:', newState);
       return newState;
     });
   };
-  
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -301,29 +300,6 @@ const Page = () => {
                   onChange={handleChange}
                   className="w-full border-b border-black opacity-50 pb-2 focus:outline-none focus:border-amber-400"
                   placeholder="••••••••"
-                />
-                {errors.password_confirmation && (
-                  <p className="text-red-500 text-sm">
-                    {errors.password_confirmation}
-                  </p>
-                )}
-              </div>
-
-              <div className="space-y-2">
-                <label
-                  htmlFor="address"
-                  className="block text-black text-base opacity-40"
-                >
-                 Địa chỉ
-                </label>
-                <input
-                  type="text"
-                  id="address"
-                  name="address"
-                  value={formData.address}
-                  onChange={handleChange}
-                  className="w-full border-b border-black opacity-50 pb-2 focus:outline-none focus:border-amber-400"
-                  placeholder="123 Main St"
                 />
                 {errors.password_confirmation && (
                   <p className="text-red-500 text-sm">
