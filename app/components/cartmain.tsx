@@ -1,6 +1,70 @@
+'use client';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { CartResponse, CartDetail } from '@/types/Cart';
+import { getCart, updateCartDetail, removeFromCart } from '@/_lib/cart';
+import Cookies from 'js-cookie';
 
 export default function Cart() {
+  const [cart, setCart] = useState<CartResponse | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  // Fetch cart data when component mounts
+  useEffect(() => {
+    const fetchCartData = async () => {
+      try {
+        const cartId = Cookies.get('cart_id');
+        if (!cartId) {
+          setError('No cart found');
+          setLoading(false);
+          return;
+        }
+        const cartData = await getCart(parseInt(cartId));
+        setCart(cartData);
+      } catch (err) {
+        setError('Failed to load cart');
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCartData();
+  }, []);
+
+  // Handle quantity updates
+  const handleQuantityChange = async (
+    cartId: number,
+    productId: number,
+    quantity: number,
+    currentPrice: number
+  ) => {
+    try {
+      const response = await updateCartDetail(cartId, productId, {
+        quantity,
+        price: currentPrice,
+      });
+      setCart(response);
+    } catch (err) {
+      console.error('Failed to update quantity:', err);
+    }
+  };
+
+  // Handle product removal
+  const handleRemoveProduct = async (cartId: number, productId: number) => {
+    try {
+      const response = await removeFromCart(cartId, productId);
+      setCart(response);
+    } catch (err) {
+      console.error('Failed to remove product:', err);
+    }
+  };
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
+  if (!cart) return <div>No items in cart</div>;
+
   return (
     <main className="flex flex-col items-center mb-20">
       {/* <!--== Start Page Header Area Wrapper ==--> */}
@@ -35,143 +99,73 @@ export default function Cart() {
                   </tr>
                 </thead>
                 <tbody className="text-gray-600 text-sm font-light">
-                  <tr className="border-b border-gray-200 hover:bg-gray-100">
-                    <td className="py-3 px-6 text-left whitespace-nowrap border ">
-                      <a href="#" className="text-red-500">
-                        ×
-                      </a>
-                    </td>
-                    <td className="py-3 px-6 text-left border">
-                      <a href="#">
-                        <Image
-                          src="/assets/images/shop/cart1.webp"
-                          alt="Product Image"
-                          width={16}
-                          height={20}
-                          className="w-16 h-20"
-                        />
-                      </a>
-                    </td>
-                    <td className="py-3 px-6 text-left border">
-                      <a href="#" className="text-blue-600 hover:underline">
-                        Condimentum posuere consectetur urna
-                      </a>
-                    </td>
-                    <td className="py-3 px-6 text-left border">$115.00</td>
-                    <td className="py-3 px-6 text-left border">
-                      <div className="flex items-center">
+                  {cart.cart_details.map((item: CartDetail) => (
+                    <tr key={item.id} className="border-b border-gray-200 hover:bg-gray-100">
+                      <td className="py-3 px-6 text-left whitespace-nowrap border">
                         <button
-                          type="button"
-                          className="dec qty-btn bg-gray-300 text-gray-700 px-2"
+                          onClick={() => handleRemoveProduct(cart.data.id, item.product_id)}
+                          className="text-red-500 text-xl"
                         >
-                          -
+                          ×
                         </button>
-                        <input
-                          type="text"
-                          className="quantity w-12 text-center mx-2 border border-gray-300"
-                          value="1"
-                          readOnly
-                        />
-                        <button
-                          type="button"
-                          className="inc qty-btn bg-gray-300 text-gray-700 px-2"
-                        >
-                          +
-                        </button>
-                      </div>
-                    </td>
-                    <td className="py-3 px-6 text-left border">$115.00</td>
-                  </tr>
-                  <tr className="border-b border-gray-200 hover:bg-gray-100">
-                    <td className="py-3 px-6 text-left border whitespace-nowrap">
-                      <a href="#" className="text-red-500">
-                        ×
-                      </a>
-                    </td>
-                    <td className="py-3 px-6 text-left border">
-                      <a href="#">
+                      </td>
+                      <td className="py-3 px-6 text-left border">
                         <Image
                           src="https://via.placeholder.com/68x84"
                           alt="Product Image"
+                          width={68}
+                          height={84}
                           className="w-16 h-20"
                         />
-                      </a>
-                    </td>
-                    <td className="py-3 px-6 text-left border">
-                      <a href="#" className="text-blue-600 hover:underline">
-                        Kaoreet lobortis sagittis laoreet
-                      </a>
-                    </td>
-                    <td className="py-3 px-6 text-left border">$95.00</td>
-                    <td className="py-3 px-6 text-left border">
-                      <div className="flex items-center">
-                        <button
-                          type="button"
-                          className="dec qty-btn bg-gray-300 text-gray-700 px-2"
-                        >
-                          -
-                        </button>
-                        <input
-                          type="text"
-                          className="quantity w-12 text-center mx-2 border border-gray-300"
-                          value="1"
-                          readOnly
-                        />
-                        <button
-                          type="button"
-                          className="inc qty-btn bg-gray-300 text-gray-700 px-2"
-                        >
-                          +
-                        </button>
-                      </div>
-                    </td>
-                    <td className="py-3 px-6 text-left border">$95.00</td>
-                  </tr>
-                  <tr className="border-b border-gray-200 hover:bg-gray-100">
-                    <td className="py-3 px-6 text-left border whitespace-nowrap">
-                      <a href="#" className="text-red-500">
-                        ×
-                      </a>
-                    </td>
-                    <td className="py-3 px-6 text-left border">
-                      <a href="#">
-                        <Image
-                          src="https://via.placeholder.com/68x84"
-                          alt="Product Image"
-                          className="w-16 h-20"
-                        />
-                      </a>
-                    </td>
-                    <td className="py-3 px-6 text-left border">
-                      <a href="#" className="text-blue-600 hover:underline">
-                        Nostrum exercitationem itae ipsum
-                      </a>
-                    </td>
-                    <td className="py-3 px-6 text-left border">$79.00</td>
-                    <td className="py-3 px-6 text-left border">
-                      <div className="flex items-center rounded-full">
-                        <button
-                          type="button"
-                          className="dec qty-btn bg-gray-300 text-gray-700 px-2"
-                        >
-                          -
-                        </button>
-                        <input
-                          type="text"
-                          className="quantity w-12 text-center mx-2 border border-gray-300"
-                          value="1"
-                          readOnly
-                        />
-                        <button
-                          type="button"
-                          className="inc qty-btn bg-gray-300 text-gray-700 px-2"
-                        >
-                          +
-                        </button>
-                      </div>
-                    </td>
-                    <td className="py-3 px-6 text-left border">$79.00</td>
-                  </tr>
+                      </td>
+                      <td className="py-3 px-6 text-left border">
+                        <span className="text-blue-600">Product Name</span>
+                      </td>
+                      <td className="py-3 px-6 text-left border">${item.price}</td>
+                      <td className="py-3 px-6 text-left border">
+                        <div className="flex items-center">
+                          <button
+                            type="button"
+                            onClick={() => 
+                              handleQuantityChange(
+                                cart.data.id,
+                                item.product_id,
+                                item.quantity - 1,
+                                item.price
+                              )
+                            }
+                            className="dec qty-btn bg-gray-300 text-gray-700 px-2"
+                            disabled={item.quantity <= 1}
+                          >
+                            -
+                          </button>
+                          <input
+                            type="text"
+                            className="quantity w-12 text-center mx-2 border border-gray-300"
+                            value={item.quantity}
+                            readOnly
+                          />
+                          <button
+                            type="button"
+                            onClick={() => 
+                              handleQuantityChange(
+                                cart.data.id,
+                                item.product_id,
+                                item.quantity + 1,
+                                item.price
+                              )
+                            }
+                            className="inc qty-btn bg-gray-300 text-gray-700 px-2"
+                          >
+                            +
+                          </button>
+                        </div>
+                      </td>
+                      <td className="py-3 px-6 text-left border">
+                        ${item.total_price_detail}
+                      </td>
+                    </tr>
+                  ))}
                   <tr>
                     <td colSpan={6} className="py-3 px-6 text-right">
                       <button
@@ -211,7 +205,9 @@ export default function Cart() {
                   <tbody>
                     <tr className="border-t">
                       <th className="py-3 text-left">Subtotal</th>
-                      <td className="py-3 text-right text-2xl">$499.00</td>
+                      <td className="py-3 text-right text-2xl">
+                        ${cart.data.total_price}
+                      </td>
                     </tr>
                     <tr className="border-t">
                       <th className="py-3 text-left">Shipping</th>
@@ -263,13 +259,15 @@ export default function Cart() {
                     </tr>
                     <tr className="border-t">
                       <th className="py-3 text-left">Total</th>
-                      <td className="py-3 text-right text-3xl">$504.00</td>
+                      <td className="py-3 text-right text-3xl">
+                        ${cart.data.total_price}
+                      </td>
                     </tr>
                   </tbody>
                 </table>
                 <div className="text-right mt-4 border-t py-4">
                   <a
-                    href="#"
+                    href="/checkout"
                     className="bg-green-500 hover:bg-green-700 text-white py-2 px-4 rounded"
                   >
                     Proceed to Checkout

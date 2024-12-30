@@ -2,12 +2,26 @@
 
 import { useState, useEffect } from 'react';
 import { getAllPaymentMethods } from '@/_lib/payment';
-import { PaymentMethod as IPaymentMethod } from '@/types/Payment';
 
 const PaymentMethod = () => {
   const [selectedMethod, setSelectedMethod] = useState<string>('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchPaymentMethods = async () => {
+      try {
+        setLoading(true);
+        await getAllPaymentMethods();
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Failed to load payment methods');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPaymentMethods();
+  }, []);
 
   const paymentMethods = [
     {
