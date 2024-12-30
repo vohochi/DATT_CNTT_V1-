@@ -1,7 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { createOrder, createPaymentHistory } from '@/_lib/order';
+import { createOrder } from '@/_lib/order';
+import { createPaymentHistory } from '@/_lib/payment';
 import { Order } from '@/types/Order';
 import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
@@ -98,7 +99,7 @@ export default function Checkout() {
           total_pay: orderData.total,
           balance: 0,
           data: JSON.stringify({
-            order_id: orderResponse.data.id,
+            order_id: orderResponse.data[0].id,
             order_code: orderData.code,
             shipping_address: orderData.shipping_address,
             payment_method: formData.paymentMethod,
