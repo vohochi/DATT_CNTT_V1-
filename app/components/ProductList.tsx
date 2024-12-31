@@ -1,12 +1,12 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { fetchProducts } from '@/_lib/product';
 import {
   Card,
   CardBody,
   CardFooter,
-  // Image,
   Button,
   Pagination,
 } from '@nextui-org/react';
@@ -69,80 +69,95 @@ const ProductList: React.FC = () => {
 
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 w-[78%] mx-auto">
         {currentProducts.map((product) => (
-          <Card
+          <Link
+            href={`/detail/${product.id}`}
             key={product.id}
-            className="w-full mx-auto relative group"
-            onMouseEnter={() => setHoveredProduct(product.id)}
-            onMouseLeave={() => setHoveredProduct(null)}
+            className="block transition-transform hover:scale-105"
           >
-            <CardBody className="p-0">
-              <div className="relative aspect-square">
-                <Link href={`/detail/${product.id}`}>
-                  {/* <Image
+            <Card
+              className="w-full mx-auto relative group"
+              onMouseEnter={() => setHoveredProduct(product.id)}
+              onMouseLeave={() => setHoveredProduct(null)}
+            >
+              <CardBody className="p-0">
+                <div className="relative aspect-square">
+                  <Image
                     src={product.thumbnail || '/placeholder.png'}
                     alt={product.name}
                     width={360}
                     height={450}
                     className="w-full h-full object-cover rounded-[10px]"
-                  /> */}
-                </Link>
-                <span
-                  className={`absolute top-0 right-0 text-xs z-10 font-bold px-6 py-2 m-4 rounded-[20px] ${
-                    product.status === 1
-                      ? 'bg-green-500 text-white'
-                      : 'bg-red-500 text-white'
-                  }`}
-                >
-                  {product.status === 1 ? 'Available' : 'Unavailable'}
-                </span>
-                {!isMobile && hoveredProduct === product.id && (
-                  <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-                    <div className="flex space-x-2">
-                      <Button
-                        isIconOnly
-                        size="sm"
-                        variant="flat"
-                        color="default"
-                        className="bg-white"
-                      >
-                        <Maximize size={16} />
-                      </Button>
-                      <Button
-                        size="sm"
-                        variant="flat"
-                        color="primary"
-                        className="bg-white text-black hover:bg-primary hover:text-white transition-colors text-xs"
-                      >
-                        ADD TO CART
-                      </Button>
-                      <Button
-                        isIconOnly
-                        size="sm"
-                        variant="flat"
-                        color="default"
-                        className="bg-white"
-                      >
-                        <Heart size={16} />
-                      </Button>
+                  />
+                  <span
+                    className={`absolute top-0 right-0 text-xs z-10 font-bold px-6 py-2 m-4 rounded-[20px] ${
+                      product.status === 1
+                        ? 'bg-green-500 text-white'
+                        : 'bg-red-500 text-white'
+                    }`}
+                  >
+                    {product.status === 1 ? 'Available' : 'Unavailable'}
+                  </span>
+                  {!isMobile && hoveredProduct === product.id && (
+                    <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                      <div className="flex space-x-2">
+                        <Button
+                          isIconOnly
+                          size="sm"
+                          variant="flat"
+                          color="default"
+                          className="bg-white"
+                          onClick={(e) => {
+                            e.preventDefault(); // Prevent navigation
+                            // Add your quick view logic here
+                          }}
+                        >
+                          <Maximize size={16} />
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="flat"
+                          color="primary"
+                          className="bg-white text-black hover:bg-primary hover:text-white transition-colors text-xs"
+                          onClick={(e) => {
+                            e.preventDefault(); // Prevent navigation
+                            // Add to cart logic here
+                          }}
+                        >
+                          ADD TO CART
+                        </Button>
+                        <Button
+                          isIconOnly
+                          size="sm"
+                          variant="flat"
+                          color="default"
+                          className="bg-white"
+                          onClick={(e) => {
+                            e.preventDefault(); // Prevent navigation
+                            // Add to wishlist logic here
+                          }}
+                        >
+                          <Heart size={16} />
+                        </Button>
+                      </div>
                     </div>
-                  </div>
-                )}
-              </div>
-            </CardBody>
-            <CardFooter className="flex-col items-start p-2">
-              <div className="flex items-center mb-1">
-                <span className="text-xs text-gray-600">
-                  {product.category?.name}
-                </span>
-              </div>
-              <h3 className="text-sm font-semibold truncate w-full">
-                {product.name}
-              </h3>
-              <div className="flex items-center justify-between w-full">
-                <span className="text-sm font-bold">${product.price}</span>
-              </div>
-            </CardFooter>
-          </Card>
+                  )}
+                </div>
+              </CardBody>
+              <CardFooter className="flex-col items-start p-2">
+                <div className="flex items-center mb-1">
+                  <span className="text-xs text-gray-600">
+                    {product.category?.name}
+                  </span>
+                </div>
+                <h3 className="text-sm font-semibold truncate w-full">
+                  {product.name}
+                </h3>
+                <div className="flex items-center justify-between w-full">
+                  <span className="text-sm font-bold">${product.price}</span>
+                </div>
+              </CardFooter>
+            </Card>
+          </Link>
         ))}
       </div>
 
