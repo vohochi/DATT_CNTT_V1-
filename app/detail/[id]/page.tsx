@@ -8,6 +8,7 @@ import { faHeart as faHeartThin } from '@fortawesome/free-solid-svg-icons';
 import { Product } from '@/types/Product';
 import { getProductById } from '@/_lib/product';
 import { useParams } from 'next/navigation';
+import Cookies from 'js-cookie';
 
 const Detail = () => {
   const { id } = useParams();
@@ -20,13 +21,14 @@ const Detail = () => {
   const [activeTab, setActiveTab] = useState('Specification');
   const [quantity, setQuantity] = useState(1);
   const [isChecked, setIsChecked] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchProduct = async () => {
       try {
         const data = await getProductById(numericId);
         setProduct(data);
-        console.log(data);
+        // console.log(data);
       } catch (error) {
         console.error('Failed to fetch product:', error);
       }
@@ -35,6 +37,71 @@ const Detail = () => {
     fetchProduct();
   }, [numericId]);
 
+  const addToCart = async () => {
+    if (!product) return;
+
+    const userId = Cookies.get('user_id');
+    if (!userId) {
+      alert('Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng');
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const response = await fetch(
+        'https://cors-anywhere.herokuapp.com/https://api-core.dsp.one/api/auth/cart/add',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            allowed_secrets:
+              'c3f72a381e7f676c21b7fca43fbe60a99aa5ff5dfc76b75993da7bd3032e3f9f',
+          },
+          body: JSON.stringify({
+            customer_id: parseInt(userId),
+            address: 'Địa chỉ mặc định', // Thêm địa chỉ
+            shipping_unit: 'Đơn vị vận chuyển mặc định', // Thêm đơn vị vận chuyển
+            details: [
+              {
+                product_id: product.id,
+                quantity: quantity,
+                price: product.price,
+                total_price_detail: quantity * product.price,
+              },
+            ],
+          }),
+        }
+      );
+
+      console.log('Response status:', response.status);
+      console.log('Response headers:', response.headers);
+
+      const responseText = await response.text();
+      console.log('Response text:', responseText);
+
+      if (response.ok) {
+        let result;
+        try {
+          result = JSON.parse(responseText);
+        } catch (e) {
+          console.error('Error parsing JSON:', e);
+          throw new Error('Invalid JSON response');
+        }
+        alert('Sản phẩm đã được thêm vào giỏ hàng');
+        console.log('Cart updated:', result);
+      } else {
+        throw new Error(
+          `Failed to add to cart: ${response.status} ${responseText}`
+        );
+      }
+    } catch (error) {
+      console.error('Error adding to cart:', error);
+      // alert(`Có lỗi xảy ra khi thêm vào giỏ hàng: ${error.message}`);
+    } finally {
+      setIsLoading(false);
+    }
+  };
   if (!product) {
     return <div>Loading...</div>;
   }
@@ -148,8 +215,12 @@ const Detail = () => {
                   />
                 </button>
 
-                <button className="bg-[#ff6565] text-white py-2 px-4 rounded-full w-[150px] md:w-[200px] h-[50px] hover:bg-[#364958] hover:text-white transition-colors duration-300">
-                  ADD TO CART
+                <button
+                  className="bg-[#ff6565] text-white py-2 px-4 rounded-full w-[150px] md:w-[200px] h-[50px] hover:bg-[#364958] hover:text-white transition-colors duration-300"
+                  onClick={addToCart}
+                  disabled={isLoading}
+                >
+                  {isLoading ? 'Đang thêm...' : 'THÊM VÀO GIỎ HÀNG'}
                 </button>
               </div>
             </div>
