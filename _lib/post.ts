@@ -1,7 +1,18 @@
 import axios from 'axios';
 
+const enableCorsAnywhere = async () => {
+  try {
+    await axios.get(`https://cors-anywhere.herokuapp.com/corsdemo`);
+    console.log('CORS Anywhere activated!');
+  } catch (error) {
+    console.error('Failed to activate CORS Anywhere:', error);
+  }
+};
+
 export const fetchAllPost = async () => {
   try {
+    await enableCorsAnywhere();
+    
     const response = await axios.get(
       'https://cors-anywhere.herokuapp.com/https://api-core.dsp.one/api/auth/post',
       {
