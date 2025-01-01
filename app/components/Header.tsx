@@ -3,7 +3,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-
 import { FaSearch, FaShoppingCart, FaSignOutAlt, FaUser } from 'react-icons/fa';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { MdOutlineArrowBackIos } from 'react-icons/md';
@@ -12,7 +11,7 @@ import CartSideBarModal from './CartRightSideBar';
 import Cookies from 'js-cookie';
 import { fetchProfile } from '@/_lib/customer';
 import { Customer } from '@/types/Customer';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { Logout } from '@/_lib/auth';
 
 const Header = () => {
@@ -24,29 +23,45 @@ const Header = () => {
   const [isCartModalOpen, setIsCartModalOpen] = useState(false);
   const [userProfile, setUserProfile] = useState<Customer | null>(null);
   const router = useRouter();
-  useEffect(() => {
+  const pathname = usePathname();
+
+  // Function to fetch user profile
+  const fetchUserProfile = async () => {
     const userId = Cookies.get('user_id');
     if (userId) {
-      fetchProfile(parseInt(userId))
-        .then((data) => {
-          console.log(data);
-          setUserProfile(data.data);
-        })
-        .catch((error) => {
-          console.error('Error fetching user profile:', error);
-        });
+      try {
+        const response = await fetchProfile(parseInt(userId));
+        setUserProfile(response.data);
+      } catch (error) {
+        console.error('Error fetching user profile:', error);
+        // if ((error as any)?.response?.status === 401) {
+        //   Cookies.remove('user_id');
+        //   setUserProfile(null);
+        // }
+      }
     }
-  }, []);
+  };
+
+  // Effect to check for user_id cookie changes
+  useEffect(() => {
+    const checkUserAuth = () => {
+      const userId = Cookies.get('user_id');
+      if (!userId && userProfile) {
+        setUserProfile(null);
+      } else if (userId && !userProfile) {
+        fetchUserProfile();
+      }
+    };
+
+    checkUserAuth();
+    const interval = setInterval(checkUserAuth, 1000);
+    return () => clearInterval(interval);
+  }, [pathname]);
 
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-
-      if (currentScrollY > lastScrollY) {
-        setVisible(false);
-      } else {
-        setVisible(true);
-      }
+      setVisible(currentScrollY <= lastScrollY);
       setLastScrollY(currentScrollY);
       setIsScrolled(currentScrollY > 50);
     };
@@ -54,14 +69,20 @@ const Header = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, [lastScrollY]);
+
   const handleLogout = async () => {
-    await Logout();
-    Cookies.remove('user_id');
-    setUserProfile(null);
-    router.push('/auth/login');
+    try {
+      await Logout();
+      Cookies.remove('user_id');
+      setUserProfile(null);
+      router.push('/auth/login');
+    } catch (error) {
+      console.error('Logout error:', error);
+      Cookies.remove('user_id');
+      setUserProfile(null);
+    }
   };
 
-  //cant scroll when open mobi menu
   useEffect(() => {
     if (isMobileMenuOpen || isCartModalOpen || isSearchModalOpen) {
       document.body.classList.add('overflow-hidden');
@@ -172,7 +193,7 @@ const Header = () => {
                       </Link>
                     </td>
                   </tr>
-                  <tr className="">
+                  <tr>
                     <td className="text-center border-b border-gray-200 p-4 hover:bg-gray-200 border-r">
                       <Link
                         href="/cart"
@@ -190,11 +211,11 @@ const Header = () => {
                       </Link>
                     </td>
                   </tr>
-                  <tr className="">
+                  <tr>
                     <td className="text-center p-4 hover:bg-gray-200 border-r">
                       <Link
                         href="/checkout"
-                        className="text-gray-700 hover:text-[#ff6565] "
+                        className="text-gray-700 hover:text-[#ff6565]"
                       >
                         Checkout
                       </Link>
@@ -236,14 +257,9 @@ const Header = () => {
           <FaShoppingCart className="w-6 h-6 text-[#1f1f1f]" />
         </div>
         <div className="w-[30px] h-[30px] flex flex-col justify-center items-center cursor-pointer">
-          {' '}
-          {/* Changed to flex-col */}
           {userProfile ? (
             <div className="flex flex-col items-center">
-              {' '}
-              {/* Changed to flex-col */}
-              <span className="text-sm">{userProfile.name}</span>{' '}
-              {/* Removed unnecessary ml-2 */}
+              <span className="text-sm">{userProfile.name}</span>
               <button
                 onClick={handleLogout}
                 className="ml-2 mt-1 text-sm text-red-500 hover:text-red-700"
@@ -268,7 +284,7 @@ const Header = () => {
         </div>
       </div>
 
-      {/* dark overlay */}
+      {/* Dark overlay */}
       <div
         className={`fixed inset-0 z-40 h-screen bg-black transition-opacity duration-300 ${
           isMobileMenuOpen || isSearchModalOpen || isCartModalOpen
@@ -296,7 +312,7 @@ const Header = () => {
               onClick={() => setIsMobileMenuOpen(false)}
             />
           </h2>
-          <nav className="flex flex-col h-full space-y-3 mt-4 w-full px-4 ">
+          <nav className="flex flex-col h-full space-y-3 mt-4 w-full px-4">
             <Link
               href="/"
               className="text-sm text-[#fff]"
