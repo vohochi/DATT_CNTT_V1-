@@ -1,5 +1,5 @@
-'use client'
-import { getPostById } from '@/_lib/post';
+'use client';
+import { getPostById } from '@/app/blogdetail/[id]/api/blogdetail';
 import { Post } from '@/types/PostBlog';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
@@ -19,7 +19,7 @@ export default function BlogDetail() {
       try {
         const data = await getPostById(numericId);
         setPost(data);
-        console.log('post',data);
+        console.log('post', data);
       } catch (error) {
         console.error('Failed to fetch product:', error);
       }
@@ -50,13 +50,13 @@ export default function BlogDetail() {
           {post.tags}
         </a>
       </div>
-      <Image
+      {/* <Image
         src={post.thumbnail}
         alt=""
         width={640}
         height={480}
         className="rounded-3xl mb-12"
-      />
+      /> */}
 
       <div className="row-auto justify-center flex">
         <div className="max-w-[925px] mx-auto">
@@ -64,11 +64,7 @@ export default function BlogDetail() {
             <div className="col-span-7">
               <ul className="flex">
                 <li className="flex items-center text-center text-2xl leading-7">
-                  <Image
-                    src=""
-                    alt=""
-                    className="border-4 rounded-full mr-6"
-                  />{' '}
+                  <Image src="" alt="" className="border-4 rounded-full mr-6" />{' '}
                   {post.author}
                 </li>
                 <li className="ml-12 flex items-center text-center text-2xl leading-7">
@@ -132,12 +128,8 @@ export default function BlogDetail() {
               </div>
             </div>
           </div>
-          <p className="mb-[32px] mt-[35px]">
-            {post.content}
-          </p>
-          <p className="mb-[50px]">
-            {post.slug}
-          </p>
+          <p className="mb-[32px] mt-[35px]">{post.content}</p>
+          <p className="mb-[50px]">{post.slug}</p>
         </div>
       </div>
       <Image
@@ -148,9 +140,7 @@ export default function BlogDetail() {
         className="rounded-3xl mb-12"
       />
       <div className="max-w-[925px] mx-auto">
-        <p className="mt-[50px] mb-[32px]">
-          {post.description}
-        </p>
+        <p className="mt-[50px] mb-[32px]">{post.description}</p>
         <ul className="list-none">
           <li className="mb-[5px]">
             • Lorem ipsum dolor sit amet, consectetur adipiscing elit

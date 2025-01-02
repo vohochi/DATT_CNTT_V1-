@@ -15,12 +15,16 @@ const nextConfig = {
       },
       {
         source: '/api/login', // Đảm bảo rằng đường dẫn này khớp với API
-        destination: 'http://api-core.dsp.one/login',
+        destination: 'https://api-core.dsp.one/login',
       },
       {
         source: '/api/register', // Đảm bảo rằng đường dẫn này khớp với API
         destination: 'http://api-core.dsp.one/api/auth/user/register',
       },
+      // {
+      //   source: '/api/category', // Đảm bảo rằng đường dẫn này khớp với API
+      //   destination: 'https://api-core.dsp.one/api/auth/user/register',
+      // },
     ];
   },
 };

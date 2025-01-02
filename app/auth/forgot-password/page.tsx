@@ -3,7 +3,10 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { sendOTP, verifyOTP } from '@/_lib/auth';
+import {
+  sendOTP,
+  verifyOTP,
+} from '@/app/auth/forgot-password/api/forgot-password';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 

@@ -28,7 +28,7 @@ const CategorySection: React.FC = () => {
     <section className="my-[100px]">
       <div className="container mx-auto w-[80%]">
         <div className="flex flex-wrap">
-          {categories.slice(1).map((category) => (
+          {categories.map((category) => (
             <div key={category.id} className="xl:w-1/6 md:w-1/3 w-1/2 p-3">
               <a
                 href="#"

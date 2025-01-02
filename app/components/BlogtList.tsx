@@ -10,7 +10,7 @@ import {
   Pagination,
 } from '@nextui-org/react';
 import { Post } from '@/types/PostBlog';
-import { fetchAllPost } from '@/_lib/post';
+import { fetchAllPost } from '@/app/blog/api/blogFetch';
 import Link from 'next/link';
 
 // Giả lập dữ liệu blog
@@ -35,7 +35,6 @@ const BlogList = () => {
   const indexOfLastBlog = currentPage * blogsPerPage;
   const indexOfFirstBlog = indexOfLastBlog - blogsPerPage;
   const currentBlogs = posts.slice(indexOfFirstBlog, indexOfLastBlog);
-
 
   useEffect(() => {
     const getPosts = async () => {
@@ -80,7 +79,6 @@ const BlogList = () => {
               </CardFooter>
             </Card>
           </Link>
-
         ))}
       </div>
       <div className="flex justify-center mt-8 md:mt-12">

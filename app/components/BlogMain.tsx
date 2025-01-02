@@ -1,4 +1,4 @@
-import { fetchAllPost } from '@/_lib/post';
+import { fetchAllPost } from '@/app/blog/api/blogFetch';
 import { Post } from '@/types/PostBlog';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -32,13 +32,13 @@ const BlogMain = () => {
         </div>
       </div>
       <div className="flex flex-wrap justify-center gap-6 w-full">
-        {posts.splice(0,3).map((post) => (
+        {posts.splice(0, 3).map((post) => (
           <Link key={post.id} href={`/blogdetail/${post.id}`}>
             <div className="flex flex-col items-start w-[370px]">
               <div className="relative overflow-hidden">
                 <Image
                   className="card-img-top rounded-[10px] transition-transform duration-300 ease-in-out transform hover:scale-110"
-                  src={post.thumbnail ? "" : '/default-image.jpg'}
+                  src={post.thumbnail ? '' : '/default-image.jpg'}
                   alt="Card cap"
                   width={370}
                   height={320}
@@ -73,7 +73,6 @@ const BlogMain = () => {
               </div>
             </div>
           </Link>
-
         ))}
       </div>
     </div>
