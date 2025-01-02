@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
-import { fetchProfile } from '@/_lib/customer';
+import { fetchProfile } from '@/app/account/api/profile';
 import { Customer } from '@/types/Customer';
 
 function ProfileForm() {
