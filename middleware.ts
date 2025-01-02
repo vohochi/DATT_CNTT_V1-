@@ -1,29 +1,27 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 
-export function middleware(request: NextRequest) {
-  const origin = request.headers.get('origin') || '*';
+export function middleware(req) {
+  if (req.method === 'OPTIONS') {
+    const response = new NextResponse(null, {
+      status: 200,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+      },
+    });
+    return response;
+  }
 
-  // Tạo phản hồi ban đầu
   const response = NextResponse.next();
-
-  // Thêm các header CORS
-  response.headers.set('Access-Control-Allow-Origin', origin); // Chỉ định nguồn gốc
+  response.headers.set('Access-Control-Allow-Origin', '*');
   response.headers.set(
     'Access-Control-Allow-Methods',
     'GET, POST, PUT, DELETE, OPTIONS'
   );
   response.headers.set(
     'Access-Control-Allow-Headers',
-    'Content-Type, Authorization, x-requested-with'
+    'Content-Type, Authorization'
   );
-
-  // Xử lý yêu cầu OPTIONS
-  if (request.method === 'OPTIONS') {
-    return new Response(null, {
-      headers: response.headers,
-      status: 204,
-    });
-  }
-
   return response;
 }

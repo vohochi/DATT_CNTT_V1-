@@ -7,8 +7,9 @@ import { useState, useEffect } from 'react';
 import WishlistModal from './QuickViewWishlist';
 import Link from 'next/link';
 import Image from 'next/image';
-import { fetchProducts } from '@/_lib/product';
+// import { fetchProducts } from '@/_lib/product';
 import { Product } from '@/types/Product';
+import { getProductApi } from '@/app/api/product.api';
 
 const TopSaleMain: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -19,8 +20,9 @@ const TopSaleMain: React.FC = () => {
   useEffect(() => {
     const getProducts = async () => {
       try {
-        const { data } = await fetchProducts();
-        setProducts(data);
+        const { data } = await getProductApi();
+        // console.log(data);
+        setProducts(data.data);
       } catch (error) {
         console.error('Failed to fetch products:', error);
       }

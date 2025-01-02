@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { fetchProducts } from '@/_lib/product';
 import {
   Card,
   CardBody,
@@ -12,6 +11,7 @@ import {
 } from '@nextui-org/react';
 import { Heart, Maximize } from 'lucide-react';
 import { Product } from '@/types/Product';
+import { getProductApi } from '@/app/api/product.api';
 
 const ProductList: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -24,8 +24,9 @@ const ProductList: React.FC = () => {
   useEffect(() => {
     const getProducts = async () => {
       try {
-        const { data } = await fetchProducts();
-        setProducts(data);
+        const { data } = await getProductApi();
+        // console.log(data);
+        setProducts(data.data);
       } catch (error) {
         console.error('Failed to fetch products:', error);
       }

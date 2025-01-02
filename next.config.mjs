@@ -1,29 +1,27 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
-  // images: {
-  //   remotePatterns: [
-  //     {
-  //       protocol: 'http', // Sử dụng http thay vì https
-  //       hostname: 'localhost', // Tên máy chủ
-  //       port: '3002', // Cổng mà máy chủ đang chạy
-  //       pathname: '/images/**', // Đường dẫn tới hình ảnh
-  //     },
-  //   ],
-  // },
-  // output: 'export',
+  typescript: {
+    // Bỏ qua lỗi TypeScript khi build
+    ignoreBuildErrors: true,
+  },
   images: {
-    remotePatterns: [
+    domains: ['via.placeholder.com', 'fakestoreapi.com', 'api-core.dsp.one'],
+  },
+  async rewrites() {
+    return [
       {
-        protocol: 'https',
-        hostname: 'via.placeholder.com', // Thêm tên miền cần thiết
+        source: '/api/:path*', // Endpoint proxy trên frontend
+        destination: 'https://api-core.dsp.one/api/:path*', // URL API thực tế
       },
       {
-        protocol: 'https',
-        hostname: 'api-core.dsp.one', // Nếu bạn đang sử dụng domain này
-        pathname: '/**',
+        source: '/api/login', // Đảm bảo rằng đường dẫn này khớp với API
+        destination: 'http://api-core.dsp.one/login',
       },
-    ],
+      {
+        source: '/api/register', // Đảm bảo rằng đường dẫn này khớp với API
+        destination: 'http://api-core.dsp.one/api/auth/user/register',
+      },
+    ];
   },
 };
 

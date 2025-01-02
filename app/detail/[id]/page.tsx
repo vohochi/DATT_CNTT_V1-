@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as faHeartThin } from '@fortawesome/free-solid-svg-icons';
 import { Product } from '@/types/Product';
-import { getProductById } from '@/_lib/product';
+import { getProductById } from '@/app/api/product.api';
 import { useParams } from 'next/navigation';
 import Cookies from 'js-cookie';
 
@@ -27,6 +27,7 @@ const Detail = () => {
     const fetchProduct = async () => {
       try {
         const data = await getProductById(numericId);
+        console.log(data);
         setProduct(data);
         // console.log(data);
       } catch (error) {

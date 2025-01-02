@@ -1,4 +1,10 @@
+// import { corsNextjs } from '@/app/components/utils/utils';
 import axios from 'axios';
+
+export const getProductApi = async () => {
+  const response = await axios.get('https://api-core.dsp.one/api/auth/product');
+  return response.data;
+};
 
 const cache = new Map();
 
@@ -10,7 +16,7 @@ export const fetchProducts = async () => {
 
   try {
     const response = await axios.get(
-      'https://cors-anywhere.herokuapp.com/https://api-core.dsp.one/api/auth/product'
+      'https://api-core.dsp.one/api/auth/product'
       // {
       //   headers: {
       //     allowed_secrets:
@@ -34,16 +40,10 @@ export const getProductById = async (id: number) => {
 
   try {
     const response = await axios.get(
-      `https://cors-anywhere.herokuapp.com/https://api-core.dsp.one/api/auth/product/${id}`,
-      {
-        headers: {
-          allowed_secrets:
-            'c3f72a381e7f676c21b7fca43fbe60a99aa5ff5dfc76b75993da7bd3032e3f9f',
-          'Content-Type': 'application/json',
-        },
-      }
+      `https://api-core.dsp.one/api/auth/product/${id}`
     );
     cache.set(cacheKey, response.data);
+    // console.log(response.data.data);
     return response.data;
   } catch (error) {
     console.error('Error fetching data: ', error);

@@ -3,141 +3,70 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Register } from '@/_lib/auth';
+import { register } from '@/app/auth/register/api/register';
 import { useRouter } from 'next/navigation';
+import axios from 'axios';
 
-interface FormErrors {
-  name?: string;
-  nick_name?: string;
-  email?: string;
-  phone?: string;
-  password?: string;
-  password_confirmation?: string;
-  code?: string;
-}
-
-interface Message {
-  type: 'success' | 'error';
-  content: string;
-}
-
-interface ApiResponse {
-  error?: string;
-  message?: string;
-  errors?: {
-    code?: string[];
-  };
+interface FormData {
+  name: string;
+  email: string;
+  password: string;
+  address: string;
+  phone: string;
+  nick_name: string;
+  password_confirmation: string;
+  customer_id: number;
 }
 
 const Page = () => {
   const router = useRouter();
 
-  const [formData, setFormData] = useState({
+  const [showPassword, setShowPassword] = useState(false);
+  const [formData, setFormData] = useState<FormData>({
     name: '',
-    nick_name: '',
     email: '',
-    phone: '',
     password: '',
+    address: '123 Street',
+    phone: '0123456789',
+    nick_name: 'john',
     password_confirmation: '',
-    code: '',
+    customer_id: 1,
   });
 
-  const [errors, setErrors] = useState<FormErrors>({});
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState<Message | null>(null);
-
-  const validateForm = (): boolean => {
-    const newErrors: FormErrors = {};
-
-    if (!formData.name.trim()) {
-      newErrors.name = 'Họ và tên là bắt buộc';
-    }
-
-    if (!formData.nick_name.trim()) {
-      newErrors.nick_name = 'Tên gọi là bắt buộc';
-    }
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!formData.email.trim() || !emailRegex.test(formData.email)) {
-      newErrors.email = 'Email không hợp lệ';
-    }
-
-    const phoneRegex = /^[0-9]{10}$/;
-    if (!formData.phone.trim() || !phoneRegex.test(formData.phone)) {
-      newErrors.phone = 'Số điện thoại không hợp lệ';
-    }
-
-    if (formData.password.length < 6) {
-      newErrors.password = 'Mật khẩu phải có ít nhất 6 ký tự';
-    }
-
-    if (formData.password !== formData.password_confirmation) {
-      newErrors.password_confirmation = 'Mật khẩu xác nhận không khớp';
-    }
-
-    if (!formData.code.trim()) {
-      newErrors.code = 'Mã xác thực là bắt buộc';
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
+  const [error, setError] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData((prevState) => {
-      const newState = { ...prevState, [name]: value };
-      console.log('Updated formData:', newState);
-      return newState;
-    });
+    setFormData({ ...formData, [name]: value });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (validateForm()) {
-      try {
-        setLoading(true);
-        const response: ApiResponse = await Register(formData);
-        console.log('Registration response:', response);
+    setLoading(true);
+    setError('');
 
-        if (!response.error && !response.message) {
-          setMessage({
-            type: 'success',
-            content: 'Bạn đã đăng ký thành công.',
-          });
-          alert('đăng ký thành công');
-          setTimeout(() => {
-            router.push('/auth/login');
-          }, 1500);
-        } else if (response.error) {
-          setMessage({
-            type: 'error',
-            content: response.error || 'Đăng ký thất bại, vui lòng thử lại.',
-          });
-        } else if (response.message) {
-          if (response.message.toLowerCase().includes('code đã tồn tại')) {
-            setMessage({
-              type: 'error',
-              content: 'Mã code đã tồn tại, vui lòng thay đổi.',
-            });
-          } else {
-            setMessage({
-              type: 'error',
-              content: response.message,
-            });
-          }
-        }
-      } catch (error) {
-        console.error('Error during registration:', error);
-        setMessage({
-          type: 'error',
-          content:
-            (error as ApiResponse)?.errors?.code?.[0] ||
-            'Đăng ký thất bại, vui lòng thử lại.',
-        });
-      } finally {
-        setLoading(false);
+    try {
+      const response = await register(formData);
+      console.log('Registration response:', response);
+
+      if (response && response.data) {
+        alert('Đăng ký thành công');
+        setTimeout(() => {
+          router.push('/auth/login');
+        }, 1500);
+      } else {
+        throw new Error('Unexpected response format');
       }
+    } catch (error) {
+      console.error('Error during registration:', error);
+      if (axios.isAxiosError(error)) {
+        setError(error.response?.data?.message || error.message);
+      } else {
+        setError('Đăng ký thất bại, vui lòng thử lại.');
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -164,19 +93,13 @@ const Page = () => {
                 Vui lòng nhập thông tin đăng ký!
               </p>
             </div>
-            {message && (
+            {error && (
               <div
-                className={`${
-                  message.type === 'success'
-                    ? 'bg-green-100 border-green-400 text-green-700'
-                    : 'bg-red-100 border-red-400 text-red-700'
-                } px-4 py-3 rounded relative`}
+                className="bg-red-100 border-red-400 text-red-700 px-4 py-3 rounded relative"
                 role="alert"
               >
-                <strong className="font-bold">
-                  {message.type === 'success' ? 'Thành công! ' : 'Lỗi! '}
-                </strong>
-                <span className="block sm:inline">{message.content}</span>
+                <strong className="font-bold">Lỗi! </strong>
+                <span className="block sm:inline">{error}</span>
               </div>
             )}
             <form onSubmit={handleSubmit} className="space-y-6">
@@ -196,9 +119,6 @@ const Page = () => {
                   className="w-full border-b border-black opacity-50 pb-2 focus:outline-none focus:border-amber-400"
                   placeholder="John Doe"
                 />
-                {errors.name && (
-                  <p className="text-red-500 text-sm">{errors.name}</p>
-                )}
               </div>
 
               <div className="space-y-2">
@@ -217,9 +137,6 @@ const Page = () => {
                   className="w-full border-b border-black opacity-50 pb-2 focus:outline-none focus:border-amber-400"
                   placeholder="john"
                 />
-                {errors.nick_name && (
-                  <p className="text-red-500 text-sm">{errors.nick_name}</p>
-                )}
               </div>
 
               <div className="space-y-2">
@@ -238,9 +155,6 @@ const Page = () => {
                   className="w-full border-b border-black opacity-50 pb-2 focus:outline-none focus:border-amber-400"
                   placeholder="john@example.com"
                 />
-                {errors.email && (
-                  <p className="text-red-500 text-sm">{errors.email}</p>
-                )}
               </div>
 
               <div className="space-y-2">
@@ -259,9 +173,6 @@ const Page = () => {
                   className="w-full border-b border-black opacity-50 pb-2 focus:outline-none focus:border-amber-400"
                   placeholder="0123456789"
                 />
-                {errors.phone && (
-                  <p className="text-red-500 text-sm">{errors.phone}</p>
-                )}
               </div>
 
               <div className="space-y-2">
@@ -272,7 +183,7 @@ const Page = () => {
                   Mật khẩu
                 </label>
                 <input
-                  type="password"
+                  type={showPassword ? 'text' : 'password'}
                   id="password"
                   name="password"
                   value={formData.password}
@@ -280,9 +191,6 @@ const Page = () => {
                   className="w-full border-b border-black opacity-50 pb-2 focus:outline-none focus:border-amber-400"
                   placeholder="••••••••"
                 />
-                {errors.password && (
-                  <p className="text-red-500 text-sm">{errors.password}</p>
-                )}
               </div>
 
               <div className="space-y-2">
@@ -293,7 +201,7 @@ const Page = () => {
                   Xác nhận mật khẩu
                 </label>
                 <input
-                  type="password"
+                  type={showPassword ? 'text' : 'password'}
                   id="password_confirmation"
                   name="password_confirmation"
                   value={formData.password_confirmation}
@@ -301,32 +209,19 @@ const Page = () => {
                   className="w-full border-b border-black opacity-50 pb-2 focus:outline-none focus:border-amber-400"
                   placeholder="••••••••"
                 />
-                {errors.password_confirmation && (
-                  <p className="text-red-500 text-sm">
-                    {errors.password_confirmation}
-                  </p>
-                )}
               </div>
 
-              <div className="space-y-2">
-                <label
-                  htmlFor="code"
-                  className="block text-black text-base opacity-40"
-                >
-                  Mã xác thực
-                </label>
+              <div className="flex items-center">
                 <input
-                  type="text"
-                  id="code"
-                  name="code"
-                  value={formData.code}
-                  onChange={handleChange}
-                  className="w-full border-b border-black opacity-50 pb-2 focus:outline-none focus:border-amber-400"
-                  placeholder="Nhập mã xác thực"
+                  type="checkbox"
+                  id="showPassword"
+                  checked={showPassword}
+                  onChange={() => setShowPassword(!showPassword)}
+                  className="mr-2"
                 />
-                {errors.code && (
-                  <p className="text-red-500 text-sm">{errors.code}</p>
-                )}
+                <label htmlFor="showPassword" className="text-sm text-gray-600">
+                  Hiển thị mật khẩu
+                </label>
               </div>
 
               <div className="w-full space-y-4">

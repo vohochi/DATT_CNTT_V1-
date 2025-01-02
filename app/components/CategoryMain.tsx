@@ -1,6 +1,6 @@
-'use client'
+'use client';
 
-import { fetchAllCategory } from '@/_lib/category';
+import { fetchAllCategory } from '@/app/api/category.api';
 import { Category } from '@/types/Category';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
@@ -11,7 +11,9 @@ const CategorySection: React.FC = () => {
     const getCategories = async () => {
       try {
         const { data } = await fetchAllCategory();
-        const activeCategory = data.filter((category: Category) => category.is_active);
+        const activeCategory = data.filter(
+          (category: Category) => category.is_active
+        );
         console.log('cate', activeCategory);
         setCategories(activeCategory);
       } catch (error) {
@@ -48,7 +50,11 @@ const CategorySection: React.FC = () => {
                     src={category.file ? `` : '/default-image.jpg'}
                     width={80}
                     height={80}
-                    alt={category.file?.filename ? `/${category.file.filename}` : 'null'}
+                    alt={
+                      category.file?.filename
+                        ? `/${category.file.filename}`
+                        : 'null'
+                    }
                   />
                 </div>
 

@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Login } from '@/_lib/auth';
+import { Login } from '@/app/auth/login/api/login';
 import { useRouter } from 'next/navigation';
 
 const Page = () => {
@@ -48,8 +48,10 @@ const Page = () => {
     if (validateForm()) {
       setLoading(true);
       try {
+        console.log({ email, password });
         const response = await Login({ email, password });
-        if (response.user_id) {
+        console.log(response);
+        if (response?.user_id) {
           Cookies.set('user_id', response.user_id, {
             expires: 7,
             secure: true,

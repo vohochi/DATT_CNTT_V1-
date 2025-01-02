@@ -1,6 +1,6 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { fetchAllBanner } from '@/_lib/banner';
+import { fetchAllBanner } from '@/app/api/banner.api';
 import { Banner } from '@/types/Banner';
 import Image from 'next/image';
 
@@ -12,6 +12,7 @@ const SliderMain = () => {
     const getBanners = async () => {
       try {
         const { data } = await fetchAllBanner();
+        console.log(data);
         const activeBanners = data.filter((banner: Banner) => banner.is_active);
         setBanners(activeBanners);
       } catch (error) {
