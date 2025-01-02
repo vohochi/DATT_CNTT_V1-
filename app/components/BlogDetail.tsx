@@ -1,9 +1,10 @@
 'use client';
-import { getPostById } from '@/app/blogdetail/[id]/api/blogdetail';
+// import { getPostById } from '@/app/blogdetail/[id]/api/blogdetail';
 import { Post } from '@/types/PostBlog';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
+import { getPostById } from '../blogdetail/[id]/api/postById';
 
 export default function BlogDetail() {
   const { id } = useParams();

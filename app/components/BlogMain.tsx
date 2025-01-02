@@ -3,6 +3,7 @@ import { Post } from '@/types/PostBlog';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+// import { fetchAllPost } from '../blog/api/allPost';
 
 const BlogMain = () => {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -10,6 +11,7 @@ const BlogMain = () => {
     const getPosts = async () => {
       try {
         const { data } = await fetchAllPost();
+        console.log('post', data);
         setPosts(data);
       } catch (error) {
         console.error('Failed to fetch categories:', error);

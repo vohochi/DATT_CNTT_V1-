@@ -8,7 +8,7 @@ import { faHeart as faHeartThin } from '@fortawesome/free-solid-svg-icons';
 import { Product } from '@/types/Product';
 import { getProductById } from '@/app/api/product.api';
 import { useParams } from 'next/navigation';
-import Cookies from 'js-cookie';
+import { AddToCart } from '@/app/cart/api/addToCart';
 
 const Detail = () => {
   const { id } = useParams();
@@ -41,68 +41,25 @@ const Detail = () => {
   const addToCart = async () => {
     if (!product) return;
 
-    const userId = Cookies.get('user_id');
+    const userId = 350;
+    // const userId = Cookies.get("user_id");
     if (!userId) {
-      alert('Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng');
+      alert("Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng");
       return;
     }
 
     setIsLoading(true);
-
     try {
-      const response = await fetch(
-        'https://cors-anywhere.herokuapp.com/https://api-core.dsp.one/api/auth/cart/add',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            allowed_secrets:
-              'c3f72a381e7f676c21b7fca43fbe60a99aa5ff5dfc76b75993da7bd3032e3f9f',
-          },
-          body: JSON.stringify({
-            customer_id: parseInt(userId),
-            address: 'Địa chỉ mặc định', // Thêm địa chỉ
-            shipping_unit: 'Đơn vị vận chuyển mặc định', // Thêm đơn vị vận chuyển
-            details: [
-              {
-                product_id: product.id,
-                quantity: quantity,
-                price: product.price,
-                total_price_detail: quantity * product.price,
-              },
-            ],
-          }),
-        }
-      );
-
-      console.log('Response status:', response.status);
-      console.log('Response headers:', response.headers);
-
-      const responseText = await response.text();
-      console.log('Response text:', responseText);
-
-      if (response.ok) {
-        let result;
-        try {
-          result = JSON.parse(responseText);
-        } catch (e) {
-          console.error('Error parsing JSON:', e);
-          throw new Error('Invalid JSON response');
-        }
-        alert('Sản phẩm đã được thêm vào giỏ hàng');
-        console.log('Cart updated:', result);
-      } else {
-        throw new Error(
-          `Failed to add to cart: ${response.status} ${responseText}`
-        );
-      }
+      const result = await AddToCart(userId, product.data, quantity);
+      alert("Sản phẩm đã được thêm vào giỏ hàng");
+      console.log("Cart updated:", result);
     } catch (error) {
-      console.error('Error adding to cart:', error);
-      // alert(`Có lỗi xảy ra khi thêm vào giỏ hàng: ${error.message}`);
+      console.error("Có lỗi xảy ra khi thêm vào giỏ hàng:", error);
     } finally {
       setIsLoading(false);
     }
   };
+
   if (!product) {
     return <div>Loading...</div>;
   }
@@ -146,10 +103,10 @@ const Detail = () => {
             {/* Product Details Section */}
             <div className="w-full md:w-1/2 p-5">
               <p className="mb-5 text-base md:text-lg">
-                {product.category?.name || 'Premium collection'}
+                {product.data.category?.name || 'Premium collection'}
               </p>
               <h1 className="text-3xl md:text-6xl mb-4 text-[#231942]">
-                {product.name}
+                {product.data.name}
               </h1>
 
               <div className="flex mb-5">
@@ -158,11 +115,10 @@ const Detail = () => {
                     <FontAwesomeIcon
                       key={index}
                       icon={faStar}
-                      className={`star ${
-                        index < Math.floor(product.width)
-                          ? 'text-yellow-500'
-                          : 'text-gray-400'
-                      }`}
+                      className={`star ${index < Math.floor(product.width)
+                        ? 'text-yellow-500'
+                        : 'text-gray-400'
+                        }`}
                     />
                   ))}
                 </div>
@@ -206,7 +162,7 @@ const Detail = () => {
 
               <div className="flex mt-10 md:mt-14 justify-between items-center">
                 <div className="text-3xl md:text-6xl text-[#231942]">
-                  ${product.price}
+                  ${product.data.price}
                 </div>
 
                 <button className="bg-transparent border-2 border-[#ff6565] py-2 px-4 rounded-full flex items-center justify-center w-[50px] h-[50px]">
@@ -221,7 +177,7 @@ const Detail = () => {
                   onClick={addToCart}
                   disabled={isLoading}
                 >
-                  {isLoading ? 'Đang thêm...' : 'THÊM VÀO GIỎ HÀNG'}
+                  {isLoading ? 'Đang thêm...' : 'ADD TO CART'}
                 </button>
               </div>
             </div>
@@ -236,9 +192,8 @@ const Detail = () => {
           <div className="w-full lg:w-1/2 pr-5 lg:ml-5">
             <div className="flex mb-10 justify-between lg:justify-start">
               <button
-                className={`text-xl md:text-2xl lg:text-3xl mr-6 lg:mr-14 underline ${
-                  activeTab === 'Specification' ? 'text-[#231942]' : ''
-                }`}
+                className={`text-xl md:text-2xl lg:text-3xl mr-6 lg:mr-14 underline ${activeTab === 'Specification' ? 'text-[#231942]' : ''
+                  }`}
                 style={{
                   color: activeTab === 'Specification' ? 'black' : '#898989',
                 }}
@@ -247,9 +202,8 @@ const Detail = () => {
                 Specification
               </button>
               <button
-                className={`text-xl md:text-2xl lg:text-3xl underline ${
-                  activeTab === 'Review' ? 'text-[#231942]' : ''
-                }`}
+                className={`text-xl md:text-2xl lg:text-3xl underline ${activeTab === 'Review' ? 'text-[#231942]' : ''
+                  }`}
                 style={{ color: activeTab === 'Review' ? 'black' : '#898989' }}
                 onClick={() => setActiveTab('Review')}
               >

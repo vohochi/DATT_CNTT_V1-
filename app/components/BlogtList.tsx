@@ -12,6 +12,7 @@ import {
 import { Post } from '@/types/PostBlog';
 import { fetchAllPost } from '@/app/blog/api/blogFetch';
 import Link from 'next/link';
+// import { fetchAllPost } from '../blog/api/allPost';
 
 // Giả lập dữ liệu blog
 const blogs = Array(20)
@@ -40,6 +41,7 @@ const BlogList = () => {
     const getPosts = async () => {
       try {
         const { data } = await fetchAllPost();
+
         setPosts(data);
       } catch (error) {
         console.error('Failed to fetch categories:', error);
