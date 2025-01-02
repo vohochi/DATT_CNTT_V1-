@@ -8,7 +8,6 @@ import { faHeart as faHeartThin } from '@fortawesome/free-solid-svg-icons';
 import { Product } from '@/types/Product';
 import { getProductById } from '@/app/api/product.api';
 import { useParams } from 'next/navigation';
-import Cookies from 'js-cookie';
 import { AddToCart } from '@/app/cart/api/addToCart';
 
 const Detail = () => {
