@@ -10,8 +10,8 @@ import {
   Pagination,
 } from '@nextui-org/react';
 import { Post } from '@/types/PostBlog';
-import { fetchAllPost } from '@/_lib/post';
 import Link from 'next/link';
+import { fetchAllPost } from '../blog/api/allPost';
 
 // Giả lập dữ liệu blog
 const blogs = Array(20)
@@ -41,6 +41,7 @@ const BlogList = () => {
     const getPosts = async () => {
       try {
         const { data } = await fetchAllPost();
+        
         setPosts(data);
       } catch (error) {
         console.error('Failed to fetch categories:', error);

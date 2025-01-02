@@ -3,59 +3,63 @@ import { useEffect, useState } from 'react';
 import { Image } from '@nextui-org/react';
 import Link from 'next/link';
 import { MdOutlineArrowBackIos } from 'react-icons/md';
-import { CartResponse } from '@/types/Cart';
-import { getCart, removeFromCart } from '@/_lib/cart';
-import Cookies from 'js-cookie';
-
 interface CartSideBarModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
+type CartItem = {
+  product_id: number;
+  name: string;
+  quantity: number;
+  price: number;
+  total_price_detail: number;
+  address: string;
+  shipping_unit: string;
+};
+
+type Cart = CartItem[];
 
 export default function CartSideBarModal({
   isOpen,
   onClose,
 }: CartSideBarModalProps) {
-  const [cart, setCart] = useState<CartResponse | null>(null);
+  const [cart, setCart] = useState<Cart>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchCart = async () => {
-      try {
-        const cartId = Cookies.get('cart_id');
-        if (cartId) {
-          const cartData = await getCart(parseInt(cartId));
-          setCart(cartData);
-        }
-      } catch (error) {
-        console.error('Failed to fetch cart:', error);
-      } finally {
-        setLoading(false);
+    try {
+      const savedCart = localStorage.getItem('cart');
+      if (savedCart) {
+        const parsedCart = JSON.parse(savedCart);
+        setCart(parsedCart);
       }
-    };
-
-    if (isOpen) {
-      fetchCart();
+    } catch (error) {
+      console.error('Error loading cart:', error);
+      setCart([]);
+    } finally {
+      setLoading(false);
     }
   }, [isOpen]);
 
-  const handleRemoveItem = async (productId: number) => {
-    try {
-      if (cart) {
-        const response = await removeFromCart(cart.data.id, productId);
-        setCart(response);
-      }
-    } catch (error) {
-      console.error('Failed to remove item:', error);
-    }
+  const handleRemoveItem = (productId: number) => {
+    // Lọc giỏ hàng để xóa sản phẩm
+    const updatedCart = cart.filter(item => item.product_id !== productId);
+    setCart(updatedCart);
+    localStorage.setItem('cart', JSON.stringify(updatedCart));
+  };
+
+
+  // Tính tổng giá trị của giỏ hàng
+  const calculateTotal = () => {
+    if (!cart) return 0;
+    return cart.reduce((total, item) => total + item.total_price_detail, 0);
   };
 
   return (
     <>
       <div
-        className={`fixed top-0 right-0 h-screen overflow-y-auto overflow-x-hidden sm:w-[400px] lg:max-w-[400px] md:max-w-[90%] bg-white z-40 ease-in-out transition-transform duration-500 ${
-          isOpen ? 'translate-x-0' : 'translate-x-full hidden'
-        }`}
+        className={`fixed top-0 right-0 h-screen overflow-y-auto overflow-x-hidden sm:w-[400px] lg:max-w-[400px] md:max-w-[90%] bg-white z-40 ease-in-out transition-transform duration-500 ${isOpen ? 'translate-x-0' : 'translate-x-full hidden'
+          }`}
       >
         <div>
           <h2
@@ -69,13 +73,13 @@ export default function CartSideBarModal({
           <div className="p-10 text-black bg-white overflow-y-auto h-full">
             {loading ? (
               <div>Loading...</div>
-            ) : !cart || cart.cart_details.length === 0 ? (
+            ) : !cart || cart.length === 0 ? (
               <div>Your cart is empty</div>
             ) : (
               <>
                 <ul className="aside-cart-product-list">
-                  {cart.cart_details.map((item) => (
-                    <li key={item.id} className="aside-product-list-item flex justify-between items-start mb-6">
+                  {cart.map((item) => (
+                    <li key={item.product_id} className="aside-product-list-item flex justify-between items-start mb-6">
                       <div className="flex items-start">
                         <Link
                           href={`/product/${item.product_id}`}
@@ -92,11 +96,11 @@ export default function CartSideBarModal({
                         <div className="flex flex-col ml-4">
                           <Link href={`/product/${item.product_id}`}>
                             <span className="product-title hover:text-[#ff6565] pb-2">
-                              Product Name {/* Replace with actual product name */}
+                              {item.name}
                             </span>
                           </Link>
                           <span className="product-price text-gray-600">
-                            {item.quantity} × ${item.price}
+                            {item.quantity} x ${item.price}
                           </span>
                         </div>
                       </div>
@@ -104,7 +108,7 @@ export default function CartSideBarModal({
                         onClick={() => handleRemoveItem(item.product_id)}
                         className="text-[21px] remove hover:text-red-800 transition duration-200 ease-in-out"
                       >
-                        ×
+                        x
                       </button>
                     </li>
                   ))}
@@ -113,7 +117,7 @@ export default function CartSideBarModal({
                 <p className="cart-total mt-4 flex justify-between text-lg">
                   <span>Subtotal:</span>
                   <span className="amount font-semibold">
-                    ${cart.data.total_price}
+                    ${calculateTotal()}
                   </span>
                 </p>
 

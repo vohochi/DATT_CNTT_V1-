@@ -11,6 +11,7 @@ export interface Product {
   width: number;
   length: number;
   height: number;
+  data: Product;
   category: {
     id: number;
     name: string;

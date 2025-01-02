@@ -10,6 +10,7 @@ import Image from 'next/image';
 // import { fetchProducts } from '@/_lib/product';
 import { Product } from '@/types/Product';
 import { getProductApi } from '@/app/api/product.api';
+import { AddToCart } from '../cart/api/addToCart';
 
 const TopSaleMain: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -30,6 +31,17 @@ const TopSaleMain: React.FC = () => {
 
     getProducts();
   }, []);
+
+  const handleAddToCart = async (product: Product) => {
+    try {
+      AddToCart(350, product, 1);
+      alert('Product added to cart successfully!');
+    } catch (error) {
+      console.error('Error adding to cart:', error);
+      alert('Failed to add product to cart.');
+    }
+  };
+
 
   const handleOpenQuickViewModal = (product: Product) => {
     setSelectedProduct(product);
@@ -120,7 +132,7 @@ const TopSaleMain: React.FC = () => {
                 >
                   <TbArrowsDiagonal />
                 </div>
-                <button className="uppercase bg-[#fff] px-4 py-3 rounded-[50px] border-2 border-[#FF6565] transition">
+                <button onClick={() => handleAddToCart(product)} className="uppercase bg-[#fff] px-4 py-3 rounded-[50px] border-2 border-[#FF6565] transition">
                   Add to cart
                 </button>
                 <div
@@ -146,7 +158,7 @@ const TopSaleMain: React.FC = () => {
                   <FaRegHeart className="mx-auto" />
                 </div>
               </div>
-              <button className="uppercase w-full bg-[#f7f7f7] px-4 py-2 border-2 border-[#fff] transition">
+              <button onClick={() => handleAddToCart(product)} className="uppercase w-full bg-[#f7f7f7] px-4 py-2 border-2 border-[#fff] transition">
                 Add to cart
               </button>
             </div>

@@ -1,8 +1,9 @@
-import { fetchAllPost } from '@/_lib/post';
+
 import { Post } from '@/types/PostBlog';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { fetchAllPost } from '../blog/api/allPost';
 
 const BlogMain = () => {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -10,6 +11,7 @@ const BlogMain = () => {
     const getPosts = async () => {
       try {
         const { data } = await fetchAllPost();
+        console.log('post', data)
         setPosts(data);
       } catch (error) {
         console.error('Failed to fetch categories:', error);
@@ -32,7 +34,7 @@ const BlogMain = () => {
         </div>
       </div>
       <div className="flex flex-wrap justify-center gap-6 w-full">
-        {posts.splice(0,3).map((post) => (
+        {posts.splice(0, 3).map((post) => (
           <Link key={post.id} href={`/blogdetail/${post.id}`}>
             <div className="flex flex-col items-start w-[370px]">
               <div className="relative overflow-hidden">
