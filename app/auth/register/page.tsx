@@ -50,7 +50,7 @@ const Page = () => {
       const response = await register(formData);
       console.log('Registration response:', response);
 
-      if (response && response.data) {
+      if (response?.data === 'User registered successfully!') {
         alert('Đăng ký thành công');
         setTimeout(() => {
           router.push('/auth/login');
