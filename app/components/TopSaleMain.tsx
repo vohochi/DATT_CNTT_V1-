@@ -22,7 +22,8 @@ const TopSaleMain: React.FC = () => {
     const getProducts = async () => {
       try {
         const { data } = await getProductApi();
-        // console.log(data);
+        console.log(`product ${data}`);
+
         setProducts(data.data);
       } catch (error) {
         console.error('Failed to fetch products:', error);
@@ -41,7 +42,6 @@ const TopSaleMain: React.FC = () => {
       alert('Failed to add product to cart.');
     }
   };
-
 
   const handleOpenQuickViewModal = (product: Product) => {
     setSelectedProduct(product);
@@ -132,7 +132,10 @@ const TopSaleMain: React.FC = () => {
                 >
                   <TbArrowsDiagonal />
                 </div>
-                <button onClick={() => handleAddToCart(product)} className="uppercase bg-[#fff] px-4 py-3 rounded-[50px] border-2 border-[#FF6565] transition">
+                <button
+                  onClick={() => handleAddToCart(product)}
+                  className="uppercase bg-[#fff] px-4 py-3 rounded-[50px] border-2 border-[#FF6565] transition"
+                >
                   Add to cart
                 </button>
                 <div
@@ -158,7 +161,10 @@ const TopSaleMain: React.FC = () => {
                   <FaRegHeart className="mx-auto" />
                 </div>
               </div>
-              <button onClick={() => handleAddToCart(product)} className="uppercase w-full bg-[#f7f7f7] px-4 py-2 border-2 border-[#fff] transition">
+              <button
+                onClick={() => handleAddToCart(product)}
+                className="uppercase w-full bg-[#f7f7f7] px-4 py-2 border-2 border-[#fff] transition"
+              >
                 Add to cart
               </button>
             </div>

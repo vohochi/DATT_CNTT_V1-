@@ -2,7 +2,9 @@
 import axios from 'axios';
 
 export const getProductApi = async () => {
-  const response = await axios.get('https://api-core.dsp.one/api/auth/product');
+  const response = await axios.get(
+    'https://api-core.dsp.one/api/client/product'
+  );
   return response.data;
 };
 
@@ -16,7 +18,7 @@ export const fetchProducts = async () => {
 
   try {
     const response = await axios.get(
-      'https://api-core.dsp.one/api/auth/product'
+      'https://api-core.dsp.one/api/client/product'
       // {
       //   headers: {
       //     allowed_secrets:
@@ -25,6 +27,7 @@ export const fetchProducts = async () => {
       //   },
       // }
     );
+    console.log(response);
     cache.set(cacheKey, response.data.data);
     return response.data.data;
   } catch (error) {
