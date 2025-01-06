@@ -43,7 +43,7 @@ export const getProductById = async (id: number) => {
 
   try {
     const response = await axios.get(
-      `https://api-core.dsp.one/api/auth/product/${id}`
+      `https://api-core.dsp.one/api/client/product/${id}`
     );
     cache.set(cacheKey, response.data);
     // console.log(response.data.data);
