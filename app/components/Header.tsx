@@ -9,10 +9,11 @@ import { MdOutlineArrowBackIos } from 'react-icons/md';
 import SearchModal from './SearchTopBar';
 import CartSideBarModal from './CartRightSideBar';
 import Cookies from 'js-cookie';
-import { fetchProfile } from '@/_lib/customer';
+// import { fetchProfile } from '@/app/api/header';
 import { Customer } from '@/types/Customer';
 import { useRouter, usePathname } from 'next/navigation';
-import { Logout } from '@/_lib/auth';
+import { Logout } from '@/app/api/logout';
+import axios, { AxiosError } from 'axios';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -25,19 +26,49 @@ const Header = () => {
   const router = useRouter();
   const pathname = usePathname();
 
-  // Function to fetch user profile
   const fetchUserProfile = async () => {
     const userId = Cookies.get('user_id');
-    if (userId) {
+    const authToken = Cookies.get('authToken');
+
+    if (userId && authToken) {
       try {
+        const fetchProfile = async (userId: number) => {
+          try {
+            const response = await axios.get(
+              `/api/auth/user/user-profile/${userId}`,
+              {
+                headers: {
+                  Authorization: `Bearer ${authToken}`,
+                },
+              }
+            );
+            console.log(`profile ${response}`);
+            return response.data;
+          } catch (error) {
+            console.error('Error fetching data: ', error);
+            if (axios.isAxiosError(error)) {
+              const axiosError = error as AxiosError;
+              if (axiosError.response?.status === 401) {
+                Cookies.remove('user_id');
+                Cookies.remove('authToken');
+              }
+            }
+            throw error;
+          }
+        };
+
         const response = await fetchProfile(parseInt(userId));
         setUserProfile(response.data);
       } catch (error) {
         console.error('Error fetching user profile:', error);
-        // if ((error as any)?.response?.status === 401) {
-        //   Cookies.remove('user_id');
-        //   setUserProfile(null);
-        // }
+        if (axios.isAxiosError(error)) {
+          const axiosError = error as AxiosError;
+          if (axiosError.response?.status === 401) {
+            Cookies.remove('user_id');
+            Cookies.remove('authToken');
+            setUserProfile(null);
+          }
+        }
       }
     }
   };
@@ -46,9 +77,10 @@ const Header = () => {
   useEffect(() => {
     const checkUserAuth = () => {
       const userId = Cookies.get('user_id');
-      if (!userId && userProfile) {
+      const authToken = Cookies.get('authToken');
+      if ((!userId || !authToken) && userProfile) {
         setUserProfile(null);
-      } else if (userId && !userProfile) {
+      } else if (userId && authToken && !userProfile) {
         fetchUserProfile();
       }
     };
@@ -57,7 +89,6 @@ const Header = () => {
     const interval = setInterval(checkUserAuth, 1000);
     return () => clearInterval(interval);
   }, [pathname]);
-
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;

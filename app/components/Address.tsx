@@ -1,3 +1,8 @@
+'use client';
+import { useEffect, useState } from 'react';
+import Cookies from 'js-cookie';
+import axios from 'axios';
+
 // Định nghĩa interfaces cho response data
 interface UserAddress {
   address: string;
@@ -9,68 +14,67 @@ interface ApiResponse {
   status?: number;
 }
 
-interface CustomError extends Error {
-  message: string;
-}
-
-import { useEffect, useState } from 'react';
-import Cookies from 'js-cookie';
-
 const AddressList = () => {
   const [addresses, setAddresses] = useState<string[]>([]);
   const [status, setStatus] = useState<'loading' | 'success' | 'failed'>(
     'loading'
   );
   const [error, setError] = useState<string | null>(null);
-  const token = Cookies.get('authToken');
-
-  const fetchAddresses = async (): Promise<void> => {
-    try {
-      setStatus('loading');
-      if (!token) {
-        throw new Error('User is not logged in');
-      }
-
-      const response = await fetch(
-        'https://cors-anywhere.herokuapp.com/http://api-core.dsp.one/api/auth/user',
-        {
-          method: 'GET',
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error('Failed to fetch user data');
-      }
-
-      const result: ApiResponse = await response.json();
-
-      if (!result.data || result.data.length === 0) {
-        throw new Error('No addresses found for this user');
-      }
-
-      const userAddresses: string[] = result.data.map(
-        (item: UserAddress) => item.address || 'Rỗng'
-      );
-
-      setAddresses(userAddresses);
-      setStatus('success');
-    } catch (err) {
-      const error = err as CustomError;
-      setError(error.message || 'An error occurred');
-      setStatus('failed');
-    }
-  };
 
   useEffect(() => {
-    fetchAddresses();
-  }, [token]);
+    const fetchAddresses = async () => {
+      const userId = Cookies.get('user_id');
+      const authToken = Cookies.get('authToken');
 
-  const handleRetry = (): void => {
-    setError(null);
+      if (!userId || !authToken) {
+        setError('User is not logged in');
+        setStatus('failed');
+        return;
+      }
+
+      try {
+        setStatus('loading');
+        const response = await axios.get<ApiResponse>(
+          `/api/auth/user/user-profile/${userId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+            },
+          }
+        );
+
+        if (!response.data.data || response.data.data.length === 0) {
+          throw new Error('No addresses found for this user');
+        }
+
+        const userAddresses: string[] = response.data.data.map(
+          (item: UserAddress) => item.address || 'Rỗng'
+        );
+
+        setAddresses(userAddresses);
+        setStatus('success');
+      } catch (error) {
+        console.error('Error fetching user addresses:', error);
+        if (axios.isAxiosError(error) && error.response?.status === 401) {
+          Cookies.remove('user_id');
+          Cookies.remove('authToken');
+        }
+        setError('Failed to fetch user addresses');
+        setStatus('failed');
+      }
+    };
+
     fetchAddresses();
+  }, []);
+
+  const handleRetry = () => {
+    setError(null);
+    setStatus('loading');
+    // Gọi lại useEffect
+    const userId = Cookies.get('user_id');
+    if (userId) {
+      Cookies.set('user_id', userId);
+    }
   };
 
   if (status === 'loading') {
