@@ -1,8 +1,9 @@
+'use client';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
-import { fetchProfile } from '@/app/account/api/profile';
 import { Customer } from '@/types/Customer';
+import axios, { AxiosError } from 'axios';
 
 function ProfileForm() {
   const [name, setName] = useState('');
@@ -16,16 +17,24 @@ function ProfileForm() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [userProfile, setUserProfile] = useState<Customer | null>(null);
-  console.log(userProfile);
   const router = useRouter();
-
+  console.log(userProfile);
   useEffect(() => {
-    const userId = Cookies.get('user_id');
+    const fetchUserProfile = async () => {
+      const userId = Cookies.get('user_id');
+      const authToken = Cookies.get('authToken');
 
-    if (userId) {
-      fetchProfile(parseInt(userId))
-        .then((data) => {
-          const profile = data.data;
+      if (userId && authToken) {
+        try {
+          const response = await axios.get(
+            `/api/auth/user/user-profile/${userId}`,
+            {
+              headers: {
+                Authorization: `Bearer ${authToken}`,
+              },
+            }
+          );
+          const profile = response.data.data;
           setUserProfile(profile);
 
           console.log('User Profile Data:', profile);
@@ -37,18 +46,31 @@ function ProfileForm() {
           setPhone(profile.phone || '');
           setAddress(profile.address || '');
           setBirthday(profile.birthday || '');
-        })
-        .catch((error) => {
+        } catch (error) {
           console.error('Error fetching user profile:', error);
-        });
-    }
-  }, []);
+          if (axios.isAxiosError(error)) {
+            const axiosError = error as AxiosError;
+            if (axiosError.response?.status === 401) {
+              Cookies.remove('user_id');
+              Cookies.remove('authToken');
+              router.push('/auth/login');
+            }
+          }
+        }
+      }
+    };
+
+    fetchUserProfile();
+  }, [router]);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     // Basic password validation (add more rules as needed)
-    if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/.test(newPassword)) {
+    if (
+      newPassword &&
+      !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/.test(newPassword)
+    ) {
       setPasswordError(
         'Password must be at least 8 characters long and include lowercase, uppercase, and numbers.'
       );
@@ -63,10 +85,16 @@ function ProfileForm() {
 
     // Handle form submission logic here (send data to your server)
     try {
-      const response = await fetch('/api/profile', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
+      const userId = Cookies.get('user_id');
+      const authToken = Cookies.get('authToken');
+
+      if (!userId || !authToken) {
+        throw new Error('User is not logged in');
+      }
+
+      const response = await axios.post(
+        '/api/auth/user/update-profile',
+        {
           name,
           nickName,
           email,
@@ -75,10 +103,15 @@ function ProfileForm() {
           birthday,
           currentPassword,
           newPassword,
-        }),
-      });
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      );
 
-      if (response.ok) {
+      if (response.status === 200) {
         // Handle successful update, e.g., redirect
         router.push('/profile');
       } else {
@@ -87,6 +120,14 @@ function ProfileForm() {
       }
     } catch (error) {
       console.error('Error submitting form:', error);
+      if (axios.isAxiosError(error)) {
+        const axiosError = error as AxiosError;
+        if (axiosError.response?.status === 401) {
+          Cookies.remove('user_id');
+          Cookies.remove('authToken');
+          router.push('/auth/login');
+        }
+      }
     }
   };
 

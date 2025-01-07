@@ -1,15 +1,19 @@
 'use client';
-import React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import Cookies from 'js-cookie';
+import axios from 'axios';
 import ProfileForm from './AccountDetails';
 import Dashboard from './Dashboard';
 import Orders from './Orders';
 import Download from './Download';
 import PaymentMethod from './PaymentMethod';
 import Address from './Address';
-import Logout from './Logout';
 
 const Myaccount = () => {
+  const router = useRouter();
+  const [activeTab, setActiveTab] = useState(0);
+
   const menu = [
     { id: 1, name: 'Dashboard' },
     { id: 2, name: 'Orders' },
@@ -20,10 +24,38 @@ const Myaccount = () => {
     { id: 7, name: 'Logout' },
   ];
 
-  const [activeTab, setActiveTab] = useState(0);
+  const handleLogout = async () => {
+    try {
+      const authToken = Cookies.get('authToken');
+      if (authToken) {
+        await axios.post(
+          '/api/auth/logout',
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+            },
+          }
+        );
+      }
+      Cookies.remove('user_id');
+      Cookies.remove('authToken');
+      router.push('/auth/login');
+    } catch (error) {
+      console.error('Logout error:', error);
+      Cookies.remove('user_id');
+      Cookies.remove('authToken');
+      router.push('/auth/login');
+    }
+  };
 
   const handleTabClick = (index: number) => {
-    setActiveTab(index);
+    if (index === 6) {
+      // Logout tab
+      handleLogout();
+    } else {
+      setActiveTab(index);
+    }
   };
 
   return (
@@ -57,14 +89,12 @@ const Myaccount = () => {
           </ul>
         </div>
         <div className="p-6 border col-span-9 md:col-span-9 w-[100%]">
-          {/* Render content based on activeTab */}
           {activeTab === 0 && <Dashboard />}
           {activeTab === 1 && <Orders />}
           {activeTab === 2 && <Download />}
           {activeTab === 3 && <PaymentMethod />}
           {activeTab === 4 && <Address />}
           {activeTab === 5 && <ProfileForm />}
-          {activeTab === 6 && <Logout />}
         </div>
       </div>
     </div>
