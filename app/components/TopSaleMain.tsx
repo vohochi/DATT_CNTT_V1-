@@ -86,7 +86,7 @@ const TopSaleMain: React.FC = () => {
           >
             <Link href={`/detail/${product.id}`}>
               <Image
-                className="card-img-top rounded-[10px] w-full"
+                className="card-img-top rounded-[10px] w-[370px] h-[450px]"
                 src={product.thumbnail || '/placeholder.png'}
                 width={370}
                 height={450}
