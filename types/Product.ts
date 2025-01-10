@@ -6,7 +6,15 @@ export interface Product {
   type: string;
   short_description: string;
   description: string;
-  thumbnail: string | null;
+  thumbnail: {
+    id: number,
+    filename: string,
+    path: string,
+    type: string,
+    size: number,
+    created_at: string,
+    updated_at: string
+  };
   price: number;
   width: number;
   length: number;

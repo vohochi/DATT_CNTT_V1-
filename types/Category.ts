@@ -20,4 +20,13 @@ export interface Category {
     created_at: string,
     updated_at: string
   },
+  image:{
+    id: number,
+    filename: string,
+    path: string,
+    type: string,
+    size: number,
+    created_at: string,
+    updated_at: string
+  },
 }

@@ -39,8 +39,8 @@ const BlogMain = () => {
             <div className="flex flex-col items-start w-[370px]">
               <div className="relative overflow-hidden">
                 <Image
-                  className="card-img-top rounded-[10px] transition-transform duration-300 ease-in-out transform hover:scale-110"
-                  src={post.thumbnail ? '' : '/default-image.jpg'}
+                  className="card-img-top rounded-[10px] transition-transform duration-300 ease-in-out transform hover:scale-110 w-[370px] h-[320px]"
+                  src={post.thumbnail ? `https://api-core.dsp.one/api/auth/file/uploads/${post.thumbnail}` : '/default-image.jpg'}
                   alt="Card cap"
                   width={370}
                   height={320}

@@ -59,7 +59,7 @@ const BlogList = () => {
             <Card className="w-full">
               <CardBody className="p-0">
                 <Image
-                  src={blog.thumbnail}
+                  src={blog.thumbnail ? `https://api-core.dsp.one/api/auth/file/uploads/${blog.thumbnail}` : 'null'}
                   alt={blog.title}
                   width={570}
                   height={320}

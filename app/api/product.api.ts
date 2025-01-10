@@ -5,6 +5,7 @@ export const getProductApi = async () => {
   const response = await axios.get(
     'https://api-core.dsp.one/api/client/product'
   );
+  console.log('product', response.data);
   return response.data;
 };
 

@@ -87,7 +87,7 @@ const TopSaleMain: React.FC = () => {
             <Link href={`/detail/${product.id}`}>
               <Image
                 className="card-img-top rounded-[10px] w-[370px] h-[450px]"
-                src={product.thumbnail || '/placeholder.png'}
+                src={`https://api-core.dsp.one/api/auth/file/${product.thumbnail?.path}` || '/placeholder.png'}
                 width={370}
                 height={450}
                 alt={product.name}

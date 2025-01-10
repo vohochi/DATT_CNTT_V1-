@@ -46,15 +46,11 @@ const CategorySection: React.FC = () => {
                 <div className="icon mx-auto mt-4">
                   <Image
                     className="transition-transform duration-300 mx-auto max-h-[80px]"
-                    // src={category.file ? `https://api-core.dsp.one/${category.file.path}` : '/default-image.jpg'}
-                    src={category.file ? `` : '/default-image.jpg'}
+                    src={category.image ? `https://api-core.dsp.one/api/auth/file/${category.image.path}` : '/default-image.jpg'}
+                    // src={category.file ? `` : '/default-image.jpg'}
                     width={80}
                     height={80}
-                    alt={
-                      category.file?.filename
-                        ? `/${category.file.filename}`
-                        : 'null'
-                    }
+                    alt={'null'}
                   />
                 </div>
 
